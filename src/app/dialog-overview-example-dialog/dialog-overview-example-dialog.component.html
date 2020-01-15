@@ -1,0 +1,27 @@
+
+
+<h1 mat-dialog-title class="text-center"> Hi Admin</h1>
+<div mat-dialog-content>
+  <h2 class="text-center">Users Creation </h2>
+  <div class="form-group">
+      <label for="usr">Name: </label>
+      <input type="text" class="form-control" [(ngModel)]="name">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Email: </label>
+      <input type="email" class="form-control" [(ngModel)]="Email">
+    </div>
+    
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Authintications: </label>
+      <select ngModule required (change)="selectChangeHandler($event)"class="form-control" >
+    
+          <option  value="User" ></option>
+          <option  value="User" >User</option>
+        <option value="Admin">Admin</option>
+      </select>
+</div>
+<div mat-dialog-actions>
+  <button class="btn btn-danger" (click)="onNoClick()">Exit</button>
+  <button class="btn btn-primary" (click)="save()" cdkFocusInitial> Save</button>
+</div>

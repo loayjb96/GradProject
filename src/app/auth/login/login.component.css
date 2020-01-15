@@ -1,0 +1,26 @@
+body { 
+    background-color: #F9F9F9;
+}
+
+.container{
+    margin-top: 5%;
+    text-align: center ;
+}
+
+.card-header {
+    padding: 5px 15px;
+}
+
+.profile-img {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+  
+
+  
