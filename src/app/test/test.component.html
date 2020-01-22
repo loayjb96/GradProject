@@ -49,16 +49,15 @@
                 </select>  
               </td>  
               <td>  
-                <input list="Category" name="myBrowser" [(ngModel)]="blankRowArray[i].Category" (ngModelChange)="setPonticType($event,i)"  
+                <input list="Category" name="myBrowser" [(ngModel)]="blankRowArray[i].Category" (change)="OnCategoryCheked(blankRowArray[i].Category,i)"  
                 [ngModelOptions]="{standalone: true}" class="form-control wp-80" >
-<datalist id="Category">
-  <option value="Animals">
-  <option value="Babies">
-  <option value="Vehicles">
-  <option value="Male">
-  <option value="Female">
-  <option value="Other">
-</datalist> 
+                
+<datalist  id="Category" >
+
+  <option  *ngFor="let cat of contacts;let x =index" value={{cat.name}}>
+
+</datalist > 
+
               </td>  
              
               
@@ -71,7 +70,21 @@
       </div>  
     </div>  
   </div> 
-  <div class="card" style="margin-top: 5%;">
+  <div *ngIf="path.length">
+    <h3  class="text-center">
+      Path
+    </h3>
+    <div  class="alert alert-success text-center"  role="alert" >
+   
+    <div   *ngFor="let x of path" style="font-size: large;">
+
+      {{x}}
+      <div class="arrowdown center" ></div>
+      <br>
+    </div>
+  </div>
+</div>
+  <div class="card" >
     <div class="card-header">Form
     
       <div class="input-group">

@@ -15,18 +15,21 @@ export class TestComponent  {
   userid:string;
   type: string;
   message:string;// this is my url 
-urlImg:string;
-public imagePath;
+  urlImg:string;
+  public imagePath;
   imgURL: any;
   name:string;
   downloadURL:any;
   delteurl:string;
-
+  contacts:any[];
+  path:any[];
   constructor(
     private storage: AngularFireStorage,
     private af:AngularFireAuth,
     private route: ActivatedRoute,private router:Router,private http:Http
-    ) { }
+    ) { 
+
+    }
   selectedFile=null;
 
   preview(files,event) {
@@ -72,8 +75,24 @@ public imagePath;
   hideMultiSelectedSubjectDropdown: boolean[] = [];  
   hideMultiSelectedSubjectDropdownAll: boolean[] = [];  
   ngOnInit() {  
-  
-  }  
+ 
+    this.contacts = [
+      {name: "Animal"},
+      {name: "Vehicles"},
+      {name: "Babies"},
+      {name: "Female"},
+      {name: "Male"},
+      {name: "Other"},
+      
+    ];
+    this.path=[]
+   
+  }
+  OnCategoryCheked(x:string,i:any){
+    this.path[i]=x;
+
+console.log(this.path)
+  }
   addBlankRow() {  
       const blankRowData = new BlankRow();  
           blankRowData.RollNo = 'Tester',  
@@ -102,6 +121,8 @@ public imagePath;
   }  
   deleteRow(index) {  
       this.blankRowArray.splice(index, 1);  
-  }  
-
+      this.path.splice(index, 1);  
+  }
+    
+   
 }
