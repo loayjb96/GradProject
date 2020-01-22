@@ -6,11 +6,8 @@ import { RouterModule } from '@angular/router';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-
-
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
-
 import { AppComponent } from './app.component';
 import { AuthService } from './auth/login/auth.service';
 
@@ -22,7 +19,7 @@ import {
 } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { environment } from 'environments/environment';
-import { TestComponent } from './test/test.component';
+
 
 
 
@@ -48,7 +45,7 @@ import { TestComponent } from './test/test.component';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    TestComponent,
+  
     
  
     

@@ -1,0 +1,26 @@
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 500%;
+     height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.tooltip {  
+    position: absolute;  
+    z-index: 3000;  
+    border: 1px solid #b7b086;  
+    background-color: white;  
+    color: #000!important;  
+    padding: 5px 15px 5px 10px;  
+    opacity: 1;  
+    width: 350px;  
+} 
+

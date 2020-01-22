@@ -1,3 +1,87 @@
-<p>
-  test works!
-</p>
+
+
+<div style="margin-top: 5%;">  
+  <button style="margin: 10px;" class="btn btn-primary" (click)="addBlankRow()">Add Blank Row</button>  
+</div>  
+<div class="col-12 col-md-12">  
+  <div class="card">  
+    <div class="card-body">  
+      <div class="table-responsive cnstr-record">  
+        <table class="table table-bordered">  
+          <thead>  
+            <tr>  
+              <th width="30">Roll No</th>  
+              <th width="100"> Tester Name</th>  
+              <th width="50">Tested Algorithm</th>  
+              <th width="70">Category</th>  
+            
+              <th width="50">Delete Row</th>  
+            </tr>  
+          </thead>  
+          <tbody>  
+            <tr *ngFor="let row of blankRowArray; let i = index">  
+              <td>  
+                <input type="text" disabled class="form-control wp-30" [(ngModel)]="blankRowArray[i].RollNo"  
+                  [ngModelOptions]="{standalone: true}">  
+              </td>  
+              <td>  
+                <input type="text" disabled class="form-control wp-30" [(ngModel)]="blankRowArray[i].Name"  
+                  [ngModelOptions]="{standalone: true}">  
+              </td>  
+              <td>  
+                <select  [(ngModel)]="blankRowArray[i].Algorithm" [ngModelOptions]="{standalone: true}"  
+                  class="form-control wp-70">  
+                  <option [ngValue]="0" disabled selected>--Choose--  
+                  </option>  
+                  <option [value]="1">Linear Regression</option>  
+                  <option [value]="2">Logistic Regression</option>  
+                  <option [value]="3">Support Vector Machines</option>  
+                  <option [value]="4">Random Forest</option>  
+                  <option [value]="5">Naïve Bayes Classification</option>  
+                  <option [value]="6">Ordinary Least Square Regression</option>  
+                  <option [value]="7">K-means</option>  
+                  <option [value]="8">Ensemble Methods</option>  
+                  <option [value]="9">Apriori Algorithm</option> 
+                  <option [value]="10">Principal Component Analysis</option>  
+                  <option [value]="11">Singular Value Decomposition</option>  
+                  <option [value]="12">Reinforcement or Semi-Supervised Machine Learning</option> 
+                  <option [value]="13">Independent Component Analysis</option>    
+                </select>  
+              </td>  
+              <td>  
+                <input list="Category" name="myBrowser" [(ngModel)]="blankRowArray[i].Category" (ngModelChange)="setPonticType($event,i)"  
+                [ngModelOptions]="{standalone: true}" class="form-control wp-80" >
+<datalist id="Category">
+  <option value="Animals">
+  <option value="Babies">
+  <option value="Vehicles">
+  <option value="Male">
+  <option value="Female">
+  <option value="Other">
+</datalist> 
+              </td>  
+             
+              
+              <td style="align-items: center;">  
+                <button (click)="deleteRow(i)" class="btn btn-danger">Delete Row</button>  
+              </td>  
+            </tr>  
+          </tbody>  
+        </table>  
+      </div>  
+    </div>  
+  </div> 
+  <div class="card" style="margin-top: 5%;">
+    <div class="card-header">Form
+    
+      <div class="input-group">
+    <div class="input-group ">
+      <span  class="btn btn-success btn-file">     
+        <span style="color:red;" *ngIf="message">{{message}}</span>
+          Upload File<input #file type="file"  (change)="preview(file.files,$event)" id="imgInp">
+      </span>
+  </div>
+      </div>
+    </div>
+  </div> 
+</div>  

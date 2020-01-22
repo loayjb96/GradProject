@@ -11,6 +11,7 @@ import { UsersComponent } from '../../users/users.component';
 import { DialogOverviewExampleDialog } from '../../dialog-overview-example-dialog/dialog-overview-example-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteWarnComponent } from '../../delete-warn/delete-warn.component';
+import { TestComponent } from '../../test/test.component';
 
 
 
@@ -26,6 +27,7 @@ import {
   
   
 } from '@angular/material';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 @NgModule({
   imports: [
     CommonModule,
@@ -39,6 +41,7 @@ import {
     MatSelectModule,
     MatTooltipModule,
     MatDialogModule,
+    AngularFireStorageModule,
     
   ],
   // providers: [AuthService],
@@ -49,6 +52,7 @@ import {
     UsersComponent,
     DialogOverviewExampleDialog,
     DeleteWarnComponent,
+    TestComponent,
    
 
   ],
