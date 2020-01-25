@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'app/auth/login/auth.service';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -10,8 +11,9 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '' },
-    { path: '/Test', title: 'NewTest',  icon: 'note_add', class: '' },
+    { path: '/Test', title: 'New Test',  icon: 'note_add', class: '' },
     { path: '/Users', title: 'Users',  icon: 'supervised_user_circle', class: '' },
+    { path: '/TestsDone', title: 'Tests Available',  icon: 'tv', class: '' },
   
     
 ];
@@ -24,7 +26,7 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   menuItems: any[];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,public authService: AuthService) { }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);

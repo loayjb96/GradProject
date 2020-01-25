@@ -52,6 +52,10 @@ console.log("here")
     });
     
   }
+  onEnterSite(data):void {
+    this.router.navigateByUrl(`/Profile?Data=${data.Uid}`)
+
+  }
   openDialogForDeletion(data): void {
     const dialogRef = this.dialog.open(DeleteWarnComponent,{
 

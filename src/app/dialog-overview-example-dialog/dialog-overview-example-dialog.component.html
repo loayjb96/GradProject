@@ -11,15 +11,15 @@
       <label for="pwd">Email: </label>
       <input type="email" class="form-control" [(ngModel)]="Email">
     </div>
-    
     <div class="form-group">
       <label for="exampleFormControlSelect1">Authintications: </label>
       <select ngModule required (change)="selectChangeHandler($event)"class="form-control" >
-    
           <option  value="User" ></option>
           <option  value="User" >User</option>
         <option value="Admin">Admin</option>
       </select>
+</div>
+
 </div>
 <div mat-dialog-actions>
   <button class="btn btn-danger" (click)="onNoClick()">Exit</button>

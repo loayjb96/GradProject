@@ -1,9 +1,7 @@
 
 
-<div style="margin-top: 5%;">  
-  <button style="margin: 10px;" class="btn btn-primary" (click)="addBlankRow()">Add Blank Row</button>  
-</div>  
-<div class="col-12 col-md-12">  
+
+<div class="col-12 col-md-12" style="margin-top: 5%;">  
   <div class="card">  
     <div class="card-body">  
       <div class="table-responsive cnstr-record">  
@@ -29,7 +27,7 @@
                   [ngModelOptions]="{standalone: true}">  
               </td>  
               <td>  
-                <select  [(ngModel)]="blankRowArray[i].Algorithm" [ngModelOptions]="{standalone: true}"  
+                <select [disabled]=Enable [(ngModel)]="blankRowArray[i].Algorithm" [ngModelOptions]="{standalone: true}"  
                   class="form-control wp-70">  
                   <option [ngValue]="0" disabled selected>--Choose--  
                   </option>  
@@ -65,11 +63,17 @@
                 <button (click)="deleteRow(i)" class="btn btn-danger">Delete Row</button>  
               </td>  
             </tr>  
+            
           </tbody>  
-        </table>  
-      </div>  
+        </table> 
+         
+      </div>
+        
     </div>  
   </div> 
+  <div class="center text-center" >  
+    <button style="margin: 10px;" class="btn btn-primary" (click)="addBlankRow()">Add Category</button>  
+  </div>  
   <div *ngIf="path.length">
     <h3  class="text-center">
       Path
@@ -89,11 +93,12 @@
     
       <div class="input-group">
     <div class="input-group ">
-      <span  class="btn btn-success btn-file">     
-        <span style="color:red;" *ngIf="message">{{message}}</span>
-          Upload File<input #file type="file"  (change)="preview(file.files,$event)" id="imgInp">
-      </span>
+      <button  class="btn btn-success btn-file" [disabled]="!Enable">     
+        
+          Upload File<input #file type="file" [disabled]="!Enable"  (change)="preview(file.files,$event)" id="imgInp">
+      </button>
   </div>
+  <h3 *ngIf="path.length">{{pathWithFile}}</h3>
       </div>
     </div>
   </div> 

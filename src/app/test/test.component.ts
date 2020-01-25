@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { BlankRow } from 'app/blank-row';
+import { AngularFirestore } from '@angular/fire/firestore';
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
@@ -23,8 +24,14 @@ export class TestComponent  {
   delteurl:string;
   contacts:any[];
   path:any[];
+  fullPath:string;
+  Enable:boolean;
+  pathWithFile:string;
+  UserName:string;
+  UserRole:string;
+
   constructor(
-    private storage: AngularFireStorage,
+    private storage: AngularFireStorage,private db:AngularFirestore,
     private af:AngularFireAuth,
     private route: ActivatedRoute,private router:Router,private http:Http
     ) { 
@@ -37,7 +44,7 @@ export class TestComponent  {
       return;
       console.log(event);
 
-      this.selectedFile=<File>event.target.files[0];
+    this.selectedFile=<File>event.target.files[0];
     var mimeType = files[0].type;
     console.log(mimeType);
     var reader = new FileReader();
@@ -53,10 +60,12 @@ export class TestComponent  {
     this.name='/'+this.type+'/'+url;// this is wher rhe image will be stored 
    
     fd.append('image',this.selectedFile,this.selectedFile.name);
+    this.ExtractPath();
     
-     this.storage.ref("a").child(this.selectedFile.name).put(this.selectedFile, {contentType: mimeType}).then(() => {
-      
-       console.log("aa")
+    
+     this.storage.ref(this.fullPath).child(this.selectedFile.name).put(this.selectedFile, {contentType: mimeType}).then(() => {
+      this.pathWithFile=this.fullPath.concat("/").concat(this.selectedFile.name);
+    
       this.downloadURL= this.storage.ref(this.name).getDownloadURL().subscribe(result => {
        
         
@@ -74,8 +83,20 @@ export class TestComponent  {
   hideMultiSelectDropdown: boolean[] = [];  
   hideMultiSelectedSubjectDropdown: boolean[] = [];  
   hideMultiSelectedSubjectDropdownAll: boolean[] = [];  
-  ngOnInit() {  
- 
+  ngOnInit() { 
+    const user =this.af.auth.currentUser; 
+    if(user!=null){
+      this.db.collection("users").doc(user.uid).get().toPromise().then(result => {
+         const actualData = result.data();
+         this.UserName=actualData.fullName;
+         this.UserRole=actualData.Role;
+         console.log(actualData)
+
+      
+    
+     })
+    }
+ this.pathWithFile=""
     this.contacts = [
       {name: "Animal"},
       {name: "Vehicles"},
@@ -85,22 +106,32 @@ export class TestComponent  {
       {name: "Other"},
       
     ];
-    this.path=[]
+    this.path=[];
+    this.fullPath="";
    
   }
   OnCategoryCheked(x:string,i:any){
     this.path[i]=x;
 
-console.log(this.path)
+    this.Enable=true;
   }
   addBlankRow() {  
       const blankRowData = new BlankRow();  
-          blankRowData.RollNo = 'Tester',  
-          blankRowData.Name = '',  
+          blankRowData.RollNo = this.UserRole,  
+          blankRowData.Name = this.UserName,  
           blankRowData.Algorithm = '',  
           blankRowData.Catagory = '',  
           this.blankRowArray.push(blankRowData)  
+          
   }  
+  ExtractPath(){
+    for(let i=0;i<this.path.length;i++){
+      if(i==0)
+      this.fullPath="".concat(this.path[i]);
+      else
+      this.fullPath+="/".concat(this.path[i]);
+    }
+  }
   openMultiSelectDD(i) {  
       for (var x = 0; x < this.blankRowArray.length; x++) {  
           this.hideMultiSelectDropdownAll[x] = false;  
@@ -122,6 +153,8 @@ console.log(this.path)
   deleteRow(index) {  
       this.blankRowArray.splice(index, 1);  
       this.path.splice(index, 1);  
+      if(this.path.length==0)
+      this.Enable=false;
   }
     
    

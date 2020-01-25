@@ -1,60 +1,179 @@
 
-		<div class="main-panel">
-			<div class="container">
+<body>
+    <div class="container main-secction">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 image-section">
+                <img src="../../assets/img/banner-1571858_1280.jpg">
+            </div>
+            <div class="row user-left-part">
+                <div class="col-md-3 col-sm-3 col-xs-12 user-profil-part pull-left">
+                    <div class="row ">
+                        <div class="col-md-12 col-md-12-sm-12 col-xs-12 user-image text-center">
+                            <img src="https://www.jamf.com/jamf-nation/img/default-avatars/generic-user-purple.png" class="rounded-circle">
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 user-detail-section1 text-center">
+                            <button id="btn-contact" (click)="clearModal()" data-toggle="modal" data-target="#contact" class="btn btn-success btn-block follow">Contact me</button> 
+                                                      
+                        </div>
+                        <div class="row user-detail-row">
+                            <div class="col-md-12 col-sm-12 user-detail-section2 pull-left">
+                                <div class="border"></div>
+                                <p>Tests</p>
+                                <span>320</span>
+                            </div>                           
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-12 pull-right profile-right-section">
+                    <div class="row profile-right-section-row">
+                        <div class="col-md-12 profile-header">
+                            <div class="row">
+                                <div class="col-md-8 col-sm-6 col-xs-6 profile-header-section1 pull-left">
+                                    <h1>{{UserName}}</h1>
+                                    <h5>{{UserRole}}</h5>
+                                </div>
+                                <div *ngIf="whenToShow" class="col-md-4 col-sm-6 col-xs-6 profile-header-section1 text-right pull-rigth">
+									<button  id="btn-contact" (click)="clearModal()" data-toggle="modal" data-target="#Edit" class="btn btn-primary">Edit Profile</button> 
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-8">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                                <li class="nav-item">
+                                                  <a class="nav-link active" href="#profile" role="tab" data-toggle="tab"><i class="fas fa-user-circle"></i> Perfil Profesional</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                  <a class="nav-link" href="#buzz" role="tab" data-toggle="tab"><i class="fas fa-info-circle"></i> Información Detallada</a>
+                                                </li>                                                
+                                              </ul>
+                                              
+                                              <!-- Tab panes -->
+                                              <div class="tab-content">
+                                                <div role="tabpanel" class="tab-pane fade show active" id="profile">
+                                                        <div class="row">
+                                                                <div class="col-md-2">
+                                                                    <label>ID</label>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <p>509230671</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-2">
+                                                                    <label>Name</label>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <p>{{UserName}}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-2">
+                                                                    <label>Email</label>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <p>{{UserEmail}}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-2">
+                                                                    <label>Phone</label>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <p>{{UserPhone}}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-2">
+                                                                    <label>Role</label>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <p>{{UserRole}}</p>
+                                                                </div>
+                                                            </div>
+                                                </div>
+                                                
+                                              </div>
+                          
+                                </div>
+                     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contact">Contact Me</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p for="msj">This message will be sent to {{UserName}}, indicating that you want to contact him. For this you must enter your personal information.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtFullname">Name </label>
+                        <input type="text" id="txtFullname" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtEmail">Email</label>
+                        <input type="text" id="txtEmail" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtPhone">Message</label>
+						<textarea class="form-control" rows="5" id="comment"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" (click)="openModal()" data-dismiss="modal">Send</button>
+                </div>
+            </div>
+        </div>
+	</div>
+	
 
-				<div class="row">
-
-					<div class=" grid-margin stretch-card">
-						<div class="card">
-							<div class="card-body ">
-								<p class="card-title font-weight-bold">About</p>
-								<hr>
-								<p class="card-description">User Information</p>
-								<ul class="about">
-									<li class="about-items"><i class="mdi mdi-account icon-sm "></i><span class="about-item-name">Name:</span><span class="about-item-detail">Santosh Ghimire</span><a href="" class="about-item-edit">Edit</a></li>
-
-									
-                       <li class="about-items"><i class="mdi mdi-trophy-variant-outline icon-sm "></i><span class="about-item-name">Authintication:</span><span class="about-item-detail">
-                         
-                    
-                      </span> <a href="" class="about-item-edit">View</a></li>
-                      
-                      <li class="about-items"><i class="mdi mdi-trophy-variant-outline icon-sm "></i><span class="about-item-name">Tests:</span><span class="about-item-detail">
-                         
-                    20
-                      </span> <a href="" class="about-item-edit">View</a></li>
-                      
-								</ul>
-								<p class="card-description">Contact Information</p>
-								<ul class="about">
-									<li class="about-items"><i class="mdi mdi-phone icon-sm "></i><span class="about-item-name">Phone:</span><span class="about-item-detail">+9779861106179</span><a href="" class="about-item-edit">Edit</a></li>
-								
-									<li class="about-items"><i class="mdi mdi-email-outline icon-sm "></i><span class="about-item-name">Email:</span><span class="about-item-detail"><a href="">reasonghimire706@gmail.com</a></span> <a href="" class="about-item-edit">Edit</a></li>
-				
-								</ul>
-								<p class="card-description">Basic Information</p>
-								<ul class="about">
-									<li class="about-items"><i class="mdi mdi-cake icon-sm "></i><span class="about-item-name">Birthday:</span><span class="about-item-detail">Aug 3 , 1998</span><a href="" class="about-item-edit">Edit</a></li>
-									<li class="about-items"><i class="mdi mdi-account icon-sm "></i><span class="about-item-name">Gender:</span><span class="about-item-detail">Male</span> <a href="" class="about-item-edit">Edit</a></li>
-								
-								</ul>
-
-
-							</div>
-						</div>
-					</div>
-
-				</div>
-
-
-
-
-			</div>
-			<!-- content-wrapper ends -->
-			<!-- partial:partials/_footer.html -->
-
-			
-			<!-- partial -->
-		</div>
-		<!-- main-panel ends -->
+	<div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contact">Edit Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p for="msj">Please edit your personal information in the Marked areas Below.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtFullname">Name </label>
+                        <input type="text" id="txtFullname" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtEmail">Email</label>
+                        <input type="text" id="txtEmail" class="form-control">
+                    </div>
+					<div class="form-group">
+                        <label for="txtEmail">Phone</label>
+                        <input type="number" id="txtEmail" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" (click)="openModal()" data-dismiss="modal">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -3,6 +3,7 @@ import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
 import {AuthService} from '../../auth/login/auth.service'
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-navbar',
@@ -18,8 +19,9 @@ export class NavbarComponent implements OnInit {
       mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
+    Uid:string;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router,public authService: AuthService) {
+    constructor(location: Location,  private element: ElementRef, private router: Router,public authService: AuthService,private af:AngularFireAuth) {
       this.location = location;
           this.sidebarVisible = false;
     }
@@ -49,6 +51,10 @@ export class NavbarComponent implements OnInit {
 
         this.authService.logout();
     }
+    onEnterSite():void {
+        const user =this.af.auth.currentUser; 
+        this.router.navigateByUrl(`/Profile?Data=${user.uid}`)
+      }
     sidebarOpen() {
         const toggleButton = this.toggleButton;
         const body = document.getElementsByTagName('body')[0];

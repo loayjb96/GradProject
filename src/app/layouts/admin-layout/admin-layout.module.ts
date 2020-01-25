@@ -12,6 +12,7 @@ import { DialogOverviewExampleDialog } from '../../dialog-overview-example-dialo
 import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteWarnComponent } from '../../delete-warn/delete-warn.component';
 import { TestComponent } from '../../test/test.component';
+import { TestDoneComponent } from '../../test-done/test-done.component';
 
 
 
@@ -53,6 +54,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     DialogOverviewExampleDialog,
     DeleteWarnComponent,
     TestComponent,
+    TestDoneComponent,
    
 
   ],

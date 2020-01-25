@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { AuthService } from './../login/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-log-in',
@@ -11,7 +12,7 @@ export class LoginComponent implements OnInit {
  isLoading:boolean=false;
  ErrorMessage :string= '';
  email:string='';// this well be my email 
-  constructor(private authService:AuthService) { }
+  constructor(private authService:AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -44,7 +45,8 @@ onSignin(form: NgForm){
     setTimeout( () => {  this.isLoading=false;   }, 3000 );
     this.authService.signinUser(email, password).then(result => {
       this.ErrorMessage = result
-      console.log(email)
+      console.log(result)
+      this.router.navigate(['/dashboard']);
     })
   
   setTimeout( () => {  ; this.ErrorMessage="" ; }, 9000 );
