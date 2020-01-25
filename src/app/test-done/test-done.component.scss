@@ -56,3 +56,29 @@ p
 {
     margin-left:15px;
 }
+.right{width:25%;
+    float:right;
+    background:#fff;
+    padding:30px;
+    height:70vh;
+    min-height:500px;
+    margin-top:29px;
+    margin-bottom:10vh}
+    .dual-list .list-group {
+        margin-top: 8px;
+    }
+    li:hover {
+        background-color: #d9534f;
+      }
+
+    .list-left li, .list-right li {
+        cursor: pointer;
+    }
+
+    .list-arrows {
+        padding-top: 100px;
+    }
+
+        .list-arrows button {
+            margin-bottom: 20px;
+        }

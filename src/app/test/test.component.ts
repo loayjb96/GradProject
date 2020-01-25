@@ -29,6 +29,7 @@ export class TestComponent  {
   pathWithFile:string;
   UserName:string;
   UserRole:string;
+  
 
   constructor(
     private storage: AngularFireStorage,private db:AngularFirestore,
