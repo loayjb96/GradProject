@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
+import { Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,8 +9,9 @@ import * as Chartist from 'chartist';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor() { }
+  usersCollection;
+  contacts: Observable<any[]> ;
+  constructor(private db:AngularFirestore) { }
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
       seq = 0;
@@ -65,7 +68,10 @@ export class DashboardComponent implements OnInit {
 
       seq2 = 0;
   };
-  ngOnInit() {
+  ngOnInit( 
+  ) {
+    this.usersCollection = this.db.collection<any>('users')
+    this.contacts = this.usersCollection.valueChanges()
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
       const dataDailySalesChart: any = {
