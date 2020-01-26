@@ -29,6 +29,7 @@ export class TestComponent  {
   pathWithFile:string;
   UserName:string;
   UserRole:string;
+  check: boolean;
   
 
   constructor(
@@ -41,6 +42,7 @@ export class TestComponent  {
   selectedFile=null;
 
   preview(files,event) {
+    
     if (files.length === 0)
       return;
       console.log(event);
@@ -66,6 +68,7 @@ export class TestComponent  {
     
      this.storage.ref(this.fullPath).child(this.selectedFile.name).put(this.selectedFile, {contentType: mimeType}).then(() => {
       this.pathWithFile=this.fullPath.concat("/").concat(this.selectedFile.name);
+      this.check=true;
     
       this.downloadURL= this.storage.ref(this.name).getDownloadURL().subscribe(result => {
        
@@ -115,6 +118,10 @@ export class TestComponent  {
     this.path[i]=x;
 
     this.Enable=true;
+  }
+  checkFileUpload():void{
+
+    this.check=true;
   }
   addBlankRow() {  
       const blankRowData = new BlankRow();  
