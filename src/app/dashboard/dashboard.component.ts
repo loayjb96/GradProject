@@ -133,7 +133,7 @@ export class DashboardComponent implements OnInit {
       /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
 
       var datawebsiteViewsChart = {
-        labels: ['1', '2', '3', '4', '5'],
+        labels: ['1', '2', '3', '4', '5','6','7'],
         series: [
           [42, 43, 84, 68, 85,90]
 
@@ -161,6 +161,80 @@ export class DashboardComponent implements OnInit {
 
       //start animation for the Emails Subscription Chart
       this.startAnimationForBarChart(websiteViewsChart);
+      var websiteViewsChart1 = new Chartist.Bar('#websiteViewsChart1', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
+
+      //start animation for the Emails Subscription Chart
+      this.startAnimationForBarChart(websiteViewsChart1);
+
+
+//##############################################
+var datawebsiteViewsChart1 = {
+  labels: ['1', '2', '3', '4', '5','6','7'],
+  series: [
+    [62, 33, 44, 38, 85,50]
+
+  ]
+};
+var optionswebsiteViewsChart1 = {
+    axisX: {
+        showGrid: false
+    },
+    low: 0,
+    high: 100,
+    chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
+};
+var responsiveOptions1: any[] = [
+  ['screen and (max-width: 640px)', {
+    seriesBarDistance: 5,
+    axisX: {
+      labelInterpolationFnc: function (value) {
+        return value[0];
+      }
+    }
+  }]
+];
+
+
+var websiteViewsChart1 = new Chartist.Bar('#websiteViewsChart1', datawebsiteViewsChart1, optionswebsiteViewsChart1, responsiveOptions1);
+
+//start animation for the Emails Subscription Chart
+this.startAnimationForBarChart(websiteViewsChart1);
+
+//##############################################
+var datawebsiteViewsChart2 = {
+  labels: ['1', '2', '3', '4', '5','6','7'],
+  series: [
+    [22, 13, 24, 48, 85,40]
+
+  ]
+};
+
+
+
+
+var websiteViewsChart2 = new Chartist.Bar('#websiteViewsChart2', datawebsiteViewsChart2, optionswebsiteViewsChart1, responsiveOptions1);
+
+//start animation for the Emails Subscription Chart
+this.startAnimationForBarChart(websiteViewsChart2);
+//##############################################
+//##############################################
+var datawebsiteViewsChart3 = {
+  labels: ['1', '2', '3', '4', '5','6','7'],
+  series: [
+    [82, 73, 84, 68, 85,60]
+
+  ]
+};
+
+
+
+
+var websiteViewsChart3 = new Chartist.Bar('#websiteViewsChart3', datawebsiteViewsChart3, optionswebsiteViewsChart1, responsiveOptions1);
+
+//start animation for the Emails Subscription Chart
+this.startAnimationForBarChart(websiteViewsChart3);
+//##############################################
+
   }
 
 }
