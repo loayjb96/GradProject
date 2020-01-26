@@ -69,11 +69,17 @@ export class DashboardComponent implements OnInit {
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
       const dataDailySalesChart: any = {
-          labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+          labels: ['1', '2', '3', '4', '5', '6', '7'],
           series: [
               [12, 17, 7, 17, 23, 18, 38]
           ]
       };
+      const dataDailySalesChart1: any = {
+        labels: ['1', '2', '3', '4', '5', '6', '7'],
+        series: [
+            [34, 26, 27,47, 26, 38, 28]
+        ]
+    };
 
      const optionsDailySalesChart: any = {
           lineSmooth: Chartist.Interpolation.cardinal({
@@ -85,8 +91,10 @@ export class DashboardComponent implements OnInit {
       }
 
       var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
+      var dailySalesChart1 = new Chartist.Line('#dailySalesChart1', dataDailySalesChart1, optionsDailySalesChart);
 
       this.startAnimationForLineChart(dailySalesChart);
+      this.startAnimationForLineChart(dailySalesChart1);
 
 
       /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
