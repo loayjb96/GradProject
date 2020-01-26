@@ -71,13 +71,13 @@ export class DashboardComponent implements OnInit {
       const dataDailySalesChart: any = {
           labels: ['1', '2', '3', '4', '5', '6', '7'],
           series: [
-              [12, 17, 7, 17, 23, 18, 38]
+              [22,37, 67,67, 83, 88, 78]
           ]
       };
       const dataDailySalesChart1: any = {
         labels: ['1', '2', '3', '4', '5', '6', '7'],
         series: [
-            [34, 26, 27,47, 26, 38, 28]
+            [142, 106, 57,107, 126, 78, 88]
         ]
     };
 
@@ -86,12 +86,20 @@ export class DashboardComponent implements OnInit {
               tension: 0
           }),
           low: 0,
-          high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          high: 100, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
           chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
       }
+      const optionsDailySalesChart1: any = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+            tension: 0
+        }),
+        low:50,
+        high: 250, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+        chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
+    }
 
       var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
-      var dailySalesChart1 = new Chartist.Line('#dailySalesChart1', dataDailySalesChart1, optionsDailySalesChart);
+      var dailySalesChart1 = new Chartist.Line('#dailySalesChart1', dataDailySalesChart1, optionsDailySalesChart1);
 
       this.startAnimationForLineChart(dailySalesChart);
       this.startAnimationForLineChart(dailySalesChart1);
@@ -125,9 +133,9 @@ export class DashboardComponent implements OnInit {
       /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
 
       var datawebsiteViewsChart = {
-        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+        labels: ['1', '2', '3', '4', '5'],
         series: [
-          [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
+          [42, 43, 84, 68, 85,90]
 
         ]
       };
@@ -136,7 +144,7 @@ export class DashboardComponent implements OnInit {
               showGrid: false
           },
           low: 0,
-          high: 1000,
+          high: 100,
           chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
       };
       var responsiveOptions: any[] = [
