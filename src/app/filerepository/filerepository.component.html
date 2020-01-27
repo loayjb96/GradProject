@@ -1,0 +1,73 @@
+
+
+
+<body>
+
+<section id="wrapper">
+
+  <div class="main">
+    <h1>Sound Repsitory</h1>
+    <div class="input-wrap"><input id="searchbar" type="search" placeholder="Search a file..." /><i class="fa fa-search" aria-hidden="true"></i></div>
+    <div class="left"  >
+      <div *ngFor="let cat of Category | async ;let i = index">
+      <div  class="top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file" id="folder3" on-mouseover='playCurrentSound(cat.Url)' on-mouseout="stopCurrentSound()" (click)='PassInfo(cat)'  data-toggle="modal" data-target="#contact">
+        <i class="fa fa-folder" aria-hidden="true"></i>
+        <i class="fa fa-check" aria-hidden="true"></i>
+       
+        <p>{{cat.Name}}</p>
+        
+      </div>
+  
+      <!-- <div class="top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file" id="folder2"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-check" aria-hidden="true"></i><p>Folder 2</p></div>
+      <div class="top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file" id="folder3"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-check" aria-hidden="true"></i><p>Folder 3</p></div>
+      <div class="top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file" id="folder4"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-check" aria-hidden="true"></i><p>Folder 4</p></div>
+      <div class="top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file" id="folder5"><i class="fa fa-folder" aria-hidden="true"></i><i class="fa fa-check" aria-hidden="true"></i><p>Folder 5</p></div> -->
+    
+      
+      </div>
+      
+    </div>
+    
+  </div>
+  <div class="right">
+    <div class="input-select-wrap">
+      <div class="fileUpload">
+        <span>+</span><p>Add your files</p>
+      </div>
+      <input id='fileSelect' multiple name='fileSelect' type='file' webkitdirectory mozdirectory>
+    </div>
+    <div id='draggableFile'>
+      <span>Drop your files here<br/><span>You can drop your files here to add them to your documents</span></span>
+    </div>
+    <div id='result'></div>
+  </div>
+
+  
+
+</section>
+<div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg"  style="margin-top: 5%;">
+    
+  <section class="item-card center" >
+    <div class="item-summary">
+    <h2 class="title">{{info}}</h2>
+    <p class="venue">PNC Pavilion</p>
+    <address class="address">
+    <p class="street-address">6295 Kellogg Ave</p>
+    <p class="locality">Cincinnati, OH 45230</p>
+    </address>
+    </div>
+    
+    <div class="item-time-date">
+    <time class="date" datetime="2018-10-16">Sept 01, 2018</time>
+    <time class="time" datetime="19:00">8:20 PM</time>
+    </div>
+    
+    </section>
+</div>
+</div>
+
+</body>
+
+
+

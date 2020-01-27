@@ -70,13 +70,15 @@ export class TestComponent  {
       this.pathWithFile=this.fullPath.concat("/").concat(this.selectedFile.name);
       this.check=true;
     
-      this.downloadURL= this.storage.ref(this.name).getDownloadURL().subscribe(result => {
+      this.downloadURL= this.storage.ref(this.pathWithFile).getDownloadURL().subscribe(result => {
        
         
         this.delteurl=result;
-        const Data=[{Url:result}];
+        const Data={Url:result,Path:this.fullPath,Name:this.selectedFile.name}
+        this.db.collection('Category').doc(this.selectedFile.name).set(Data)
+        console.log(Data)
         //this.newMessage(result);// here we send the url to the newMessege( string:url)_sending the url 
-      
+   
         })
      }) 
 
