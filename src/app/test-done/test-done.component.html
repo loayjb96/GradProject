@@ -13,9 +13,38 @@
 <div class="right">
   <h3 class="mb-5 text-center">List of testers</h3>
   <hr>
+<div class="row">
+  <div class="">
+    <div class="card">
+        <div class="card-header card-header-danger">
+            <h4 class="card-title">Employees Stats</h4>
+            <p class="card-category">New employees on 15th September, 2016</p>
+        </div>
+        <div class="card-body table-responsive">
+            <table class="table table-hover">
+                <thead class="text-warning">
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Premsion</th>
+                    
+                </thead>
+                <tbody *ngFor="let user of contacts | async; index as i">
+                    <tr>
+                        <td>{{i+1}}</td>
+                        <td>{{user.fullName}}</td>
+                        <td>{{user.Role}}</td>
+                    
+                    </tr>
+                   
+                  
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
 
-
-    <div class="dual-list list-left ">
+    <!-- <div class="dual-list list-left ">
         <div class="well text-center" style=" background:#fff;">
            
             <ul *ngFor="let user of contacts | async" class="list-group" style=" background:#fff;">
@@ -31,7 +60,7 @@
             </ul>
         </div>
     
-</div>
+</div> -->
 </div>
 <div class="header-body">
   

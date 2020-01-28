@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
+import { Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,8 +9,9 @@ import * as Chartist from 'chartist';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor() { }
+  usersCollection;
+  contacts: Observable<any[]> ;
+  constructor(private db:AngularFirestore) { }
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
       seq = 0;
@@ -65,28 +68,47 @@ export class DashboardComponent implements OnInit {
 
       seq2 = 0;
   };
-  ngOnInit() {
+  ngOnInit( 
+  ) {
+    this.usersCollection = this.db.collection<any>('users')
+    this.contacts = this.usersCollection.valueChanges()
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
       const dataDailySalesChart: any = {
-          labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+          labels: ['1', '2', '3', '4', '5', '6', '7'],
           series: [
-              [12, 17, 7, 17, 23, 18, 38]
+              [22,37, 67,67, 83, 88, 78]
           ]
       };
+      const dataDailySalesChart1: any = {
+        labels: ['1', '2', '3', '4', '5', '6', '7'],
+        series: [
+            [142, 106, 57,107, 126, 78, 88]
+        ]
+    };
 
      const optionsDailySalesChart: any = {
           lineSmooth: Chartist.Interpolation.cardinal({
               tension: 0
           }),
           low: 0,
-          high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          high: 100, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
           chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
       }
+      const optionsDailySalesChart1: any = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+            tension: 0
+        }),
+        low:50,
+        high: 250, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+        chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
+    }
 
       var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
+      var dailySalesChart1 = new Chartist.Line('#dailySalesChart1', dataDailySalesChart1, optionsDailySalesChart1);
 
       this.startAnimationForLineChart(dailySalesChart);
+      this.startAnimationForLineChart(dailySalesChart1);
 
 
       /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
@@ -117,9 +139,9 @@ export class DashboardComponent implements OnInit {
       /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
 
       var datawebsiteViewsChart = {
-        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+        labels: ['1', '2', '3', '4', '5','6','7'],
         series: [
-          [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
+          [42, 43, 84, 68, 85,90]
 
         ]
       };
@@ -128,7 +150,7 @@ export class DashboardComponent implements OnInit {
               showGrid: false
           },
           low: 0,
-          high: 1000,
+          high: 100,
           chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
       };
       var responsiveOptions: any[] = [
@@ -145,6 +167,80 @@ export class DashboardComponent implements OnInit {
 
       //start animation for the Emails Subscription Chart
       this.startAnimationForBarChart(websiteViewsChart);
+      var websiteViewsChart1 = new Chartist.Bar('#websiteViewsChart1', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
+
+      //start animation for the Emails Subscription Chart
+      this.startAnimationForBarChart(websiteViewsChart1);
+
+
+//##############################################
+var datawebsiteViewsChart1 = {
+  labels: ['1', '2', '3', '4', '5','6','7'],
+  series: [
+    [62, 33, 44, 38, 85,50]
+
+  ]
+};
+var optionswebsiteViewsChart1 = {
+    axisX: {
+        showGrid: false
+    },
+    low: 0,
+    high: 100,
+    chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
+};
+var responsiveOptions1: any[] = [
+  ['screen and (max-width: 640px)', {
+    seriesBarDistance: 5,
+    axisX: {
+      labelInterpolationFnc: function (value) {
+        return value[0];
+      }
+    }
+  }]
+];
+
+
+var websiteViewsChart1 = new Chartist.Bar('#websiteViewsChart1', datawebsiteViewsChart1, optionswebsiteViewsChart1, responsiveOptions1);
+
+//start animation for the Emails Subscription Chart
+this.startAnimationForBarChart(websiteViewsChart1);
+
+//##############################################
+var datawebsiteViewsChart2 = {
+  labels: ['1', '2', '3', '4', '5','6','7'],
+  series: [
+    [22, 13, 24, 48, 85,40]
+
+  ]
+};
+
+
+
+
+var websiteViewsChart2 = new Chartist.Bar('#websiteViewsChart2', datawebsiteViewsChart2, optionswebsiteViewsChart1, responsiveOptions1);
+
+//start animation for the Emails Subscription Chart
+this.startAnimationForBarChart(websiteViewsChart2);
+//##############################################
+//##############################################
+var datawebsiteViewsChart3 = {
+  labels: ['1', '2', '3', '4', '5','6','7'],
+  series: [
+    [82, 73, 84, 68, 85,60]
+
+  ]
+};
+
+
+
+
+var websiteViewsChart3 = new Chartist.Bar('#websiteViewsChart3', datawebsiteViewsChart3, optionswebsiteViewsChart1, responsiveOptions1);
+
+//start animation for the Emails Subscription Chart
+this.startAnimationForBarChart(websiteViewsChart3);
+//##############################################
+
   }
 
 }

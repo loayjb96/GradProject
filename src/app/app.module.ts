@@ -27,6 +27,7 @@ import { environment } from 'environments/environment';
 
 
 
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -46,6 +47,7 @@ import { environment } from 'environments/environment';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    
   
     
  

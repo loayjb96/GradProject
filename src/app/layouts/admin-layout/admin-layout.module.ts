@@ -13,6 +13,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteWarnComponent } from '../../delete-warn/delete-warn.component';
 import { TestComponent } from '../../test/test.component';
 import { TestDoneComponent } from '../../test-done/test-done.component';
+import { FilerepositoryComponent } from '../../filerepository/filerepository.component';
 
 
 
@@ -55,6 +56,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     DeleteWarnComponent,
     TestComponent,
     TestDoneComponent,
+    FilerepositoryComponent,
    
 
   ],
