@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { AuthService } from './auth/login/auth.service';
+import {HttpClientModule} from '@angular/common/http'
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 
@@ -19,6 +20,7 @@ import {
 } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { environment } from 'environments/environment';
+import { from } from 'rxjs';
 
 
 
@@ -41,6 +43,7 @@ import { environment } from 'environments/environment';
     AngularFireAuthModule,
     AngularFireModule,
     AngularFireModule.initializeApp(environment.firebase),
+    HttpClientModule,
 
   
   ],

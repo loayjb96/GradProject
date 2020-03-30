@@ -104,7 +104,11 @@
     
   </div> 
   <div class="center text-center" >  
-    <button style="margin: 10px;" class="btn btn-warning" [disabled]="!check" >Commeit new test</button>  
-  </div>  
+    <button style="margin: 10px;" class="btn btn-warning" [disabled]="check" (click) ="getPosts()" >Commeit new test</button>  
+  </div> 
+  <div *ngFor="let post of Posts | 
+  async">
+    {{post | json}}
+  </div> 
 
 </div>  

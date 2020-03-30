@@ -2,17 +2,23 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Http } from '@angular/http';
+import { HttpClient, HttpParams,HttpHeaders} from '@angular/common/http';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { BlankRow } from 'app/blank-row';
 import { AngularFirestore } from '@angular/fire/firestore';
+import{Post} from './../posts'
+import {Observable} from 'rxjs/Observable'
+import 'rxjs/add/operator/retry'
+import 'rxjs/add/operator/catch'
+import 'rxjs/add/observable/of'
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.scss']
 })
 export class TestComponent  {
-
+  readonly ROOT_URL='https://api.abilisense.com/v1/api/loadclassifier'
+  readonly ROOT_URL1='https://jsonplaceholder.typicode.com/todos'
   userid:string;
   type: string;
   message:string;// this is my url 
@@ -30,15 +36,18 @@ export class TestComponent  {
   UserName:string;
   UserRole:string;
   check: boolean;
+  Posts:Observable<any> 
+  NewPost:Observable<any>
   
 
   constructor(
     private storage: AngularFireStorage,private db:AngularFirestore,
     private af:AngularFireAuth,
-    private route: ActivatedRoute,private router:Router,private http:Http
+    private route: ActivatedRoute,private router:Router,private http:HttpClient
     ) { 
 
     }
+ 
   selectedFile=null;
 
   preview(files,event) {
@@ -166,6 +175,25 @@ export class TestComponent  {
       if(this.path.length==0)
       this.Enable=false;
   }
-    
-   
+
+  getPosts(){
+    let params=new HttpParams().set('userId','1')
+    this.Posts=this.http.get<Post[]>(this.ROOT_URL).retry(1).
+    catch(err=>{
+      console.log(err)
+      return Observable.of(err)
+    })
+    console.log('get request')
+
+  }
+  createPosts(){
+    const data: Post={
+      id:null,
+      userId:23,
+      title:'my new pot',
+      body:'hello world!'
+    }
+this.NewPost
+
+  }
 }
