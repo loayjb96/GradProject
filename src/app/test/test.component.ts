@@ -16,14 +16,16 @@ import 'rxjs/add/observable/of'
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.scss']
 })
+
 export class TestComponent  {
-  readonly ROOT_URL='https://api.abilisense.com/v1/api/loadclassifier'
-  readonly ROOT_URL1='https://jsonplaceholder.typicode.com/todos'
+  readonly ROOT_URL='https://api.abilisense.com/v1/api/analizefile'
+  readonly ROOT_URL1='https://api.abilisense.com/v1/api/loadclassifier'
+  readonly ROOT_URL2='https://api.abilisense.com/v1/api/registerDevice'
   userid:string;
   type: string;
   message:string;// this is my url 
   urlImg:string;
-  public imagePath;
+  public imagePath:File;
   imgURL: any;
   name:string;
   downloadURL:any;
@@ -38,6 +40,7 @@ export class TestComponent  {
   check: boolean;
   Posts:Observable<any> 
   NewPost:Observable<any>
+  res:any
   
 
   constructor(
@@ -178,7 +181,7 @@ export class TestComponent  {
 
   getPosts(){
     let params=new HttpParams().set('userId','1')
-    this.Posts=this.http.get<Post[]>(this.ROOT_URL).retry(1).
+    this.Posts=this.http.get<Post[]>(this.ROOT_URL1).retry(1).
     catch(err=>{
       console.log(err)
       return Observable.of(err)
@@ -187,13 +190,25 @@ export class TestComponent  {
 
   }
   createPosts(){
-    const data: Post={
-      id:null,
-      userId:23,
-      title:'my new pot',
-      body:'hello world!'
-    }
-this.NewPost
+   let header =new HttpHeaders()
+   header=header.set('X-AbiliSense-API-Key','0479e58c-3258-11e8-b467-0ed5f89Tests')
+   header=header.set('accept','application/json')
+ 
+   let options = {headers:header};
+   let params=new HttpParams().set('audiofile ',this.selectedFile)
+   params=params.set('samplingrate','44100');
+
+    const formData: FormData = new FormData();
+    formData.append('audiofile', this.selectedFile);
+    this.NewPost=this.http.post(this.ROOT_URL,formData,options)
+    this.NewPost.subscribe(data=>{
+      this.res='The Algorthim Detected '+data.events[0].events[0];
+  })
+    //  var request=new XMLHttpRequest();
+    // request.open("POST", this.ROOT_URL2,);
+// request.send();
+
+
 
   }
 }
