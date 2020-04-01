@@ -54,7 +54,7 @@ export class AdminLayoutComponent implements OnInit {
       });
       if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
           let ps = new PerfectScrollbar(elemMainPanel);
-          ps = new PerfectScrollbar(elemSidebar);
+        //   ps = new PerfectScrollbar(elemSidebar);
       }
 
       const window_width = $(window).width();
