@@ -58,7 +58,6 @@
 
               </td>  
              
-              
               <td style="align-items: center;">  
                 <button (click)="deleteRow(i)" class="btn btn-danger">Delete Row</button>  
               </td>  
@@ -104,14 +103,49 @@
     
   </div> 
   <div class="center text-center" >  
-    <button style="margin: 10px;" class="btn btn-warning" [disabled]="false" (click) ="createPosts()" >Commeit new test</button>  
+    <button data-toggle="modal" data-target="#Test" style="margin: 10px;" class="btn btn-warning" [disabled]="false" (click) ="createPosts()" >Commeit new test</button>  
   </div> 
+ 
+  <div *ngIf='res' class="card" style="text-align: center; " >
 
-  <div *ngIf='res' class="card" style="text-align: center;">
-    <h2 style="color: rgb(39, 172, 13);">{{res}}</h2>
     
     
   </div> 
+  <div class="modal fade" id="Test" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"  style="margin-top: 5%;">
+      <div class="item-summary">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="item-summary">
+                <h4  class="alert alert-primary" style="text-align: center;">samplingrate 8000</h4>
+                
+                <address class="alert alert-success">
+                <p class="street-address">{{res}}</p>
+                
+                </address>
+                </div>
+            </div>
+            <div class="col-md-4 ml-auto">
+              <div class="item-summary">
+                <h4  class="alert alert-primary" style="text-align: center;">samplingrate 44100</h4>
+               
+                <address class="alert alert-success">
+                <p class="street-address">{{res2}}</p>
+                
+                </address>
+                </div>
+            </div>
+          </div>
+    
+
+        </div>
+      </div>
+  </div>
+  <div class="center text-center" >  
+    <button data-toggle="modal" data-target="#Test" data-dismiss="modal" style="margin: 10px;" class="btn btn-info" (click)="fetchFileFromStorage()">Show More Info</button>  
+  </div> 
+  </div>
   <!-- {{NewPost |async| json}} -->
 
   <div *ngFor="let post of Posts | 

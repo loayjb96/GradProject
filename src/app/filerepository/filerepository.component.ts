@@ -18,6 +18,7 @@ export class FilerepositoryComponent implements OnInit {
   date: string;
   newDate: string[];
   newDate1: string;
+  url: any;
   ngOnInit(): void {
     this.CategoryCollection = this.db.collection<any>('Category')
     this.Category = this.CategoryCollection.valueChanges()
@@ -50,8 +51,12 @@ PassInfo(cat):void{
     this.newDate=this.date.split(",")
     this.date=this.newDate[0]
     this.newDate1=this.newDate[1]
+    this.url=cat.Url
 console.log(this.newDate)
 
 
+}
+  async fetchFileFromStorage(){
+ 
 }
 }

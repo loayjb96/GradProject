@@ -41,6 +41,7 @@ export class TestComponent  {
   Posts:Observable<any> 
   NewPost:Observable<any>
   res:any
+  res2: any;
   
 
   constructor(
@@ -53,7 +54,7 @@ export class TestComponent  {
  
   selectedFile=null;
 
-  preview(files,event) {
+  async preview(files,event) {
     
     if (files.length === 0)
       return;
@@ -73,11 +74,8 @@ export class TestComponent  {
     const fd =new FormData();
     const url=  Math.random().toString(36).substring(7);
     this.name='/'+this.type+'/'+url;// this is wher rhe image will be stored 
-   
     fd.append('image',this.selectedFile,this.selectedFile.name);
     this.ExtractPath();
-    
-    
      this.storage.ref(this.fullPath).child(this.selectedFile.name).put(this.selectedFile, {contentType: mimeType}).then(() => {
       this.pathWithFile=this.fullPath.concat("/").concat(this.selectedFile.name);
       this.check=true;
@@ -96,7 +94,6 @@ export class TestComponent  {
    
         })
      }) 
-
   }
   blankRowArray: Array < BlankRow > = [];  
   blankRowData = new BlankRow();  
@@ -193,25 +190,38 @@ export class TestComponent  {
 
   }
   createPosts(){
+    this.res='Waiting api response'
+    this.res2='Waiting api response'
+    this.ApiREquest(8000)
+   this.ApiREquest(44100)
+    console.log(this.res)
+
+
+
+  }
+  ApiREquest(channel){
    let header =new HttpHeaders()
    header=header.set('X-AbiliSense-API-Key','0479e58c-3258-11e8-b467-0ed5f89Tests')
    header=header.set('accept','application/json')
- 
    let options = {headers:header};
    let params=new HttpParams().set('audiofile ',this.selectedFile)
-   params=params.set('samplingrate','8000');
-
-    const formData: FormData = new FormData();
-    formData.append('audiofile', this.selectedFile);
-    this.NewPost=this.http.post(this.ROOT_URL,formData,options)
+   params=params.set('samplingrate',channel);
+   const formData: FormData = new FormData();
+   formData.append('audiofile', this.selectedFile);
+   this.NewPost=this.http.post(this.ROOT_URL,formData,options)
+   if(channel==8000){
     this.NewPost.subscribe(data=>{
-      this.res='The Algorthim Detected '+data.events[0].events[0];
-  })
-    //  var request=new XMLHttpRequest();
-    // request.open("POST", this.ROOT_URL2,);
-// request.send();
+      this.res= 'The Algorthim Detected '+data.events[0].events[0];
+   })
+   }
+   else
+   this.NewPost.subscribe(data=>{
+    this.res2= 'The Algorthim Detected '+data.events[0].events[0];
+ })
+  
+ 
 
-
+  
 
   }
 }
