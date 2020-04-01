@@ -84,9 +84,12 @@ export class TestComponent  {
     
       this.downloadURL= this.storage.ref(this.pathWithFile).getDownloadURL().subscribe(result => {
        
-        
+        let now = new Date().toLocaleString();
         this.delteurl=result;
-        const Data={Url:result,Path:this.fullPath,Name:this.selectedFile.name}
+        const Data={Url:result,Path:this.fullPath,Name:this.selectedFile.name,Date:now}
+  
+
+      
         this.db.collection('Category').doc(this.selectedFile.name).set(Data)
         console.log(Data)
         //this.newMessage(result);// here we send the url to the newMessege( string:url)_sending the url 
@@ -196,7 +199,7 @@ export class TestComponent  {
  
    let options = {headers:header};
    let params=new HttpParams().set('audiofile ',this.selectedFile)
-   params=params.set('samplingrate','44100');
+   params=params.set('samplingrate','8000');
 
     const formData: FormData = new FormData();
     formData.append('audiofile', this.selectedFile);

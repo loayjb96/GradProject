@@ -35,7 +35,7 @@ h1{font-size:50px;margin-bottom:30px}
 
 .is-dropped{transform:scale(0);transition:.2s all ease-out}
 .folder{float:left;width:150px;height:150px;background:rgba(0,0,0,0);transition:.2s background-color ease-out;text-align:center}
-.folder i.fa-folder{height:90px!important;width:100%!important;line-height:100px!important;margin:10px auto!important;font-size:90px!important;transition:.2s all ease-out}
+.folder i.fa-music{height:90px!important;width:100%!important;line-height:100px!important;margin:10px auto!important;font-size:90px!important;transition:.2s all ease-out}
 .folder i.fa-check{color:#fff;background:rgba(0,0,0,.1);border-radius:50%;width:60px;height:60px;text-align:center;line-height:60px;position:absolute;left:0;right:0;top:34px;margin:auto;pointer-events:none;transform:scale(0);opacity:0;font-size:24px}
 .folder.item-dropped i.fa-check{animation:animateValidation 1s linear}
 @keyframes animateValidation{
@@ -49,7 +49,7 @@ h1{font-size:50px;margin-bottom:30px}
 .tooltiper .tooltip,.tooltiper-up .tooltip{font-size:.7rem;background:rgba(0,0,0,.7);padding:5px 10px;border-radius:5px;line-height:1.4em;opacity:0}
 #folder1 i.fa-folder,#folder1-content h2 .fa-folder{color:#eb4141!important}
 #folder2 i.fa-folder,#folder2-content h2 .fa-folder{color:#4bc97a}
-#folder3 i.fa-folder,#folder3-content h2 .fa-folder{color:#6fdbeb}
+#folder3 i.fa-folder,#folder3-content h2 .fa-folder{color:#6fdbeb,}
 #folder4 i.fa-folder,#folder4-content h2 .fa-folder{color:#eeca4e}
 #folder5 i.fa-folder,#folder5-content h2 .fa-folder{color:#5b5b5b}
 .tooltiper{position:relative;z-index:3}

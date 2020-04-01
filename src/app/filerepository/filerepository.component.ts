@@ -14,6 +14,10 @@ export class FilerepositoryComponent implements OnInit {
   subCategory:any
   audio: HTMLAudioElement;
   info: any;
+  path: any;
+  date: string;
+  newDate: string[];
+  newDate1: string;
   ngOnInit(): void {
     this.CategoryCollection = this.db.collection<any>('Category')
     this.Category = this.CategoryCollection.valueChanges()
@@ -41,7 +45,12 @@ stopCurrentSound():void{
 }
 PassInfo(cat):void{
   this.info=cat.Name
-console.log(cat)
+  this.path=cat.Path
+    this.date=cat.Date
+    this.newDate=this.date.split(",")
+    this.date=this.newDate[0]
+    this.newDate1=this.newDate[1]
+console.log(this.newDate)
 
 
 }
