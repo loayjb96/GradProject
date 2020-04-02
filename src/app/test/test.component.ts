@@ -42,6 +42,8 @@ export class TestComponent  {
   NewPost:Observable<any>
   res:any
   res2: any;
+  ok1: any;
+  ok2: any;
   
 
   constructor(
@@ -195,6 +197,8 @@ export class TestComponent  {
     this.ApiREquest(8000)
    this.ApiREquest(44100)
     console.log(this.res)
+    this.ok1=null
+    this.ok2=null
 
 
 
@@ -211,12 +215,22 @@ export class TestComponent  {
    this.NewPost=this.http.post(this.ROOT_URL,formData,options)
    if(channel==8000){
     this.NewPost.subscribe(data=>{
-      this.res= 'The Algorthim Detected '+data.events[0].events[0];
+      console.log(data.events.length)
+      this.res= 'API Response ,'
+      for (var i=0; i<data.events.length;i++){
+     this.res+='Events: '+data.events[i].events+' | Time: '+data.events[i].time+',';
+      }
+      this.ok1=1
    })
+  
    }
    else
    this.NewPost.subscribe(data=>{
-    this.res2= 'The Algorthim Detected '+data.events[0].events[0];
+    this.res2= 'API Response ,'
+    for (var i=0; i<data.events.length;i++){
+   this.res2+='Events: '+data.events[i].events+' | Time: '+data.events[i].time+',';
+    }
+    this.ok2=1
  })
   
  
