@@ -44,6 +44,7 @@ export class TestComponent  {
   res2: any;
   ok1: any;
   ok2: any;
+  NewPost1: Observable<any>;
   
 
   constructor(
@@ -212,8 +213,10 @@ export class TestComponent  {
    params=params.set('samplingrate',channel);
    const formData: FormData = new FormData();
    formData.append('audiofile', this.selectedFile);
-   this.NewPost=this.http.post(this.ROOT_URL,formData,options)
+   
+   
    if(channel==8000){
+    this.NewPost=this.http.post(this.ROOT_URL,formData,options)
     this.NewPost.subscribe(data=>{
       console.log(data.events.length)
       this.res= 'API Response ,'
@@ -224,14 +227,16 @@ export class TestComponent  {
    })
   
    }
-   else
-   this.NewPost.subscribe(data=>{
+   else{
+    this.NewPost1=this.http.post(this.ROOT_URL,formData,options)
+   this.NewPost1.subscribe(data=>{
     this.res2= 'API Response ,'
     for (var i=0; i<data.events.length;i++){
    this.res2+='Events: '+data.events[i].events+' | Time: '+data.events[i].time+',';
     }
     this.ok2=1
  })
+}
   
  
 

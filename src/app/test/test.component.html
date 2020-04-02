@@ -120,7 +120,7 @@
               <div class="item-summary">
                 <h4  class="alert alert-primary" style="text-align: center;">samplingrate 8000</h4>
                 
-                <address *ngIf='ok1'class="alert alert-success">
+                <address *ngIf='NewPost'class="alert alert-success">
                   <div *ngFor="let r of res.split(',')">
                     {{r}} <br/>
               </div> 
@@ -133,7 +133,7 @@
               <div class="item-summary">
                 <h4  class="alert alert-primary" style="text-align: center;">samplingrate 44100</h4>
                
-                <address *ngIf='ok2' class="alert alert-success">
+                <address *ngIf='NewPost1' class="alert alert-success">
                   <div *ngFor="let r2 of res2.split(',')">
                     {{r2}} <br/>
               </div> 
@@ -151,7 +151,7 @@
     <button data-toggle="modal" data-target="#Test" data-dismiss="modal" style="margin: 10px;" class="btn btn-info" (click)="fetchFileFromStorage()">Show More Info</button>  
   </div> 
   </div>
-  {{NewPost |async| json}}
+  <!-- {{NewPost |async| json}} -->
 
   <div *ngFor="let post of Posts | 
   async">
