@@ -21,7 +21,7 @@ export class TestComponent  {
   readonly ROOT_URL='https://api.abilisense.com/v1/api/analizefile'
   readonly ROOT_URL1='https://api.abilisense.com/v1/api/loadclassifier'
   readonly ROOT_URL2='https://api.abilisense.com/v1/api/registerDevice'
-  userid:string;
+  userid:any;
   type: string;
   message:string;// this is my url 
   urlImg:string;
@@ -44,10 +44,11 @@ export class TestComponent  {
   res2: string;
    ResArray1: [string, string] = ["",""];
    ResArray2: [string, string] = ["",""];
-  
+  test:string[]=[""];
   NewPost1: Observable<any>;
   now: string;
   rand: number;
+  str: string;
   
 
   constructor(
@@ -106,13 +107,14 @@ export class TestComponent  {
   hideMultiSelectedSubjectDropdown: boolean[] = [];  
   hideMultiSelectedSubjectDropdownAll: boolean[] = [];  
   ngOnInit() { 
-    const user =this.af.auth.currentUser; 
+    const user =this.af.auth.currentUser;
     if(user!=null){
       this.db.collection("users").doc(user.uid).get().toPromise().then(result => {
          const actualData = result.data();
          this.UserName=actualData.fullName;
          this.UserRole=actualData.Role;
-         console.log(actualData)
+         this.test=actualData.Tests;
+         console.log("actual data ",actualData.Tests)
 
       
     
@@ -196,22 +198,33 @@ export class TestComponent  {
   createPosts(){
     this.res=""
     this.res2=""
+    this.rand=Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
+    this.str=this.rand.toString()
     this.ApiREquest(8000)
    this.ApiREquest(44100)
-    console.log(this.res)
-  
-     this.rand=Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
+   const user =this.af.auth.currentUser;
+   if(user!=null){
+    this.db.collection("users").doc(user.uid).get().toPromise().then(result => {
+      const actualData = result.data();
+      this.test=actualData.Tests;
+  })
+  this.test.push(this.str)
+    let Tests=this.test 
+    console.log(Tests)
+     this.db.collection("users").doc(user.uid).set({
+      Tests,
+      }, { merge: true });
+   }
   }
   ApiREquest(channel){
    let header =new HttpHeaders()
    header=header.set('X-AbiliSense-API-Key','0479e58c-3258-11e8-b467-0ed5f89Tests')
    header=header.set('accept','application/json')
    let options = {headers:header};
-   let params=new HttpParams().set('audiofile ',this.selectedFile)
-   params=params.set('samplingrate',channel);
    const formData: FormData = new FormData();
    formData.append('audiofile', this.selectedFile);
-   
+   formData.append('samplingrate', channel);
+
    
    if(channel==8000){
     this.NewPost=this.http.post(this.ROOT_URL,formData,options)
@@ -223,8 +236,10 @@ export class TestComponent  {
      this.ResArray1[0]=this.ResArray1[0].concat(" "+data.events[i].events)
      this.ResArray1[1]=this.ResArray1[1].concat(" "+data.events[i].time)
       }
-      const Data={TesterName:this.UserName,Catagory:this.path,HZ8000:this.ResArray1,HZ44100:this.ResArray2,time:this.now,TestId:this.rand}
+      const Data={TesterName:this.UserName,Catagory:this.path,
+        HZ8000:this.ResArray1,HZ44100:this.ResArray2,time:this.now,TestId:this.rand,Name:this.selectedFile.name}
       this.db.collection('Tests').doc(this.rand.toString()).set(Data)
+      
    })
   
    }
@@ -237,7 +252,8 @@ export class TestComponent  {
    this.ResArray2[0]=this.ResArray2[0].concat(" "+data.events[i].events)
    this.ResArray2[1]= this.ResArray2[1].concat(" "+data.events[i].time)
     }
-    const Data={TesterName:this.UserName,Catagory:this.path,HZ8000:this.ResArray1,HZ44100:this.ResArray2,time:this.now,TestId:this.rand}
+    const Data={TesterName:this.UserName,Catagory:this.path,HZ8000:this.ResArray1,
+      HZ44100:this.ResArray2,time:this.now,TestId:this.rand,Name:this.selectedFile.name}
       this.db.collection('Tests').doc(this.rand.toString()).set(Data)
  })
 }

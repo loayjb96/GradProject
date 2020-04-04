@@ -70,18 +70,18 @@ console.log("here")
   }
   createNewUser(resultPassed): void {
    
-
+    let password="123123"
 
     const fullName = resultPassed.name;
     const email = resultPassed.email;
     const UserRole=resultPassed.Role;
-    const password="123123"
-  
- 
+    if(resultPassed.password!=""){
+   password=resultPassed.Password;
+    }
     const Data= ({fullName: fullName,Email:email,
-     Role:UserRole,Uid:"",PhoneNumber:"" ,Birthday:"",Tests:"",Gender:""}) 
-    console.log(resultPassed);
-    this.af.auth.createUserWithEmailAndPassword(email, password)
+     Role:UserRole,Uid:"",PhoneNumber:"" ,Birthday:"",Tests:[],Gender:""}) 
+    console.log(password);
+    this.af.auth.createUserWithEmailAndPassword(email,password)
     .then((result) => {
 // 
       Data.Uid=result.user.uid;

@@ -14,6 +14,7 @@ export class DialogOverviewExampleDialog {
   Email:string;
   Role:string;
   message:string;
+  Password:string;
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,)
  {}
@@ -23,7 +24,7 @@ export class DialogOverviewExampleDialog {
    
   }
   save(){  
-    const pass={name:this.name,email:this.Email,Role:this.Role};
+    const pass={name:this.name,email:this.Email,Role:this.Role,Password:this.Password};
     this.dialogRef.close(pass);
 
   }
