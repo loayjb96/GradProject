@@ -40,11 +40,14 @@ export class TestComponent  {
   check: boolean;
   Posts:Observable<any> 
   NewPost:Observable<any>
-  res:any
-  res2: any;
-  ok1: any;
-  ok2: any;
+  res:string
+  res2: string;
+   ResArray1: [string, string] = ["",""];
+   ResArray2: [string, string] = ["",""];
+  
   NewPost1: Observable<any>;
+  now: string;
+  rand: number;
   
 
   constructor(
@@ -52,9 +55,7 @@ export class TestComponent  {
     private af:AngularFireAuth,
     private route: ActivatedRoute,private router:Router,private http:HttpClient
     ) { 
-
     }
- 
   selectedFile=null;
 
   async preview(files,event) {
@@ -85,9 +86,9 @@ export class TestComponent  {
     
       this.downloadURL= this.storage.ref(this.pathWithFile).getDownloadURL().subscribe(result => {
        
-        let now = new Date().toLocaleString();
+        this.now = new Date().toLocaleString();
         this.delteurl=result;
-        const Data={Url:result,Path:this.fullPath,Name:this.selectedFile.name,Date:now}
+        const Data={Url:result,Path:this.fullPath,Name:this.selectedFile.name,Date:this.now}
   
 
       
@@ -193,16 +194,13 @@ export class TestComponent  {
 
   }
   createPosts(){
-    this.res='Waiting api response'
-    this.res2='Waiting api response'
+    this.res=""
+    this.res2=""
     this.ApiREquest(8000)
    this.ApiREquest(44100)
     console.log(this.res)
-    this.ok1=null
-    this.ok2=null
-
-
-
+  
+     this.rand=Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
   }
   ApiREquest(channel){
    let header =new HttpHeaders()
@@ -222,8 +220,11 @@ export class TestComponent  {
       this.res= 'API Response ,'
       for (var i=0; i<data.events.length;i++){
      this.res+='Events: '+data.events[i].events+' | Time: '+data.events[i].time+',';
+     this.ResArray1[0]=this.ResArray1[0].concat(" "+data.events[i].events)
+     this.ResArray1[1]=this.ResArray1[1].concat(" "+data.events[i].time)
       }
-      this.ok1=1
+      const Data={TesterName:this.UserName,Catagory:this.path,HZ8000:this.ResArray1,HZ44100:this.ResArray2,time:this.now,TestId:this.rand}
+      this.db.collection('Tests').doc(this.rand.toString()).set(Data)
    })
   
    }
@@ -233,10 +234,16 @@ export class TestComponent  {
     this.res2= 'API Response ,'
     for (var i=0; i<data.events.length;i++){
    this.res2+='Events: '+data.events[i].events+' | Time: '+data.events[i].time+',';
+   this.ResArray2[0]=this.ResArray2[0].concat(" "+data.events[i].events)
+   this.ResArray2[1]= this.ResArray2[1].concat(" "+data.events[i].time)
     }
-    this.ok2=1
+    const Data={TesterName:this.UserName,Catagory:this.path,HZ8000:this.ResArray1,HZ44100:this.ResArray2,time:this.now,TestId:this.rand}
+      this.db.collection('Tests').doc(this.rand.toString()).set(Data)
  })
 }
+this.ResArray1=["",""]
+this.ResArray2=["",""]
+
   
  
 

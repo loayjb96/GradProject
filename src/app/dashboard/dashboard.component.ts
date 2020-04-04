@@ -75,10 +75,10 @@ export class DashboardComponent implements OnInit {
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
       const dataDailySalesChart: any = {
-          labels: ['1', '2', '3', '4', '5', '6', '7'],
-          series: [
-              [22,37, 67,67, 83, 88, 78]
-          ]
+          labels: ['other', '1', '2', '3' ,'4','5', '6'],
+          series: [ [1,2,3,4,5,6,7]]
+             
+          
       };
       const dataDailySalesChart1: any = {
         labels: ['1', '2', '3', '4', '5', '6', '7'],
@@ -91,8 +91,8 @@ export class DashboardComponent implements OnInit {
           lineSmooth: Chartist.Interpolation.cardinal({
               tension: 0
           }),
-          low: 0,
-          high: 100, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          low: 1,
+          high: 9, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
           chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
       }
       const optionsDailySalesChart1: any = {
