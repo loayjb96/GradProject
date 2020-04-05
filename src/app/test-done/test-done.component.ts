@@ -20,6 +20,8 @@ export class TestDoneComponent implements OnInit {
   splitted2: string;
   splitted12: string;
   splitted22: string;
+  fileName: any;
+  Name: string='all';
   
   constructor(private route: ActivatedRoute,private router: Router,private db:AngularFirestore,private af:AngularFireAuth) {
     
@@ -74,6 +76,8 @@ activateChart($event, id){
     const actualData = result.data();
     let HZ44100=actualData.HZ44100;
     let HZ8000=actualData.HZ8000;
+    this.fileName=actualData.Name;
+    this.fileName=this.fileName.split(".wav")
     
 
 this.splitted1 = HZ8000[0].split(" ").slice(1);
@@ -132,6 +136,14 @@ this. splitted22 = HZ44100[1].split(" ").slice(1);
     this.startAnimationForLineChart(dailySalesChart1);
 }, 100);
 })
+}
+sortvia(userName){
+
+  this.Name=userName
+  this.ngOnInit
+}
+resetSort(){
+  this.Name='all'
 }
 
 }

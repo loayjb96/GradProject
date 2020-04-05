@@ -12,6 +12,10 @@
       <input type="email" class="form-control" [(ngModel)]="Email">
     </div>
     <div class="form-group">
+      <label for="pwd">Password: </label>
+      <input type="password" class="form-control" [(ngModel)]="Password">
+    </div>
+    <div class="form-group">
       <label for="exampleFormControlSelect1">Authintications: </label>
       <select ngModule required (change)="selectChangeHandler($event)"class="form-control" >
           <option  value="User" ></option>

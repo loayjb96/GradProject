@@ -60,7 +60,7 @@ export class UserProfileComponent implements OnInit {
          this.UserRole=actualData.Role;
          this.UserPhone=actualData.PhoneNumber;
          this.UserEmail=actualData.Email;
-         this.UserTests=actualData.Tests;
+         this.UserTests=actualData.Tests
          console.log(actualData)
      })
     

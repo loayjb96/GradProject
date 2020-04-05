@@ -119,6 +119,7 @@
             <div class="col-md-6">
               <div class="item-summary">
                 <h4  class="alert alert-primary" style="text-align: center;">samplingrate 8000</h4>
+            
                 
                 <address *ngIf='NewPost'class="alert alert-success">
                   <div *ngFor="let r of res.split(',')">
@@ -148,7 +149,7 @@
       </div>
   </div>
   <div class="center text-center" >  
-    <button data-toggle="modal" data-target="#Test" data-dismiss="modal" style="margin: 10px;" class="btn btn-info" (click)="fetchFileFromStorage()">Show More Info</button>  
+    <button data-toggle="modal" data-target="#Test" data-dismiss="modal" style="margin: 10px;" class="btn btn-info" >Show More Info</button>  
   </div> 
   </div>
   <!-- {{NewPost |async| json}} -->

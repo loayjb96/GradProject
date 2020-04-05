@@ -7,6 +7,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable()
 export class AuthService {
+  private LoggedInStatus=JSON.parse(localStorage.getItem('LoggedIn')||'false')
   ErrorMessage :string= '';
   token: string;
 public Role:string;
@@ -40,10 +41,7 @@ public Role:string;
               }
             )
 
-            this.db.collection("users").doc(this.afAuth.auth.currentUser.uid).get().toPromise().then(result => {
-              const actualData = result.data();
-              //this.Role=actualData.Role;
-          })
+     localStorage.setItem('LoggedIn','true')
 
         }
       )
@@ -78,6 +76,7 @@ public Role:string;
         }
     )
     this.token = null;
+    localStorage.removeItem('LoggedIn')
   }
 
   getToken() {
@@ -89,7 +88,7 @@ public Role:string;
   }
 
   isAuthenticated() {
-    return this.token != null;
+    return this.checkLogin
   }
   /// addedd   
   resetPasswordInit(email: string) { 
@@ -103,6 +102,9 @@ public Role:string;
  ///// 
  userRole(){
 return this.Role
+}
+get checkLogin(){
+  return JSON.parse(localStorage.getItem('LoggedIn'))
 }
 
 
