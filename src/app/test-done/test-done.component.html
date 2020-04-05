@@ -17,8 +17,8 @@
   <div class="">
     <div class="card">
         <div class="card-header card-header-danger">
-            <h4 class="card-title">Employees Stats</h4>
-            <p class="card-category">New employees on 15th September, 2016</p>
+            <h4 class="card-title">Company Testers</h4>
+            <p class="card-category">Sort Tests by the Names Down . </p>
         </div>
         <div class="card-body table-responsive">
             <table class="table table-hover">
@@ -29,21 +29,24 @@
                     
                 </thead>
                 <tbody *ngFor="let user of contacts | async; index as i">
-                    <tr>
+                    
+                    <tr *ngIf="user.Role!='Viwer'" (click)="sortvia(user.fullName)">
                         <td>{{i+1}}</td>
                         <td>{{user.fullName}}</td>
                         <td>{{user.Role}}</td>
                     
-                    </tr>
+                    </tr >
                    
                   
                 </tbody>
             </table>
+            <div class="center text-center" >  
+            <button  style="border-radius: 20%;"  class="btn btn-info " (click)="resetSort()"> Reset Sort</button>
+            </div>
         </div>
     </div>
 </div>
 </div>
-
     <!-- <div class="dual-list list-left ">
         <div class="well text-center" style=" background:#fff;">
            
@@ -67,7 +70,8 @@
 <div class="row">
   
 <div *ngFor="let test of Test | async" class="col-md-6">
-<div class="card card-stats mb-4 mb-xl-0 alert alert-dark">
+<div *ngIf="Name==test.TesterName || Name=='all' " class="card card-stats mb-4 mb-xl-0 alert alert-dark">
+    
 <div  class="card-body"  data-toggle="modal" data-target="#StatModal" (click)='activateChart($event, test.TestId)'>
 <div class="row">
 <div class="col">

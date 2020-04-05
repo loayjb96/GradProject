@@ -21,6 +21,7 @@ export class TestDoneComponent implements OnInit {
   splitted12: string;
   splitted22: string;
   fileName: any;
+  Name: string='all';
   
   constructor(private route: ActivatedRoute,private router: Router,private db:AngularFirestore,private af:AngularFireAuth) {
     
@@ -135,6 +136,14 @@ this. splitted22 = HZ44100[1].split(" ").slice(1);
     this.startAnimationForLineChart(dailySalesChart1);
 }, 100);
 })
+}
+sortvia(userName){
+
+  this.Name=userName
+  this.ngOnInit
+}
+resetSort(){
+  this.Name='all'
 }
 
 }
