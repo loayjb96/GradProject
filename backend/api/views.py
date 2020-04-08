@@ -25,7 +25,11 @@ import os
 # @define_usage(returns={'url_usage': 'Dict'})
 # @api_view(['GET'])
 # @permission_classes((AllowAny,)
+
 def api_convert(request):
+    def f(method):
+        return "<h1>MyClub Event Calendar"+method+"</h1>"
+
     method=''
     if request.method == 'GET':
         method='get'
@@ -56,9 +60,22 @@ def api_convert(request):
     except:
         return HttpResponse({'error tt   '+method: 'Please provide correct file'},
                          status=HTTP_400_BAD_REQUEST)
-    return HttpResponse("<h1>MyClub Event Calendar"+method+"</h1>")
+    # return HttpResponse("<h1>MyClub Event Calendar"+method+"</h1>")
+    # file = open("/path/to/your/song.mp3", "rb").read() 
 
+    try:    
+        # with open(file_location, 'r') as f:
+        file_data = file.read()
 
+        # sending response 
+        response = HttpResponse(file_data, content_type='audio/mpeg')
+        response['Content-Disposition'] = 'attachment; filename="foo.xls"'
+
+    except IOError:
+        # handle file not exist case here
+        response = HttpResponse('<h1>File not exist</h1>')
+
+    return response
         # wav=os.path.splitext(mp3_file)[0]+'.wav'
     # wav='mmm'+'.wav'
     # sound=pydub.AudioSegment.from_mp3(myfile)
