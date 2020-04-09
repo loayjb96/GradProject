@@ -27,6 +27,25 @@ import os
 # @permission_classes((AllowAny,)
 
 def api_convert(request):
+    def change_file(file):
+        # mp3=glob.glob('*.mp3')
+        wav='fff'+'.wav'
+        print('here ')
+        # pydub.AudioSegment.converter = r"C:\Users\Musa\Downloads\ffmbeg\ffmpeg-20200403-52523b6-win64-static\bin"
+        # pydub.AudioSegment.ffmpeg = r"C:\Users\Musa\Downloads\ffmbeg\ffmpeg-20200403-52523b6-win64-static\bin"
+        # pydub.AudioSegment.ffprobe =r"C:\Users\Musa\Downloads\ffmbeg\ffmpeg-20200403-52523b6-win64-static\bin"
+        mp3_file=file
+
+        sound=pydub.AudioSegment.from_mp3(mp3_file)
+        sound.export(wav, format="wav")
+
+        print('fff ')
+    # sound.export(wav,format="wav")
+        return wav  
+
+
+        
+        
     def f(method):
         return "<h1>MyClub Event Calendar"+method+"</h1>"
 
@@ -50,7 +69,7 @@ def api_convert(request):
         # files=request.META
         file=request.FILES['myfile']
         # os.system(file.mp3)
-
+        # file=change_file(file)
 
         # with open('/path/I/want/to/save/file/to/file_name.pdf', 'wb') as f:
         # f.write(r.content)
@@ -65,12 +84,13 @@ def api_convert(request):
 
     try:    
         # with open(file_location, 'r') as f:
-        file_data = file.read()
+        # file_data = file.read()
 
         # sending response 
-        response = HttpResponse(file_data, content_type='audio/mpeg')
-        response['Content-Disposition'] = 'attachment; filename="foo.xls"'
 
+        response = HttpResponse(file, content_type='audio/mp3')
+        response['Content-Disposition'] = 'attachment; filename="foo.xls"'
+        print('finishes ')
     except IOError:
         # handle file not exist case here
         response = HttpResponse('<h1>File not exist</h1>')
