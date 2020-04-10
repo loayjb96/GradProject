@@ -7,6 +7,8 @@ from rest_framework.status import HTTP_400_BAD_REQUEST
 from  myvenv.Lib import pydub
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 import os 
+import librosa    
+
 # from .decorators import define_usage
 
 # def check_file(viewsets.ModelViewSet):
@@ -38,6 +40,8 @@ def api_convert(request):
 
         sound=pydub.AudioSegment.from_mp3(mp3_file)
         sound.export(wav, format="wav")
+        y, sr = librosa.load(wav, sr=8000) # Downsample to 8kHz
+        librosa.output.write_wav(wav, y, sr)
 
         print('fff ')
     # sound.export(wav,format="wav")
