@@ -3,57 +3,45 @@
 
 <body>
 
-<section id="wrapper">
 
-  <div class="main">
     <h1>Sound Repsitory</h1>
-    <div class="input-wrap"><input id="searchbar" type="search" placeholder="Search a file..." /><i class="fa fa-search" aria-hidden="true"></i></div>
-    <div class="left"  >
+  
+    
+   
       <div *ngFor="let cat of Category | async ;let i = index">
-      <div  class="top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file" id="folder3" on-mouseover='playCurrentSound(cat.Url)' on-mouseout="stopCurrentSound()" (click)='PassInfo(cat)'  data-toggle="modal" data-target="#contact">
+      <div  class="top-droppable folder tooltiper tooltiper-up sonar-emitter" data-tooltip="0 file" id="folder3" on-mouseover='playCurrentSound(cat.Url)' on-mouseout="stopCurrentSound()" (click)='PassInfo(cat)'  data-toggle="modal" data-target="#contact">
+        <div class="sonar-wave">
         <i class="fa fa-music" aria-hidden="true"></i>
         <i class="fa fa-check" aria-hidden="true"></i>
        
         <p>{{cat.Name}}</p>
         
       </div>
-      
+    </div>
       </div>
+   
       
-    </div>
-    
-  </div>
-  <div class="right">
-    <div class="input-select-wrap">
-      <div class="fileUpload">
-        <span>+</span><p>Add your files</p>
-      </div>
-      <input id='fileSelect' multiple name='fileSelect' type='file' webkitdirectory mozdirectory>
-    </div>
-    <div id='draggableFile'>
-      <span>Drop your files here<br/><span>You can drop your files here to add them to your documents</span></span>
-    </div>
-    <div id='result'></div>
-  </div>
+
+ 
 
   
 
-</section>
+
 <div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg"  style="margin-top: 5%;">
-  <section class="item-card center" >
-    <div class="item-summary">
-    <h2 class="title">{{info}}</h2>
-    <p class="venue">Category</p>
+  <div class="modal-dialog modal-sm"  style="margin-top: 5%;">
+  <section class="item-card center" style="background-color: #5cb85c;; border-radius: 5%;" >
+    <div style="margin-left: 2%;"  class="item-summary">
+    <h2 class="title" style="color: #ffff;">{{info}}</h2>
+    <p style="color: #ffff;" class="venue">Category</p>
     <address class="address">
-    <p class="street-address">{{path}}</p>
+    <p style="color: #ffff;" class="street-address">{{path}}</p>
     
     </address>
     </div>
     
-    <div class="item-time-date">
-    <time class="date" datetime="2018-10-16">{{date}}</time>
-    <time class="time" datetime="19:00">{{newDate1}}</time>
+    <div style="margin-left: 2%;"  class="item-time-date">
+    <time style="color: #ffff;" class="date" datetime="2018-10-16">{{date}}</time>
+    <time style="color: #ffff;" class="time" datetime="19:00">{{newDate1}}</time>
     </div>
     
     </section>

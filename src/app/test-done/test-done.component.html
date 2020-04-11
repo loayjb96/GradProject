@@ -70,7 +70,7 @@
 <div class="row">
   
 <div *ngFor="let test of Test | async" class="col-md-6">
-<div *ngIf="Name==test.TesterName || Name=='all' " class="card card-stats mb-4 mb-xl-0 alert alert-dark">
+<div *ngIf="Name==test.TesterName || Name=='all' " class="card card-stats mb-4 mb-xl-0 alert alert-dark" style="border-radius: 20%;">
     
 <div  class="card-body"  data-toggle="modal" data-target="#StatModal" (click)='activateChart($event, test.TestId)'>
 <div class="row">
