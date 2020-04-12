@@ -12,6 +12,6 @@ from .import views
 
 # ]
 
-urlpatterns = [
-     path('', views.api_convert, name='api_convert'),
-      ]
+# urlpatterns = [
+#      path('', views.api_convert, name='api_convert'),
+#       ]
