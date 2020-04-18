@@ -4,17 +4,17 @@
 <body>
 
 
-    <h1>Sound Repsitory</h1>
+    <h2 class="text-center" style="margin-top: 5%;"> Sound Repsitory</h2>
   
     
    
-      <div *ngFor="let cat of Category | async ;let i = index">
+      <div style="margin-left: 3.5%;" *ngFor="let cat of Category | async ;let i = index" >
       <div  class="top-droppable folder tooltiper tooltiper-up sonar-emitter" data-tooltip="0 file" id="folder3" on-mouseover='playCurrentSound(cat.Url)' on-mouseout="stopCurrentSound()" (click)='PassInfo(cat)'  data-toggle="modal" data-target="#contact">
-        <div class="sonar-wave">
+        <div class="sonar-wave" style="background-image: url('./assets/img/sidebar-1.jpg' );">
         <i class="fa fa-music" aria-hidden="true"></i>
         <i class="fa fa-check" aria-hidden="true"></i>
        
-        <p>{{cat.Name}}</p>
+        <p style="font-weight: 500; font-family: Arial, Helvetica, sans-serif; color:black;">{{cat.Name}}</p>
         
       </div>
     </div>

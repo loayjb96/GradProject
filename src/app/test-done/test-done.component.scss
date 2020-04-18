@@ -67,6 +67,10 @@ p
     .dual-list .list-group {
         margin-top: 8px;
     }
+    .table tbody tr:hover td, .table tbody tr:hover th {
+        background:#33b5e5;
+        border-radius: 1%;
+    }
     li:hover {
         background-color: #d9534f;
       }

@@ -103,7 +103,7 @@
     
   </div> 
   <div class="center text-center" >  
-    <button data-toggle="modal" data-target="#Test" style="margin: 10px;" class="btn btn-warning" [disabled]="false" (click) ="createPosts()" >Commeit new test</button>  
+    <button data-toggle="modal" data-target="#Test" style="margin: 10px;" class="btn btn-warning" [disabled]="!check" (click) ="createPosts()" >Commeit new test</button>  
   </div> 
  
   <div *ngIf='res' class="card" style="text-align: center; " >
