@@ -141,9 +141,38 @@ sortvia(userName){
 
   this.Name=userName
   this.ngOnInit
+  this.f1score()
 }
 resetSort(){
   this.Name='all'
 }
+// here i want to write function to detrmine score Metrics to Evaluate your Machine
+f1score(){
+  var expected_value = ["dog", "dog", "cat", "cat",'baby',"baby","gf"];
+  var true_value =     ["dog", "Orange", "cat", "Mango","baby","grf","gf"];
 
+  var crosses=this.number_of_crosses(expected_value,true_value)
+  console.log('cros matches inside  function ',crosses)
+
+
+}
+number_of_crosses(arr1,arr2){
+var n = arr1
+var m =arr2
+var counter_crosses=0;
+n.forEach((num1, index) => {
+  const num2 = m[index];
+  var n = num1.localeCompare(num2);
+  console.log(num1, num2);
+
+  if(n==0){
+    counter_crosses+=1
+  }
+  // console.log("counter is ",counter_crosses)
+  
+  // console.log(num1, num2);
+});
+return counter_crosses
+}
+////////////////////
 }
