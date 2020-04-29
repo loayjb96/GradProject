@@ -65,47 +65,46 @@ export class TestComponent  {
     private route: ActivatedRoute,private router:Router,private http:HttpClient,private http1: Http
     ) { 
     }
-  selectedFile=null;
+  
+  selectedFile: File[] = [];
 
   async preview(files,event) {
-    
+    this.selectedFile=[]
     if (files.length === 0)
       return;
-      console.log(event);
-
-    this.selectedFile=<File>event.target.files[0];
-    var mimeType = files[0].type;
-    console.log(mimeType);
+      this.pathWithFile=""
+      var filesAmount = event.target.files.length;
+     
+      for (let i = 0; i < filesAmount; i++) {
+        this.ExtractPath();
+    this.selectedFile.push(<File>event.target.files[i]);
+    alert(this.selectedFile.length)
+    var mimeType = files[i].type;
     var reader = new FileReader();
     this.imagePath = files;
-    reader.readAsDataURL(files[0]); 
+    reader.readAsDataURL(event.target.files[i]); 
   
     reader.onload = (_event) => { 
       this.imgURL = reader.result; 
     
     }
-    const fd =new FormData();
-    const url=  Math.random().toString(36).substring(7);
-    this.name='/'+this.type+'/'+url;// this is wher rhe image will be stored 
-    fd.append('image',this.selectedFile,this.selectedFile.name);
-    this.ExtractPath();
-     this.storage.ref(this.fullPath).child(this.selectedFile.name).put(this.selectedFile, {contentType: mimeType}).then(() => {
-      this.pathWithFile=this.fullPath.concat("/").concat(this.selectedFile.name);
-      this.check=true;
     
+     this.storage.ref(this.fullPath).child(this.selectedFile[i].name).put(this.selectedFile[i], {contentType: mimeType}).then(() => {
+      this.pathWithFile=this.fullPath.concat("/").concat(this.selectedFile[i].name);
+      this.check=true;
       this.downloadURL= this.storage.ref(this.pathWithFile).getDownloadURL().subscribe(result => {
        
         this.now = new Date().toLocaleString();
         this.delteurl=result;
-        const Data={Url:result,Path:this.fullPath,Name:this.selectedFile.name,Date:this.now}
+        const Data={Url:result,Path:this.fullPath,Name:this.selectedFile[i].name,Date:this.now}
   
 
       
-        this.db.collection('Category').doc(this.selectedFile.name).set(Data)
-        console.log(Data)
+        this.db.collection('Category').doc(this.selectedFile[i].name).set(Data)
    
         })
      }) 
+    }
   }
   blankRowArray: Array < BlankRow > = [];  
   blankRowData = new BlankRow();  
@@ -171,6 +170,8 @@ x=0
  if(this.index2!=0){
    this.index2=this.temp
  }
+ else
+ this.index2=0
     
     this.getPosts(this.index2).subscribe(  
       Message=>{this.Message=Message;
@@ -210,6 +211,13 @@ x=0
       this.path.splice(index, 1);  
       if(this.path.length==0)
       this.Enable=false;
+     
+      if(index>0){
+      this.index2=index;
+      this.temp=this.blankRowArray[index-1].Catagory
+      }
+      else
+      this.index2=0
   }
 
   getPosts(index:any){
@@ -253,12 +261,14 @@ x=0
    }
   }
   ApiREquest(channel){
+let Data={}
    let header =new HttpHeaders()
    header=header.set('X-AbiliSense-API-Key','0479e58c-3258-11e8-b467-0ed5f89Tests')
    header=header.set('accept','application/json')
    let options = {headers:header};
+   for(let i=0;i<this.selectedFile.length;i++){
    const formData: FormData = new FormData();
-   formData.append('audiofile', this.selectedFile);
+   formData.append('audiofile', this.selectedFile[i]);
    formData.append('samplingrate', channel);
 
    
@@ -266,33 +276,39 @@ x=0
     this.NewPost=this.http.post(this.ROOT_URL,formData,options)
     this.NewPost.subscribe(data=>{
       console.log(data.events.length)
-      this.res= 'API Response ,'
+      // this.res= 'API Response ,'
       for (var i=0; i<data.events.length;i++){
      this.res+='Events: '+data.events[i].events+' | Time: '+data.events[i].time+',';
      this.ResArray1[0]=this.ResArray1[0].concat(" "+data.events[i].events)
      this.ResArray1[1]=this.ResArray1[1].concat(" "+data.events[i].time)
       }
-      const Data={TesterName:this.UserName,Catagory:this.path,
-        HZ8000:this.ResArray1,HZ44100:this.ResArray2,time:this.now,TestId:this.rand,Name:this.selectedFile.name}
-      this.db.collection('Tests').doc(this.rand.toString()).set(Data)
+      //  Data={TesterName:this.UserName,Catagory:this.path,
+      //   HZ8000:this.ResArray1,HZ44100:this.ResArray2,time:this.now,TestId:this.rand,Name:this.selectedFile[i].name}
+     
       
    })
   
    }
+   
    else{
     this.NewPost1=this.http.post(this.ROOT_URL,formData,options)
    this.NewPost1.subscribe(data=>{
-    this.res2= 'API Response ,'
+    // this.res2= 'API Response ,'
     for (var i=0; i<data.events.length;i++){
    this.res2+='Events: '+data.events[i].events+' | Time: '+data.events[i].time+',';
    this.ResArray2[0]=this.ResArray2[0].concat(" "+data.events[i].events)
    this.ResArray2[1]= this.ResArray2[1].concat(" "+data.events[i].time)
     }
-    const Data={TesterName:this.UserName,Catagory:this.path,HZ8000:this.ResArray1,
-      HZ44100:this.ResArray2,time:this.now,TestId:this.rand,Name:this.selectedFile.name}
-      this.db.collection('Tests').doc(this.rand.toString()).set(Data)
+   
+      
  })
 }
+Data={TesterName:this.UserName,Catagory:this.path,HZ8000:this.ResArray1,
+  HZ44100:this.ResArray2,time:this.now,TestId:this.rand,Name:this.selectedFile[i].name}
+  console.log("dd  ",Data)
+  }
+  console.log(Data)
+  this.db.collection('Tests').doc(this.rand.toString()).set(Data)
 this.ResArray1=["",""]
 this.ResArray2=["",""]
 
