@@ -141,29 +141,44 @@ sortvia(userName){
 
   this.Name=userName
   this.ngOnInit
-  this.f1score()
+  this.accuaracy()
+  // this.accuaracy()
 }
 resetSort(){
   this.Name='all'
 }
 // here i want to write function to detrmine score Metrics to Evaluate your Machine
-f1score(){
-  var expected_value = ["dog", "dog", "cat", "cat",'baby',"baby","gf"];
-  var true_value =     ["dog", "Orange", "cat", "Mango","baby","grf","gf"];
 
-  var crosses=this.number_of_crosses(expected_value,true_value)
-  console.log('cros matches inside  function ',crosses)
+// accuaracy
+
+accuaracy(){
+  var expected_value = ["dog", "dog", "cat", "cat",'baby',"baby","gf","goo"];
+  var true_value =     ["dog", "Orange", "cat", "Mango","baby","grf","gf","goo"];
+
+  var num_of_crosses=this.cross_matches(expected_value,true_value)
+  try {
+    var result=num_of_crosses/(true_value).length
+    var fixed_result=result.toFixed(3)//i can detrmin to whic decimal to fixe
+    console.log("result of accuaracy ",fixed_result)
+  }
+  catch(error) {
+    console.error(error);
+    // expected output: ReferenceError: nonExistentFunction is not defined
+    // Note - error messages will vary depending on browser
+  }
+
+  console.log('cros matches inside  function ',num_of_crosses)
 
 
 }
-number_of_crosses(arr1,arr2){
+cross_matches(arr1,arr2){
 var n = arr1
 var m =arr2
 var counter_crosses=0;
 n.forEach((num1, index) => {
   const num2 = m[index];
   var n = num1.localeCompare(num2);
-  console.log(num1, num2);
+  // console.log(num1, num2);
 
   if(n==0){
     counter_crosses+=1
