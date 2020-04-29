@@ -1,6 +1,7 @@
-export interface Post{
-    id:number;
-    userId:number;
-    title:string;
-    body:string;
+export class Post{
+
+    path:string;
+    constructor(Path: string) {
+        this.path=Path;
+      }
 }

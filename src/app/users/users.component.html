@@ -22,9 +22,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of contacts | async">
+      <tr *ngFor="let user of contacts | async;index as i">
 
-        <td>1</td>
+        <td>{{i+1}}</td>
         <td> {{ user.fullName }}</td>
         <td> {{ user.Email }}</td>
         <td> {{ user.Role }}</td>
