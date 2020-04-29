@@ -1,5 +1,6 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { Http } from '@angular/http';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpParams,HttpHeaders} from '@angular/common/http';
@@ -11,6 +12,8 @@ import {Observable} from 'rxjs/Observable'
 import 'rxjs/add/operator/retry'
 import 'rxjs/add/operator/catch'
 import 'rxjs/add/observable/of'
+import { Response } from '@angular/http'
+import 'rxjs/Rx';
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
@@ -41,6 +44,7 @@ export class TestComponent  {
   Posts:Observable<any> 
   NewPost:Observable<any>
   res:string
+  data:any=[]
   res2: string;
    ResArray1: [string, string] = ["",""];
    ResArray2: [string, string] = ["",""];
@@ -49,12 +53,16 @@ export class TestComponent  {
   now: string;
   rand: number;
   str: string;
+  index:number=0
+  index2:number=0
+  Message=[];
+  temp: any;
   
 
   constructor(
     private storage: AngularFireStorage,private db:AngularFirestore,
     private af:AngularFireAuth,
-    private route: ActivatedRoute,private router:Router,private http:HttpClient
+    private route: ActivatedRoute,private router:Router,private http:HttpClient,private http1: Http
     ) { 
     }
   selectedFile=null;
@@ -95,7 +103,6 @@ export class TestComponent  {
       
         this.db.collection('Category').doc(this.selectedFile.name).set(Data)
         console.log(Data)
-        //this.newMessage(result);// here we send the url to the newMessege( string:url)_sending the url 
    
         })
      }) 
@@ -115,6 +122,7 @@ export class TestComponent  {
          this.UserRole=actualData.Role;
          this.test=actualData.Tests;
          console.log("actual data ",actualData.Tests)
+         this.index=1;
 
       
     
@@ -122,9 +130,9 @@ export class TestComponent  {
     }
  this.pathWithFile=""
     this.contacts = [
-      {name: "Animal"},
+      {name: "Animallll"},
       {name: "Vehicles"},
-      {name: "Babies"},
+      {name: "Babises"},
       {name: "Female"},
       {name: "Male"},
       {name: "Other"},
@@ -134,24 +142,60 @@ export class TestComponent  {
     this.fullPath="";
    
   }
-  OnCategoryCheked(x:string,i:any){
+  OnCategoryCheked(x:any,i:any){
     this.path[i]=x;
-
-    this.Enable=true;
-  }
+    this.temp=x;
+    const Data= {path:x}// URL:this.messege what we send 
+    
+    if(i==0){
+x=0
+    }
+    else
+    x=this.blankRowArray[i-1].Catagory
+ 
+    
+          let a= this.http.post('https://systemtestproject-96b42.firebaseio.com/Category/'+x+'.json',Data)
+          a.subscribe(  
+           (response)=>{
+           this.Enable=true;
+         })
+        
+    
+ 
+}
   checkFileUpload():void{
 
     this.check=true;
   }
   addBlankRow() {  
-      const blankRowData = new BlankRow();  
-          blankRowData.RollNo = this.UserRole,  
-          blankRowData.Name = this.UserName,  
-          blankRowData.Algorithm = '',  
-          blankRowData.Catagory = '',  
-          this.blankRowArray.push(blankRowData)  
+ if(this.index2!=0){
+   this.index2=this.temp
+ }
+    
+    this.getPosts(this.index2).subscribe(  
+      Message=>{this.Message=Message;
+      this.addBlank()}
+    
+    );
+    
+     
           
-  }  
+  } 
+  addBlank(){
+    this.data=[]
+    const blankRowData = new BlankRow();  
+    blankRowData.RollNo = this.UserRole,  
+    blankRowData.Name = this.UserName,  
+    blankRowData.Algorithm = '',  
+    blankRowData.Catagory = '',  
+    this.blankRowArray.push(blankRowData) 
+    for (let key in this.Message) {
+           this.data[this.Message[key].path]=this.Message[key].path
+      
+     }
+    console.log("secound ",this.data)
+    this.index2++;
+  } 
   ExtractPath(){
     for(let i=0;i<this.path.length;i++){
       if(i==0)
@@ -160,24 +204,7 @@ export class TestComponent  {
       this.fullPath+="/".concat(this.path[i]);
     }
   }
-  openMultiSelectDD(i) {  
-      for (var x = 0; x < this.blankRowArray.length; x++) {  
-          this.hideMultiSelectDropdownAll[x] = false;  
-          this.hideMultiSelectedSubjectDropdownAll[x] = false;  
-          this.hideMultiSelectedSubjectDropdown[x] = false;  
-      }  
-      this.hideMultiSelectDropdownAll[i] = true;  
-      this.hideMultiSelectDropdown[i] = !this.hideMultiSelectDropdown[i];  
-  }  
-  openMultiSelectDDForSubject(i) {  
-      for (var x = 0; x < this.blankRowArray.length; x++) {  
-          this.hideMultiSelectedSubjectDropdownAll[x] = false;  
-          this.hideMultiSelectDropdownAll[x] = false;  
-          this.hideMultiSelectDropdown[x] = false;  
-      }  
-      this.hideMultiSelectedSubjectDropdownAll[i] = true;  
-      this.hideMultiSelectedSubjectDropdown[i] = !this.hideMultiSelectedSubjectDropdown[i];  
-  }  
+  
   deleteRow(index) {  
       this.blankRowArray.splice(index, 1);  
       this.path.splice(index, 1);  
@@ -185,14 +212,23 @@ export class TestComponent  {
       this.Enable=false;
   }
 
-  getPosts(){
-    let params=new HttpParams().set('userId','1')
-    this.Posts=this.http.get<Post[]>(this.ROOT_URL1).retry(1).
-    catch(err=>{
-      console.log(err)
-      return Observable.of(err)
-    })
-    console.log('get request')
+  getPosts(index:any){
+   
+    return this.http1.get('https://systemtestproject-96b42.firebaseio.com/Category/'+index+'.json')
+    .map((response: Response) => {
+      const data: Post[] = response.json();
+      this.Message=data
+      console.log(this.Message)
+      return data;
+    }
+
+    ).catch(
+      (error: Response) => {
+
+        return Observable.throw('something went wrong');
+      }
+
+    );
 
   }
   createPosts(){

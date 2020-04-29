@@ -13,7 +13,7 @@
               <th width="50">Tested Algorithm</th>  
               <th width="70">Category</th>  
             
-              <th width="50">Delete Row</th>  
+              <th width="50">Delete</th>  
             </tr>  
           </thead>  
           <tbody>  
@@ -47,12 +47,13 @@
                 </select>  
               </td>  
               <td>  
-                <input list="Category" name="myBrowser" [(ngModel)]="blankRowArray[i].Category" (change)="OnCategoryCheked(blankRowArray[i].Category,i)"  
+                <input list="Category" name="myBrowser" [(ngModel)]="blankRowArray[i].Catagory" (change)="OnCategoryCheked(blankRowArray[i].Catagory,i)"  
                 [ngModelOptions]="{standalone: true}" class="form-control wp-80" >
                 
 <datalist  id="Category" >
+  <!-- <option  *ngFor="let cat of contacts;let x =index" [value]=cat.path></option> -->
+  <option *ngFor="let cat of data.sort() | keyvalue" [value]=cat.value></option>
 
-  <option  *ngFor="let cat of contacts;let x =index" value={{cat.name}}>
 
 </datalist > 
 
@@ -154,9 +155,9 @@
   </div>
   <!-- {{NewPost |async| json}} -->
 
-  <div *ngFor="let post of Posts | 
+  <!-- <div *ngFor="let post of Posts | 
   async">
     {{post | json}}
-  </div> 
+  </div>  -->
 
 </div>  
