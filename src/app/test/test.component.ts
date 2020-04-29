@@ -184,7 +184,7 @@ export class TestComponent  {
       if(this.path.length==0)
       this.Enable=false;
   }
-s
+
   getPosts(){
     let params=new HttpParams().set('userId','1')
     this.Posts=this.http.get<Post[]>(this.ROOT_URL1).retry(1).
