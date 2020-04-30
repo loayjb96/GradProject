@@ -57,6 +57,8 @@ export class TestComponent  {
   index2:number=0
   Message=[];
   temp: any;
+  done: boolean;
+  FileName: string;
   
 
   constructor(
@@ -262,11 +264,13 @@ x=0
   }
   ApiREquest(channel){
 let Data={}
+this.done=false;
    let header =new HttpHeaders()
    header=header.set('X-AbiliSense-API-Key','0479e58c-3258-11e8-b467-0ed5f89Tests')
    header=header.set('accept','application/json')
    let options = {headers:header};
    for(let i=0;i<this.selectedFile.length;i++){
+    this.FileName=this.selectedFile[i].name
    const formData: FormData = new FormData();
    formData.append('audiofile', this.selectedFile[i]);
    formData.append('samplingrate', channel);
@@ -275,47 +279,44 @@ let Data={}
    if(channel==8000){
     this.NewPost=this.http.post(this.ROOT_URL,formData,options)
     this.NewPost.subscribe(data=>{
-      console.log(data.events.length)
-      // this.res= 'API Response ,'
-      for (var i=0; i<data.events.length;i++){
-     this.res+='Events: '+data.events[i].events+' | Time: '+data.events[i].time+',';
-     this.ResArray1[0]=this.ResArray1[0].concat(" "+data.events[i].events)
-     this.ResArray1[1]=this.ResArray1[1].concat(" "+data.events[i].time)
-      }
-      //  Data={TesterName:this.UserName,Catagory:this.path,
-      //   HZ8000:this.ResArray1,HZ44100:this.ResArray2,time:this.now,TestId:this.rand,Name:this.selectedFile[i].name}
-     
+      this.res+=i+" "+this.selectedFile[i].name+","
+      for (var j=0; j<data.events.length;j++){
       
+     this.res+='Events: '+data.events[j].events+' | Time: '+data.events[j].time+',';
+     this.ResArray1[0]=this.ResArray1[0].concat(" "+data.events[j].events)
+     this.ResArray1[1]=this.ResArray1[1].concat(" "+data.events[j].time)
+     
+      }
+     
+      this.res+="_____________________________________,"
+      //  Data={TesterName:this.UserName,Catagory:this.path,
+      //   HZ8000:this.ResArray1,HZ44100:this.ResArray2,time:this.now,TestId:this.rand,Name:this.selectedFile[i].name} 
    })
-  
    }
    
    else{
     this.NewPost1=this.http.post(this.ROOT_URL,formData,options)
    this.NewPost1.subscribe(data=>{
     // this.res2= 'API Response ,'
-    for (var i=0; i<data.events.length;i++){
-   this.res2+='Events: '+data.events[i].events+' | Time: '+data.events[i].time+',';
-   this.ResArray2[0]=this.ResArray2[0].concat(" "+data.events[i].events)
-   this.ResArray2[1]= this.ResArray2[1].concat(" "+data.events[i].time)
-    }
-   
-      
+    this.res2+=i+" "+this.selectedFile[i].name+","
+    for (var k=0; k<data.events.length;k++){
+   this.res2+='Events: '+data.events[k].events+' | Time: '+data.events[k].time+',';
+   this.ResArray2[0]=this.ResArray2[0].concat(" "+data.events[k].events)
+   this.ResArray2[1]= this.ResArray2[1].concat(" "+data.events[k].time)
+   this.done=true;
+  
+    }   
+    this.res2+="_____________________________________,"
  })
 }
 Data={TesterName:this.UserName,Catagory:this.path,HZ8000:this.ResArray1,
   HZ44100:this.ResArray2,time:this.now,TestId:this.rand,Name:this.selectedFile[i].name}
   console.log("dd  ",Data)
+  this.done=true;
   }
   console.log(Data)
   this.db.collection('Tests').doc(this.rand.toString()).set(Data)
 this.ResArray1=["",""]
 this.ResArray2=["",""]
-
-  
- 
-
-  
-
   }
 }

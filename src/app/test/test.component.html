@@ -127,12 +127,12 @@
                 <address *ngIf='NewPost'class="alert alert-success">
                   <h3>API Response</h3>
                   <div *ngFor="let r of res.split(','); let i = index">
-                    <div *ngIf="i<selectedFile.length">
+                    <!-- <div *ngIf="i<selectedFile.length">
                     <h4 style="color: black;">
-                {{selectedFile[i].name}}
+                {{FileName}}
               </h4>
                     <br/>
-                    </div>
+                    </div> -->
                     {{r}} 
                     <br/>
               </div> 
@@ -148,12 +148,12 @@
                 <address *ngIf='NewPost1' class="alert alert-success">
                   <h3>API Response</h3>
                   <div *ngFor="let r2 of res2.split(','); let i = index">
-                    <div *ngIf="i<selectedFile.length">
+                    <!-- <div *ngIf="i<selectedFile.length">
                       <h4 style="color: black;">
-                      {{selectedFile[i].name}}
+                      {{FileName}}
                     </h4>
                           <br/>
-                          </div>
+                          </div> -->
                           {{r2}} 
                           <br/>
               </div> 
