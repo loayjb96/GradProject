@@ -35,6 +35,9 @@ export class TestComponent  {
   delteurl:string;
   contacts:any[];
   path:any[];
+   final:Array<string>=[];
+   final2:Array<string>=[];
+   FileNames:Array<string>=[];
   fullPath:string;
   Enable:boolean;
   pathWithFile:string;
@@ -48,6 +51,7 @@ export class TestComponent  {
   res2: string;
    ResArray1: [string, string] = ["",""];
    ResArray2: [string, string] = ["",""];
+   ResTemp: [string] = [""];
   test:string[]=[""];
   NewPost1: Observable<any>;
   now: string;
@@ -57,15 +61,18 @@ export class TestComponent  {
   index2:number=0
   Message=[];
   temp: any;
+ 
   done: boolean;
   FileName: string;
+  SystemUser: any;
   
 
   constructor(
-    private storage: AngularFireStorage,private db:AngularFirestore,
+    private storage: AngularFireStorage,public db:AngularFirestore,
     private af:AngularFireAuth,
     private route: ActivatedRoute,private router:Router,private http:HttpClient,private http1: Http
     ) { 
+  
     }
   
   selectedFile: File[] = [];
@@ -115,30 +122,31 @@ export class TestComponent  {
   hideMultiSelectedSubjectDropdown: boolean[] = [];  
   hideMultiSelectedSubjectDropdownAll: boolean[] = [];  
   ngOnInit() { 
-    const user =this.af.auth.currentUser;
-    if(user!=null){
-      this.db.collection("users").doc(user.uid).get().toPromise().then(result => {
-         const actualData = result.data();
-         this.UserName=actualData.fullName;
-         this.UserRole=actualData.Role;
-         this.test=actualData.Tests;
-         console.log("actual data ",actualData.Tests)
-         this.index=1;
+   
+    this.af.auth.onAuthStateChanged(function(user) {
+      if (user!=null) {
+        localStorage.setItem('testObject', JSON.stringify(user));
+        var SystemUser = localStorage.getItem('testObject');
 
-      
-    
-     })
+      } else {
+        // No user is signed in.
+        alert("not signed")
+      }
+    });
+    var SystemUser = localStorage.getItem('testObject');
+    this.SystemUser= JSON.parse(SystemUser)
+    if(this.SystemUser!=null){
+      this.db.collection("users").doc(this.SystemUser.uid).get().toPromise().then(result => {
+        const actualData = result.data();
+        this.UserName=actualData.fullName;
+        this.UserRole=actualData.Role;
+        this.test=actualData.Tests;
+        this.index=1;
+
+    })
     }
  this.pathWithFile=""
-    this.contacts = [
-      {name: "Animallll"},
-      {name: "Vehicles"},
-      {name: "Babises"},
-      {name: "Female"},
-      {name: "Male"},
-      {name: "Other"},
-      
-    ];
+
     this.path=[];
     this.fullPath="";
    
@@ -261,8 +269,12 @@ x=0
       Tests,
       }, { merge: true });
    }
+  
   }
   ApiREquest(channel){
+  // this.final=[];
+  this.ResTemp=[""]
+
 let Data={}
 this.done=false;
    let header =new HttpHeaders()
@@ -274,23 +286,27 @@ this.done=false;
    const formData: FormData = new FormData();
    formData.append('audiofile', this.selectedFile[i]);
    formData.append('samplingrate', channel);
-
-   
    if(channel==8000){
     this.NewPost=this.http.post(this.ROOT_URL,formData,options)
     this.NewPost.subscribe(data=>{
       this.res+=i+" "+this.selectedFile[i].name+","
+      this.ResTemp=[""]
       for (var j=0; j<data.events.length;j++){
       
      this.res+='Events: '+data.events[j].events+' | Time: '+data.events[j].time+',';
      this.ResArray1[0]=this.ResArray1[0].concat(" "+data.events[j].events)
      this.ResArray1[1]=this.ResArray1[1].concat(" "+data.events[j].time)
-     
+     this.ResTemp[0]=this.ResTemp[0].concat(data.events[j].events+" ")
       }
-     
+      this.final.push(this.ResTemp[0])
+      this.FileNames.push(this.selectedFile[i].name)
+    
       this.res+="_____________________________________,"
-      //  Data={TesterName:this.UserName,Catagory:this.path,
-      //   HZ8000:this.ResArray1,HZ44100:this.ResArray2,time:this.now,TestId:this.rand,Name:this.selectedFile[i].name} 
+      Data={TesterName:this.UserName,Catagory:this.path,HZ8000:this.final,
+        HZ44100:this.final2,time:this.now,TestId:this.rand,Name:this.FileNames}
+        console.log("dd  ",Data)
+      this.db.collection('Tests').doc(this.rand.toString()).set(Data)
+
    })
    }
    
@@ -299,23 +315,29 @@ this.done=false;
    this.NewPost1.subscribe(data=>{
     // this.res2= 'API Response ,'
     this.res2+=i+" "+this.selectedFile[i].name+","
+    this.ResTemp=[""]
     for (var k=0; k<data.events.length;k++){
    this.res2+='Events: '+data.events[k].events+' | Time: '+data.events[k].time+',';
    this.ResArray2[0]=this.ResArray2[0].concat(" "+data.events[k].events)
    this.ResArray2[1]= this.ResArray2[1].concat(" "+data.events[k].time)
+   this.ResTemp[0]=this.ResTemp[0].concat(data.events[k].events+" ")
    this.done=true;
   
-    }   
+    } 
+    this.final2.push(this.ResTemp[0])  
     this.res2+="_____________________________________,"
+    Data={TesterName:this.UserName,Catagory:this.path,HZ8000:this.final,
+      HZ44100:this.final2,time:this.now,TestId:this.rand,Name:this.FileNames}
+      console.log("dd  ",Data)
+    this.db.collection('Tests').doc(this.rand.toString()).set(Data)
  })
 }
-Data={TesterName:this.UserName,Catagory:this.path,HZ8000:this.ResArray1,
-  HZ44100:this.ResArray2,time:this.now,TestId:this.rand,Name:this.selectedFile[i].name}
-  console.log("dd  ",Data)
+
+
   this.done=true;
+  
   }
-  console.log(Data)
-  this.db.collection('Tests').doc(this.rand.toString()).set(Data)
+ 
 this.ResArray1=["",""]
 this.ResArray2=["",""]
   }

@@ -76,19 +76,17 @@ activateChart($event, id){
     const actualData = result.data();
     let HZ44100=actualData.HZ44100;
     let HZ8000=actualData.HZ8000;
+   
     this.fileName=actualData.Name;
-    this.fileName=this.fileName.split(".wav")
+    // this.fileName=this.fileName.split(".wav")
     
-
-this.splitted1 = HZ8000[0].split(" ").slice(1);
-this. splitted2 = HZ8000[1].split(" ").slice(1);
-this. splitted12 = HZ44100[0].split(" ").slice(1); 
-this. splitted22 = HZ44100[1].split(" ").slice(1); 
-
-
- console.log(this.splitted2)
-// console.log(splitted12)
-// console.log(splitted22)
+for(let i=0;i<HZ8000.length;i++){
+this.splitted1 = HZ8000[i].split(" ");
+console.log(this.splitted1)
+}
+// this. splitted2 = HZ8000[1].split(" ").slice(1);
+// this. splitted12 = HZ44100[0].split(" ").slice(1); 
+// this. splitted22 = HZ44100[1].split(" ").slice(1); 
   const dataDailySalesChart: any = {
     labels: this.splitted1,
     series: [
