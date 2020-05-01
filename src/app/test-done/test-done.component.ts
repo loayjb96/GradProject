@@ -149,6 +149,9 @@ resetSort(){
 
 // accuaracy
 
+
+
+
 accuaracy(){
   var expected_value = ["dog", "dog", "cat", "cat",'baby',"baby","gf","goo"];
   var true_value =     ["dog", "Orange", "cat", "Mango","baby","grf","gf","goo"];
@@ -187,5 +190,35 @@ n.forEach((num1, index) => {
 });
 return counter_crosses
 }
-////////////////////
+confision_matrix_function(){
+  // this comes from our model 
+  var expected_value = ["dog", "dog", "cat", "cat",'baby',"baby","gf","goo"];
+  //this is what we inset known element for us 
+  var true_value =     ["dog", "Orange", "cat", "Mango","baby","grf","gf","goo"];
+
+
+
+		var confusionMatrix = [
+			[169, 10],
+			[7, 46]
+    ];
+    var tp = confusionMatrix[0][0];
+    var fn = confusionMatrix[0][1];
+    var fp = confusionMatrix[1][0];
+    var tn = confusionMatrix[1][1];
+
+    var p = tp + fn;
+    var n = fp + tn;
+
+    var accuracy = (tp+tn)/(p+n);
+    var f1 = 2*tp/(2*tp+fp+fn);
+    var precision = tp/(tp+fp);
+    var recall = tp/(tp+fn);
+
+
+}
+
+
+
+
 }
