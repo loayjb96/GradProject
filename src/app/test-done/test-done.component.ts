@@ -17,12 +17,22 @@ export class TestDoneComponent implements OnInit {
   Test: Observable<any[]> ;
   Res:Array<string>=[];
   Res2:Array<string>=[];
+  Resarray:Array<number>=[];
   count:Array<number>=[];
   id:number
 
   fileName: any;
   Name: string='all';
   category: any;
+  accuracy: number;
+  f1: number;
+  precision: number;
+  recall: number;
+  accuracy2: number;
+  recall2: number;
+  precision2: number;
+  f12: number;
+  updated: boolean=false;
   
   constructor(private route: ActivatedRoute,private router: Router,private db:AngularFirestore,private af:AngularFireAuth) {
     
@@ -81,7 +91,13 @@ activateChart($event, id){
     let HZ8000=actualData.HZ8000;
    this.category=actualData.Catagory;
     this.fileName=actualData.Name;
-    console.log(this.fileName)
+    if(!actualData.Result8000){
+      this.updated=false
+ 
+    }
+    else
+    this.updated=true
+   
     // this.fileName=this.fileName.split(".wav")
   
 for(let i=0,j=0,k=0;i<HZ8000.length,j<this.fileName.length,k<HZ44100.length;i++,j++,k++){
@@ -93,6 +109,8 @@ this.count.push(i+1)
 console.log(this.count)
 console.log(this.Res)
 console.log(this.category[0])
+this.confision_matrix_function(this.category[0],this.Res,"1")
+this.confision_matrix_function(this.category[0],this.Res2,"2")
 // this. splitted12 = HZ44100[0].split(" ").slice(1); 
 // this. splitted22 = HZ44100[1].split(" ").slice(1); 
   const dataDailySalesChart: any = {
@@ -144,7 +162,7 @@ console.log(this.category[0])
     this.startAnimationForLineChart(dailySalesChart1);
 }, 100);
 })
-this.accuaracy()
+
 }
 sortvia(userName){
 
@@ -153,33 +171,6 @@ sortvia(userName){
 }
 resetSort(){
   this.Name='all'
-}
-// here i want to write function to detrmine score Metrics to Evaluate your Machine
-
-// accuaracy
-
-
-
-
-accuaracy(){
-  var expected_value = ["dog", "dog", "cat", "cat",'baby',"baby","gf","goo"];
-  var true_value =     ["dog", "Orange", "cat", "Mango","baby","grf","gf","goo"];
-
-  var num_of_crosses=this.cross_matches(expected_value,true_value)
-  try {
-    var result=num_of_crosses/(true_value).length
-    var fixed_result=result.toFixed(3)//i can detrmin to whic decimal to fixe
-    console.log("result of accuaracy ",fixed_result)
-  }
-  catch(error) {
-    console.error(error);
-    // expected output: ReferenceError: nonExistentFunction is not defined
-    // Note - error messages will vary depending on browser
-  }
-
-  console.log('cros matches inside  function ',num_of_crosses)
-
-
 }
 cross_matches(arr1,arr2){
 var n = arr1
@@ -196,16 +187,9 @@ n.forEach((num1, index) => {
 });
 return counter_crosses
 }
-confision_matrix_function(catagory){
-
-  // this comes from our model 
-  var expected_value = ["speach", "speach", "music", "animal",'animal',"speach","music","speach","speach"];
-  //this is what we inset known element for us 
-  var true_value =     ["dog", "Orange", "cat", "Mango","baby","grf","gf","goo"];
-  var arr1 =true_value
-  var arr2=expected_value
-  // var myStringArray = ["Hello","World"];
-
+confision_matrix_function(catagory,expected_value_api,str){
+  this.Resarray=[]
+  var arr2=expected_value_api
   // we want to find true postive true negtive 
   var tp =0;
   var tn=0;
@@ -229,19 +213,35 @@ confision_matrix_function(catagory){
 			[169, 10],
 			[7, 46]
     ];
-    // var tp = confusionMatrix[0][0];
-    // var fn = confusionMatrix[0][1];
-    // var fp = confusionMatrix[1][0];
-    // var tn = confusionMatrix[1][1];
-
     var p = tp + fn;
     var n = fp + tn;
-
-    var accuracy = (tp+tn)/(p+n);
-    var f1 = 2*tp/(2*tp+fp+fn);
-    var precision = tp/(tp+fp);
-    var recall = tp/(tp+fn);
-console.log("accuracy",accuracy,"f1",f1,"precision",precision,"recall",recall)
+if(str==1){
+  
+    this. accuracy = (tp+tn)/(p+n);
+    this. f1 = 2*tp/(2*tp+fp+fn);
+    this. precision = tp/(tp+fp);
+    this. recall = tp/(tp+fn);
+    if(this.updated==false){
+      alert(122)
+    this.Resarray.push(this.accuracy,this.f1,this.precision,this.recall)
+    this.db.collection("Tests").doc(this.id.toString()).set({
+     Result8000: this.Resarray
+    }, { merge: true });
+  }
+}
+if(str==2){
+  this. accuracy2 = (tp+tn)/(p+n);
+  this. f12 = 2*tp/(2*tp+fp+fn);
+  this. precision2 = tp/(tp+fp);
+  this. recall2 = tp/(tp+fn);
+  if(this.updated==false){
+  this.Resarray.push(this.accuracy2,this.f12,this.precision2,this.recall2)
+    this.db.collection("Tests").doc(this.id.toString()).set({
+     Result44100: this.Resarray
+    }, { merge: true });
+  }
+}
+console.log("accuracy",this.accuracy,"f1",this.f1,"precision",this.precision,"recall",this.recall)
     
 
 

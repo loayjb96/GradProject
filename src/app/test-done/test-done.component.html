@@ -107,13 +107,44 @@
                 <div class="col-md-12">
                     <div class="card card-chart">
                         <div class="card-header card-header-info">
-                            <h4 style="text-align: center;">samplingrate 8000</h4>
+                            <h4 style="text-align: center;">Sampling rate 8000</h4>
                             <div class="ct-chart" id="dailySalesChart"></div>
                         </div>
                         <div class="card-body">
                             <h4 style="font-weight: 500;"  class="card-title" style="font-weight: 500;">Algortim Accuraccy </h4>
                             <p class="card-category">
-                                <span class="text-success"><i class="fa fa-long-arrow-up"></i> 5% </span>  Accuracy increase in the last test .</p>
+                                <span class="text-success">Algortim Accuracy in this test: {{accuracy}} </span> </p>
+                        </div>
+                        <div class="card-footer">
+                           
+                                  <div class="card">
+                                   
+                                      <div class="card-body table-responsive">
+                                          <table class="table table-hover">
+                                              <thead class="text-warning">
+                                                  <th>Accuracy</th>
+                                                  <th>F1 Score</th>
+                                                  <th>Precision</th>
+                                                  <th>Recall</th>
+                                                  
+                                              </thead>
+                                              <tbody>
+                                                  
+                                                  <tr >
+                                                    <td>{{accuracy*100|number}}%</td>
+                                                    <td>{{f1*100|number}}%</td>
+                                                    <td>{{precision*100|number}}%</td>
+                                                    <td>{{recall*100|number}}%</td>
+                                                  
+                                                  </tr >
+                                                 
+                                                
+                                              </tbody>
+                                          </table>
+ 
+                              </div>
+                              </div>
+                           
                         </div>
                         <div class="card-footer">
                             <div class="stats">
@@ -125,14 +156,14 @@
                 <div class="col-md-12">
                     <div class="card card-chart">
                         <div class="card-header card-header-primary">
-                            <h4 style="text-align: center;">samplingrate 44100 </h4>
+                            <h4 style="text-align: center;">Sampling rate 44100 </h4>
                            
                             <div class="ct-chart" id="dailySalesChart1"></div>
                         </div>
                         <div class="card-body">
                             <h4 style="font-weight: 500;"  class="card-title" style="font-weight: 500;">Algortim Accuraccy </h4>
                             <p class="card-category">
-                                <span class="text-success"><i class="fa fa-long-arrow-up"></i> 5% </span>  Accuracy increase in the last test .</p>
+                                <span class="text-success">Algortim Accuracy in this test: {{accuracy2}} </span> </p>
                         </div>
                         <div class="card-footer">
                             <div class="stats">
