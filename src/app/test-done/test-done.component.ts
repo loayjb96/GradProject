@@ -144,14 +144,12 @@ console.log(this.category[0])
     this.startAnimationForLineChart(dailySalesChart1);
 }, 100);
 })
-this.accuaracy(this.Res,this.Res)
+this.accuaracy()
 }
 sortvia(userName){
 
   this.Name=userName
   this.ngOnInit
-  // this.accuaracy()
-  // this.accuaracy()
 }
 resetSort(){
   this.Name='all'
@@ -159,6 +157,9 @@ resetSort(){
 // here i want to write function to detrmine score Metrics to Evaluate your Machine
 
 // accuaracy
+
+
+
 
 accuaracy(){
   var expected_value = ["dog", "dog", "cat", "cat",'baby',"baby","gf","goo"];
@@ -195,5 +196,58 @@ n.forEach((num1, index) => {
 });
 return counter_crosses
 }
-////////////////////
+confision_matrix_function(catagory){
+
+  // this comes from our model 
+  var expected_value = ["speach", "speach", "music", "animal",'animal',"speach","music","speach","speach"];
+  //this is what we inset known element for us 
+  var true_value =     ["dog", "Orange", "cat", "Mango","baby","grf","gf","goo"];
+  var arr1 =true_value
+  var arr2=expected_value
+  // var myStringArray = ["Hello","World"];
+
+  // we want to find true postive true negtive 
+  var tp =0;
+  var tn=0;
+  var fp=0;
+  var fn=0
+  var arrayLength = arr2.length;
+
+  for (var i = 0; i < arrayLength; i++) {
+      // console.log(myStringArray[i]);
+      if(catagory==arr2[i]){
+        tp+=1
+      }else{
+        fn+=1
+      }
+      //Do something
+  }  
+
+
+    console.log("array length=",arrayLength,"true postive ",tp,"false negtive",fn)
+		var confusionMatrix = [
+			[169, 10],
+			[7, 46]
+    ];
+    // var tp = confusionMatrix[0][0];
+    // var fn = confusionMatrix[0][1];
+    // var fp = confusionMatrix[1][0];
+    // var tn = confusionMatrix[1][1];
+
+    var p = tp + fn;
+    var n = fp + tn;
+
+    var accuracy = (tp+tn)/(p+n);
+    var f1 = 2*tp/(2*tp+fp+fn);
+    var precision = tp/(tp+fp);
+    var recall = tp/(tp+fn);
+console.log("accuracy",accuracy,"f1",f1,"precision",precision,"recall",recall)
+    
+
+
+}
+
+
+
+
 }
