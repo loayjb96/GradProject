@@ -15,13 +15,14 @@ export class TestDoneComponent implements OnInit {
   contacts: Observable<any[]> ;
   TestCollection;
   Test: Observable<any[]> ;
+  Res:Array<string>=[];
+  Res2:Array<string>=[];
+  count:Array<number>=[];
   id:number
-  splitted1: string;
-  splitted2: string;
-  splitted12: string;
-  splitted22: string;
+
   fileName: any;
   Name: string='all';
+  category: any;
   
   constructor(private route: ActivatedRoute,private router: Router,private db:AngularFirestore,private af:AngularFireAuth) {
     
@@ -69,28 +70,37 @@ export class TestDoneComponent implements OnInit {
 };
 
 activateChart($event, id){
-  
+ this.count=[]
+ this.Res=[]
+ this.Res2=[]
   this.id=id
  
   this.db.collection("Tests").doc(this.id.toString()).get().toPromise().then(result => {
     const actualData = result.data();
     let HZ44100=actualData.HZ44100;
     let HZ8000=actualData.HZ8000;
-   
+   this.category=actualData.Catagory;
     this.fileName=actualData.Name;
+    console.log(this.fileName)
     // this.fileName=this.fileName.split(".wav")
-    
-for(let i=0;i<HZ8000.length;i++){
-this.splitted1 = HZ8000[i].split(" ");
-console.log(this.splitted1)
+  
+for(let i=0,j=0,k=0;i<HZ8000.length,j<this.fileName.length,k<HZ44100.length;i++,j++,k++){
+this.Res.push( HZ8000[i].split(" ")[0]);
+this.Res2.push(HZ44100[k].split(" ")[0]);
+this.fileName[i]=this.fileName[i].split(".wav")
+this.count.push(i+1)
 }
-// this. splitted2 = HZ8000[1].split(" ").slice(1);
+console.log(this.count)
+console.log(this.Res)
+console.log(this.category[0])
 // this. splitted12 = HZ44100[0].split(" ").slice(1); 
 // this. splitted22 = HZ44100[1].split(" ").slice(1); 
   const dataDailySalesChart: any = {
-    labels: this.splitted1,
+    labels:  this.Res,
+    
     series: [
-        this.splitted2
+     this.count
+       
     ]
   };
 
@@ -100,15 +110,15 @@ console.log(this.splitted1)
         tension: 0
     }),
     low: 1,
-    high:this.splitted2.length+5, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+    high:this.Res.length+5, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
     height:200,
     width:550,
     chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
   }
   const dataDailySalesChart1: any = {
-    labels: this.splitted12,
+    labels: this.Res,
     series: [
-        this.splitted22
+        this.count
     ]
   };
 
@@ -118,7 +128,7 @@ console.log(this.splitted1)
         tension: 0
     }),
     low: 1,
-    high:this.splitted22.length+5, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+    high:this.Res2.length+5, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
     height:200,
     width:550,
     chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
@@ -134,12 +144,13 @@ console.log(this.splitted1)
     this.startAnimationForLineChart(dailySalesChart1);
 }, 100);
 })
+this.accuaracy(this.Res,this.Res)
 }
 sortvia(userName){
 
   this.Name=userName
   this.ngOnInit
-  this.accuaracy()
+  // this.accuaracy()
   // this.accuaracy()
 }
 resetSort(){
@@ -149,7 +160,7 @@ resetSort(){
 
 // accuaracy
 
-accuaracy(){
+accuaracy(arr1,arr2){
   var expected_value = ["dog", "dog", "cat", "cat",'baby',"baby","gf","goo"];
   var true_value =     ["dog", "Orange", "cat", "Mango","baby","grf","gf","goo"];
 
@@ -176,14 +187,11 @@ var counter_crosses=0;
 n.forEach((num1, index) => {
   const num2 = m[index];
   var n = num1.localeCompare(num2);
-  // console.log(num1, num2);
+  
 
   if(n==0){
     counter_crosses+=1
   }
-  // console.log("counter is ",counter_crosses)
-  
-  // console.log(num1, num2);
 });
 return counter_crosses
 }
