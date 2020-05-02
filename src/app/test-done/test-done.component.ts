@@ -160,7 +160,7 @@ resetSort(){
 
 // accuaracy
 
-accuaracy(arr1,arr2){
+accuaracy(){
   var expected_value = ["dog", "dog", "cat", "cat",'baby',"baby","gf","goo"];
   var true_value =     ["dog", "Orange", "cat", "Mango","baby","grf","gf","goo"];
 
