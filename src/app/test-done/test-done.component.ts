@@ -33,6 +33,10 @@ export class TestDoneComponent implements OnInit {
   precision2: number;
   f12: number;
   updated: boolean=false;
+  testId: any;
+  parmTestID:any
+  class:any="card card-stats mb-4 mb-xl-0 alert alert-dark"
+
   
   constructor(private route: ActivatedRoute,private router: Router,private db:AngularFirestore,private af:AngularFireAuth) {
     
@@ -43,7 +47,15 @@ export class TestDoneComponent implements OnInit {
     this.contacts = this.usersCollection.valueChanges()
     this.TestCollection = this.db.collection<any>('Tests')
     this.Test = this.TestCollection.valueChanges()
-    
+    this.route
+      .queryParams
+      .subscribe(params => {
+        // Defaults to 0 if no query param provided.
+        this.parmTestID = +params['TestId'] || 0;
+        if(this.parmTestID!=0)
+        this.class=" glow-on-hover card card-stats mb-4 mb-xl-0 alert alert-dark"
+      });
+     
   }
   startAnimationForLineChart(chart){
     let seq: any, delays: any, durations: any;
@@ -80,11 +92,12 @@ export class TestDoneComponent implements OnInit {
 };
 
 activateChart($event, id){
+  if(id==this.parmTestID)
+  this.parmTestID=0
  this.count=[]
  this.Res=[]
  this.Res2=[]
   this.id=id
- 
   this.db.collection("Tests").doc(this.id.toString()).get().toPromise().then(result => {
     const actualData = result.data();
     let HZ44100=actualData.HZ44100;
@@ -172,6 +185,17 @@ sortvia(userName){
 resetSort(){
   this.Name='all'
 }
+assign(id){
+ this.testId=id
+}
+delete(){
+  
+  this.db.collection("Tests").doc(String(this.testId)).delete().then(function() {
+    console.log("Document successfully deleted!");
+}).catch(function(error) {
+    console.error("Error removing document: ", error);
+});
+}
 cross_matches(arr1,arr2){
 var n = arr1
 var m =arr2
@@ -222,11 +246,12 @@ if(str==1){
     this. precision = tp/(tp+fp);
     this. recall = tp/(tp+fn);
     if(this.updated==false){
-      alert(122)
+
     this.Resarray.push(this.accuracy,this.f1,this.precision,this.recall)
     this.db.collection("Tests").doc(this.id.toString()).set({
      Result8000: this.Resarray
     }, { merge: true });
+    
   }
 }
 if(str==2){

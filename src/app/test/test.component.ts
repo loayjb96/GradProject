@@ -341,4 +341,9 @@ this.done=false;
 this.ResArray1=["",""]
 this.ResArray2=["",""]
   }
+  navigateToPage(){
+
+    this.router.navigate(['/TestsDone'], { queryParams: { TestId: this.rand.toString() } });
+    // this.router.navigateByUrl('/TestsDone');
+  }
 }
