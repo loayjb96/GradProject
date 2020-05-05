@@ -10,7 +10,7 @@
             <tr>  
               <th width="30">Roll No</th>  
               <th width="100"> Tester Name</th>  
-              <th width="50">Tested Algorithm</th>  
+              <!-- <th width="50">Tested Algorithm</th>   -->
               <th width="70">Category</th>  
             
               <th width="50">Delete</th>  
@@ -26,7 +26,7 @@
                 <input type="text" disabled class="form-control wp-30" [(ngModel)]="blankRowArray[i].Name"  
                   [ngModelOptions]="{standalone: true}">  
               </td>  
-              <td>  
+              <!-- <td>  
                 <select [disabled]=Enable [(ngModel)]="blankRowArray[i].Algorithm" [ngModelOptions]="{standalone: true}"  
                   class="form-control wp-70">  
                   <option [ngValue]="0" disabled selected>--Choose--  
@@ -45,7 +45,7 @@
                   <option [value]="12">Reinforcement or Semi-Supervised Machine Learning</option> 
                   <option [value]="13">Independent Component Analysis</option>    
                 </select>  
-              </td>  
+              </td>   -->
               <td>  
                 <input list="Category" name="myBrowser" [(ngModel)]="blankRowArray[i].Catagory" (change)="OnCategoryCheked(blankRowArray[i].Catagory,i)"  
                 [ngModelOptions]="{standalone: true}" class="form-control wp-80" >
@@ -95,10 +95,12 @@
     <div class="input-group ">
       <button  class="btn btn-success btn-file" [disabled]="!Enable">     
 
-          Upload File<input #file type="file" [disabled]="!Enable"  (change)="preview(file.files,$event)" id="imgInp">
+          Upload File<input #file type="file" [disabled]="!Enable"  (change)="preview(file.files,$event)" id="imgInp" multiple>
       </button>
   </div>
-  <h3 *ngIf="path.length">{{pathWithFile}}</h3>
+  <div *ngIf="path.length">
+    <h3 *ngFor="let temp of selectedFile">{{temp.name}}</h3>
+  </div>
       </div>
     </div>
     
@@ -123,8 +125,16 @@
             
                 
                 <address *ngIf='NewPost'class="alert alert-success">
-                  <div *ngFor="let r of res.split(',')">
-                    {{r}} <br/>
+                  <h3>API Response</h3>
+                  <div *ngFor="let r of res.split(','); let i = index">
+                    <!-- <div *ngIf="i<selectedFile.length">
+                    <h4 style="color: black;">
+                {{FileName}}
+              </h4>
+                    <br/>
+                    </div> -->
+                    {{r}} 
+                    <br/>
               </div> 
                 <!-- <p class="street-address">{{res}}</p> -->
                 
@@ -136,8 +146,16 @@
                 <h4  class="alert alert-primary" style="text-align: center;">samplingrate 44100</h4>
                
                 <address *ngIf='NewPost1' class="alert alert-success">
-                  <div *ngFor="let r2 of res2.split(',')">
-                    {{r2}} <br/>
+                  <h3>API Response</h3>
+                  <div *ngFor="let r2 of res2.split(','); let i = index">
+                    <!-- <div *ngIf="i<selectedFile.length">
+                      <h4 style="color: black;">
+                      {{FileName}}
+                    </h4>
+                          <br/>
+                          </div> -->
+                          {{r2}} 
+                          <br/>
               </div> 
                 
                 </address>
