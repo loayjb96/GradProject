@@ -8,45 +8,26 @@
         <table class="table table-bordered">  
           <thead>  
             <tr>  
-              <th width="30">Roll No</th>  
-              <th width="100"> Tester Name</th>  
-              <!-- <th width="50">Tested Algorithm</th>   -->
-              <th width="70">Category</th>  
+              <th style="width: fit-content;" >Roll No</th>  
+              <th style="width: fit-content;">Name</th>  
+             
+              <th style="width: fit-content;">Category</th>  
             
-              <th width="50">Delete</th>  
+              <th style="width: fit-content;">Actions</th>  
             </tr>  
           </thead>  
           <tbody>  
             <tr *ngFor="let row of blankRowArray; let i = index">  
-              <td>  
+              <td style="width: fit-content;">  
                 <input type="text" disabled class="form-control wp-30" [(ngModel)]="blankRowArray[i].RollNo"  
                   [ngModelOptions]="{standalone: true}">  
               </td>  
-              <td>  
+              <td style="width: fit-content;">  
                 <input type="text" disabled class="form-control wp-30" [(ngModel)]="blankRowArray[i].Name"  
                   [ngModelOptions]="{standalone: true}">  
               </td>  
-              <!-- <td>  
-                <select [disabled]=Enable [(ngModel)]="blankRowArray[i].Algorithm" [ngModelOptions]="{standalone: true}"  
-                  class="form-control wp-70">  
-                  <option [ngValue]="0" disabled selected>--Choose--  
-                  </option>  
-                  <option [value]="1">Linear Regression</option>  
-                  <option [value]="2">Logistic Regression</option>  
-                  <option [value]="3">Support Vector Machines</option>  
-                  <option [value]="4">Random Forest</option>  
-                  <option [value]="5">Naïve Bayes Classification</option>  
-                  <option [value]="6">Ordinary Least Square Regression</option>  
-                  <option [value]="7">K-means</option>  
-                  <option [value]="8">Ensemble Methods</option>  
-                  <option [value]="9">Apriori Algorithm</option> 
-                  <option [value]="10">Principal Component Analysis</option>  
-                  <option [value]="11">Singular Value Decomposition</option>  
-                  <option [value]="12">Reinforcement or Semi-Supervised Machine Learning</option> 
-                  <option [value]="13">Independent Component Analysis</option>    
-                </select>  
-              </td>   -->
-              <td>  
+
+              <td style="width: fit-content;">  
                 <input list="Category" name="myBrowser" [(ngModel)]="blankRowArray[i].Catagory" (change)="OnCategoryCheked(blankRowArray[i].Catagory,i)"  
                 [ngModelOptions]="{standalone: true}" class="form-control wp-80" >
                 
@@ -60,8 +41,13 @@
               </td>  
              
               <td style="align-items: center;">  
-                <button (click)="deleteRow(i)" class="btn btn-danger">Delete Row</button>  
+                <!-- <button (click)="deleteRow(i)" class="btn btn-danger">Delete Row</button> 
+                <button style="margin: 10px;" class="btn btn-primary" (click)="addBlankRow()">Add Category</button>  -->
+                <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons" *ngIf="this.blankRowArray[i].Catagory!=''"  (click)="addBlankRow(i)">&#xE03B;</i></a>
+                <!-- <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a> -->
+                <a class="delete" title="Delete" data-toggle="tooltip" (click)="deleteRow(i)"><i class="material-icons">&#xE872;</i></a>
               </td>  
+           
             </tr>  
             
           </tbody>  
@@ -71,9 +57,10 @@
         
     </div>  
   </div> 
-  <div class="center text-center" >  
+  <div *ngIf="show" class="center text-center" >  
     <button style="margin: 10px;" class="btn btn-primary" (click)="addBlankRow()">Add Category</button>  
   </div>  
+ 
   <div *ngIf="path.length">
     <h3  class="text-center">
       Path
@@ -98,6 +85,7 @@
           Upload File<input #file type="file" [disabled]="!Enable"  (change)="preview(file.files,$event)" id="imgInp" multiple>
       </button>
   </div>
+
   <div *ngIf="path.length">
     <h3 *ngFor="let temp of selectedFile">{{temp.name}}</h3>
   </div>
@@ -105,6 +93,11 @@
     </div>
     
   </div> 
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
   <div class="center text-center" >  
     <button data-toggle="modal" data-target="#Test" style="margin: 10px;" class="btn btn-warning" [disabled]="!check" (click) ="createPosts()" >Commeit new test</button>  
   </div> 
