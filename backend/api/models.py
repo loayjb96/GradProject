@@ -10,6 +10,8 @@ from django.core.files import File
 #     test_id=models.CharField(max_length=32)
 #     pass
 ###########################3 in case we want to use model 
+# for know we hsve s proplem when deploying to herok u
+#  
 class My_Test(models.Model):
     title = models.CharField(max_length=32)
     test_id = models.AutoField(primary_key=True)
