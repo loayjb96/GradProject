@@ -81,6 +81,7 @@ export class DashboardComponent implements OnInit {
     this.Test = this.TestCollection.valueChanges()
     this.Test.subscribe(res => {
       for(let k=0;k<res.length;k++){
+        if(res[k].Result8000)
        this.data.push(res[k].Result8000[0])
       this.testId.push(res[k].TestId)
       }

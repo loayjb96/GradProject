@@ -67,6 +67,7 @@ export class TestComponent  {
   SystemUser: any;
   show: boolean=true;
   Can_add: boolean=false;
+  activate: boolean;
   
 
   constructor(
@@ -80,6 +81,7 @@ export class TestComponent  {
   selectedFile: File[] = [];
 
   async preview(files,event) {
+    this.activate=true
     this.selectedFile=[]
     if (files.length === 0)
       return;
@@ -106,6 +108,7 @@ export class TestComponent  {
       this.downloadURL= this.storage.ref(this.pathWithFile).getDownloadURL().subscribe(result => {
        if(i==filesAmount-1)
        this.check=true;
+       this.activate=false
         this.now = new Date().toLocaleString();
         this.delteurl=result;
         const Data={Url:result,Path:this.fullPath,Name:this.selectedFile[i].name,Date:this.now}
@@ -359,4 +362,5 @@ this.ResArray2=["",""]
     this.router.navigate(['/TestsDone'], { queryParams: { TestId: this.rand.toString() } });
     // this.router.navigateByUrl('/TestsDone');
   }
+  
 }

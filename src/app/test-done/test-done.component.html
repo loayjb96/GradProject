@@ -171,21 +171,91 @@
                                       <div class="card-body table-responsive">
                                           <table class="table table-hover">
                                               <thead class="text-warning">
-                                                  <th>Accuracy</th>
-                                                  <th>F1 Score</th>
-                                                  <th>Precision</th>
-                                                  <th>Recall</th>
+                                                  <th>Measure</th>
+                                                  <th>Value</th>
+                                                  <th>Derivations</th>
+                                                 
                                                   
                                               </thead>
                                               <tbody>
-                                                  
+                                          
                                                   <tr >
-                                                    <td>{{accuracy*100|number}}%</td>
-                                                    <td>{{f1*100|number}}%</td>
-                                                    <td>{{precision*100|number}}%</td>
+                                                    <td>Recall</td>
                                                     <td>{{recall*100|number}}%</td>
+                                                    <td>TPR = TP / (TP + FN)</td>
+                                                   
+                                                  </tr >
+                                                  <tr >
+                                                    
+                                                    <td>Specifity</td>
+                                                    <td>{{Specifity*100|number}}%</td>
+                                                    <td>SPC = TN / (FP + TN)</td>
                                                   
                                                   </tr >
+                                                  <tr >
+                                                  
+                                                    <td>Precision</td>
+                                                    <td>{{precision*100|number}}%</td>
+                                                    <td>PPV = TP / (TP + FP)</td>
+                                                   
+                                                  </tr >
+                                                  <tr >
+                                                   
+                                                    <td>Negative Predictive Value</td>
+                                                    <td>{{NegativePredictive*100|number}}%</td>
+                                                    <td>NPV = TN / (TN + FN)</td>
+                                                    
+                                                  </tr >
+                                                  <tr >
+                                                 
+                                                    <td>False Positive Rate</td>
+                                                    <td>{{FalsePositive*100|number}}%</td>
+                                                  
+                                                    <td>FPR = FP / (FP + TN)</td>
+                                                
+                                                  </tr >
+                                                  <tr >
+                                             
+                                                    <td>False Discovery Rate</td>
+                                                    <td>{{FalseFiscovery*100|number}}%</td>
+                                                   
+                                                    <td>FDR = FP / (FP + TP)</td>
+                                               
+                                                  </tr >
+                                                  <tr >
+                                    
+                                                    <td>False Negative Rate</td>
+                                                    <td>{{FalseNegative*100|number}}%</td>
+                                                
+                                                    <td>FNR = FN / (FN + TP)</td>
+                                                 
+                                                  </tr >
+                                                  <tr >
+                                                
+                                                    <td>Accuracy</td>
+                                                    <td>{{accuracy*100|number}}%</td>
+                                                    <td>ACC = (TP + TN) / (P + N)</td>
+                                                   
+                                                  </tr >
+                                                  <tr >
+                                                  
+                                                    <td>F1 Score</td>
+                                                    <td>{{f1*100|number}}%</td>
+                                                    
+                                                    <td>F1 = 2TP / (2TP + FP + FN)</td>
+                                                  </tr >
+                                                  <tr >
+                                                  
+                                                   
+                                                 
+                                                    
+                                                    <td>Matthews Correlation Coefficient</td>
+                                                    <td>{{Matthews*100|number}}%</td>
+                                                    <td>TP*TN - FP*FN / sqrt((TP+FP)*(TP+FN)*(TN+FP)*(TN+FN))</td>
+                                                  </tr >
+                                                
+                                               
+                                                 
                                                  
                                                 
                                               </tbody>

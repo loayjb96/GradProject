@@ -36,6 +36,12 @@ export class TestDoneComponent implements OnInit {
   testId: any;
   parmTestID:any
   class:any="card card-stats mb-4 mb-xl-0 alert alert-dark"
+  Specifity: number;
+  NegativePredictive: number;
+  FalsePositive: number;
+  FalseFiscovery: number;
+  FalseNegative: number;
+  Matthews: number;
 
   
   constructor(private route: ActivatedRoute,private router: Router,private db:AngularFirestore,private af:AngularFireAuth) {
@@ -239,12 +245,28 @@ confision_matrix_function(catagory,expected_value_api,str){
     ];
     var p = tp + fn;
     var n = fp + tn;
+    var x=tp+fp
+    var y=tn+fn
+    if(p==0)
+    p=1
+    if(n==0)
+    n=1
+    if(x==0)
+    x=1
+    if(y==0)
+    y=1
 if(str==1){
-  
+  console.log("tp: "+tp+" tn: "+tn+" fp: "+fp+" fn: "+fn)
     this. accuracy = (tp+tn)/(p+n);
     this. f1 = 2*tp/(2*tp+fp+fn);
-    this. precision = tp/(tp+fp);
-    this. recall = tp/(tp+fn);
+    this. precision = tp/(x);
+    this. recall = tp/(p);
+    this.Specifity=tn/(n);
+    this.NegativePredictive=tn/(y);
+    this.FalsePositive=fp/n;
+    this.FalseFiscovery=fp/x;
+    this.FalseNegative=fn/p;
+    this.Matthews=(tp*tn-fp*fn)/Math.sqrt((x)*(p)*(n)*(y))
     if(this.updated==false){
 
     this.Resarray.push(this.accuracy,this.f1,this.precision,this.recall)
