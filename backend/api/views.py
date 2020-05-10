@@ -104,7 +104,19 @@ def api_convert(request):
     # wav='mmm'+'.wav'
     # sound=pydub.AudioSegment.from_mp3(myfile)
     # sound.export(wav,format="wav") 
-    
+     
+     ##added if we want to use this method for know it does m=not work 
+     
+     # def sendfile(name):
+    #     base='./mediafiles/'
+    #     fname=base+name+'.wav'
+    #     print(fname)
+    #     f = open(fname,"rb") 
+    #     response = HttpResponse()
+    #     response.write(f.read())
+    #     response['Content-Type'] ='audio/mp3'
+    #     response['Content-Length'] =os.path.getsize(fname )
+    #     return response
     
 
 # Create your views here.

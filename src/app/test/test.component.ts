@@ -65,6 +65,9 @@ export class TestComponent  {
   done: boolean;
   FileName: string;
   SystemUser: any;
+  show: boolean=true;
+  Can_add: boolean=false;
+  activate: boolean;
   
 
   constructor(
@@ -78,6 +81,7 @@ export class TestComponent  {
   selectedFile: File[] = [];
 
   async preview(files,event) {
+    this.activate=true
     this.selectedFile=[]
     if (files.length === 0)
       return;
@@ -100,9 +104,11 @@ export class TestComponent  {
     
      this.storage.ref(this.fullPath).child(this.selectedFile[i].name).put(this.selectedFile[i], {contentType: mimeType}).then(() => {
       this.pathWithFile=this.fullPath.concat("/").concat(this.selectedFile[i].name);
-      this.check=true;
+      
       this.downloadURL= this.storage.ref(this.pathWithFile).getDownloadURL().subscribe(result => {
-       
+       if(i==filesAmount-1)
+       this.check=true;
+       this.activate=false
         this.now = new Date().toLocaleString();
         this.delteurl=result;
         const Data={Url:result,Path:this.fullPath,Name:this.selectedFile[i].name,Date:this.now}
@@ -152,17 +158,23 @@ export class TestComponent  {
    
   }
   OnCategoryCheked(x:any,i:any){
+   
     this.path[i]=x;
     this.temp=x;
     const Data= {path:x}// URL:this.messege what we send 
+    if(this.data[x]){
+      console.log(this.data[x]);
+      this.Enable=true
+  return
+      }
+   
     
     if(i==0){
 x=0
     }
     else
     x=this.blankRowArray[i-1].Catagory
- 
-    
+  
           let a= this.http.post('https://systemtestproject-96b42.firebaseio.com/Category/'+x+'.json',Data)
           a.subscribe(  
            (response)=>{
@@ -176,7 +188,8 @@ x=0
 
     this.check=true;
   }
-  addBlankRow() {  
+  addBlankRow(i) {  
+    this.show=false
  if(this.index2!=0){
    this.index2=this.temp
  }
@@ -185,26 +198,27 @@ x=0
     
     this.getPosts(this.index2).subscribe(  
       Message=>{this.Message=Message;
-      this.addBlank()}
+      this.addBlank(i)}
     
-    );
-    
-     
-          
+    );        
   } 
-  addBlank(){
+  addBlank(i){
     this.data=[]
     const blankRowData = new BlankRow();  
     blankRowData.RollNo = this.UserRole,  
     blankRowData.Name = this.UserName,  
+    
     blankRowData.Algorithm = '',  
-    blankRowData.Catagory = '',  
+    blankRowData.Catagory = '',
+
     this.blankRowArray.push(blankRowData) 
+   
+ 
     for (let key in this.Message) {
            this.data[this.Message[key].path]=this.Message[key].path
       
      }
-    console.log("secound ",this.data)
+ 
     this.index2++;
   } 
   ExtractPath(){
@@ -217,6 +231,8 @@ x=0
   }
   
   deleteRow(index) {  
+    if(index==0)
+    this.show=true;
       this.blankRowArray.splice(index, 1);  
       this.path.splice(index, 1);  
       if(this.path.length==0)
@@ -231,12 +247,12 @@ x=0
   }
 
   getPosts(index:any){
-   
+  
     return this.http1.get('https://systemtestproject-96b42.firebaseio.com/Category/'+index+'.json')
     .map((response: Response) => {
       const data: Post[] = response.json();
       this.Message=data
-      console.log(this.Message)
+     
       return data;
     }
 
@@ -341,4 +357,10 @@ this.done=false;
 this.ResArray1=["",""]
 this.ResArray2=["",""]
   }
+  navigateToPage(){
+
+    this.router.navigate(['/TestsDone'], { queryParams: { TestId: this.rand.toString() } });
+    // this.router.navigateByUrl('/TestsDone');
+  }
+  
 }
