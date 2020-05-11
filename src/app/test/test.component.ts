@@ -268,6 +268,7 @@ x=0
   createPosts(){
     this.res=""
     this.res2=""
+    this.FileNames=[]
     this.rand=Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
     this.str=this.rand.toString()
     this.ApiREquest(8000)

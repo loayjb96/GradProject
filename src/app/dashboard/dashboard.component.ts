@@ -16,6 +16,8 @@ export class DashboardComponent implements OnInit {
   Test: Observable<any[]> ;
   data:Array<number>=[];
   testId:Array<number>=[];
+  avergae:any;
+  count:any;
   constructor(private db:AngularFirestore) { }
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
@@ -75,16 +77,24 @@ export class DashboardComponent implements OnInit {
   };
   ngOnInit( 
   ) {
+    this. avergae=0
+    this.count=0
+
     this.usersCollection = this.db.collection<any>('users')
     this.contacts = this.usersCollection.valueChanges()
     this.TestCollection = this.db.collection<any>('Tests')
     this.Test = this.TestCollection.valueChanges()
     this.Test.subscribe(res => {
       for(let k=0;k<res.length;k++){
-        if(res[k].Result8000)
+        if(res[k].Result8000){
        this.data.push(res[k].Result8000[0])
+       this.avergae+=res[k].Result8000[0]
+       this.count++
+       
+        }
       this.testId.push(res[k].TestId)
       }
+      this.avergae/=this.count
        this.activateCharts()
        
    });
