@@ -247,10 +247,10 @@ confision_matrix_function(catagory,expected_value_api,str){
     var n = fp + tn;
     var x=tp+fp
     var y=tn+fn
-    if(p==0)
+    if(p+n==0)
     p=1
-    if(n==0)
-    n=1
+    
+  
     if(x==0)
     x=1
     if(y==0)
@@ -261,12 +261,16 @@ if(str==1){
     this. f1 = 2*tp/(2*tp+fp+fn);
     this. precision = tp/(x);
     this. recall = tp/(p);
+    if(n==0)
+    this.Specifity=tn/(1);
+    else
     this.Specifity=tn/(n);
     this.NegativePredictive=tn/(y);
     this.FalsePositive=fp/n;
     this.FalseFiscovery=fp/x;
     this.FalseNegative=fn/p;
     this.Matthews=(tp*tn-fp*fn)/Math.sqrt((x)*(p)*(n)*(y))
+    // alert(this.accuracy)
     if(this.updated==false){
 
     this.Resarray.push(this.accuracy,this.f1,this.precision,this.recall)
