@@ -167,7 +167,10 @@
                         <div class="card-footer">
                            
                                   <div class="card">
-                                   
+                                    <div class="card-header card-header-info">
+                                      <h4 class="card-title">Confusion matrix values</h4>
+                                      
+                                  </div>
                                       <div class="card-body table-responsive">
                                           <table class="table table-hover">
                                               <thead class="text-warning">
@@ -263,15 +266,62 @@
  
                               </div>
                               </div>
+                              
                            
                         </div>
                         <div class="card-footer">
-                            <div class="stats">
+                          <div class="card">
+                            <div class="card-header card-header-primary">
+                              <h4 class="card-title">Audio Files Included in this Test</h4>
+                              
+                          </div>
+                              <div class="card-body table-responsive">
+                                  <table class="table table-hover">
+                                      <thead class="text-warning">
+                                          <th>File</th>
+                                          <th>Returned Value</th>
+                                          <th>Expected Value</th>
+                                         
+                                          
+                                      </thead>
+                                      <tbody>
+                                  
+                                          <tr *ngFor="let name of fileName;let i = index ">
+                                            <td style="font-weight: 500; background-color: chocolate;" *ngIf="category==Res[i]; else loggedOut1">{{name}} </td>
+                                            <td style="font-weight: 500; background-color: chocolate;" *ngIf="category==Res[i]; else loggedOut2">{{Res[i]}} </td>
+                                            <td style="font-weight: 500; background-color: chocolate;" *ngIf="category==Res[i]; else loggedOut3">{{category}} </td>
+                                            <ng-template #loggedOut1>
+                                              <td>{{name}}</td>
+                                          
+                                            </ng-template>
+                                            <ng-template #loggedOut2>
+                                              
+                                              <td>{{Res[i]}}</td>
+                                            
+                                            </ng-template>
+                                            <ng-template #loggedOut3>
+                                             
+                                            <td>{{category}}</td>
+                                            </ng-template>
+                                            
+                                            </tr>
+                                           
+                                         
+                                         
+                                         
+                                        
+                                      </tbody>
+                                  </table>
+
+                      </div>
+                      </div>
+                            <!-- <div class="stats">
                                 <i class="material-icons">access_time</i> updated 4 minutes ago
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
+                
                 <div class="col-md-12">
                     <div class="card card-chart">
                         <div class="card-header card-header-primary">
