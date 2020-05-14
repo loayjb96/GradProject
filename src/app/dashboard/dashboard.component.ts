@@ -14,7 +14,9 @@ export class DashboardComponent implements OnInit {
   contacts: Observable<any[]> ;
   TestCollection;
   Test: Observable<any[]> ;
+  testCount:Array<number>=[];
   data:Array<number>=[];
+  Testers:Array<number>=[];
   testId:Array<number>=[];
   avergae:any;
   count:any;
@@ -98,6 +100,21 @@ export class DashboardComponent implements OnInit {
        this.activateCharts()
        
    });
+   this.contacts.subscribe(res => {
+    for(let k=0;k<res.length;k++){
+     console.log(res[k])
+     this.Testers.push(res[k].fullName)
+     if(res[k].Tests)
+     this.testCount.push(res[k].Tests.length)
+     else
+     this.testCount.push(0)
+  
+    }
+    console.log(this.Testers)
+    console.log(this.testCount)
+     this.activateCharts()
+     
+ });
   
   
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
@@ -179,7 +196,8 @@ export class DashboardComponent implements OnInit {
       }),
       low: 0,
       high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-      chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
+      chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
+      
   }
 
   var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
@@ -192,19 +210,30 @@ export class DashboardComponent implements OnInit {
   /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
 
   var datawebsiteViewsChart = {
-    labels: ['1', '2', '3', '4', '5','6','7'],
+    labels:this.Testers,
     series: [
-      [42, 43, 84, 68, 85,90]
-
+     this.testCount
     ]
   };
   var optionswebsiteViewsChart = {
       axisX: {
-          showGrid: false
+          showGrid: true
       },
-      low: 0,
-      high: 100,
-      chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
+      
+      low:Math.min(...this.testCount),
+              high:Math.max(...this.testCount)+0.1,
+      chartPadding: { top: 0, right: 5, bottom: 0, left: 0},
+      axisY: {
+        showGrid:true,
+        low:Math.min(...this.testCount),
+              high:Math.max(...this.testCount)+0.1,
+        
+        ticks: this.testCount
+      
+      
+       
+    }
+      
   };
   var responsiveOptions: any[] = [
     ['screen and (max-width: 640px)', {

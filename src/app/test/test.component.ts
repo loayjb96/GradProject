@@ -151,6 +151,7 @@ export class TestComponent  {
 
     })
     }
+    this.test=[""];
  this.pathWithFile=""
 
     this.path=[];
@@ -266,6 +267,7 @@ x=0
 
   }
   createPosts(){
+ 
     this.res=""
     this.res2=""
     this.FileNames=[]
@@ -277,8 +279,10 @@ x=0
    if(user!=null){
     this.db.collection("users").doc(user.uid).get().toPromise().then(result => {
       const actualData = result.data();
-      this.test=actualData.Tests;
+       this.test=actualData.Tests;
+      // this.test.push(actualData.Tests)
   })
+  console.log(this.test)
   this.test.push(this.str)
     let Tests=this.test 
     console.log(Tests)
