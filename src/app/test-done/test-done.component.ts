@@ -58,8 +58,12 @@ export class TestDoneComponent implements OnInit {
       .subscribe(params => {
         // Defaults to 0 if no query param provided.
         this.parmTestID = +params['TestId'] || 0;
-        if(this.parmTestID!=0)
-        this.class=" glow-on-hover card card-stats mb-4 mb-xl-0 alert alert-dark"
+        if(this.parmTestID!=0){
+          this.class=" glow-on-hover card card-stats mb-4 mb-xl-0 alert alert-dark"
+          this.calc(this.parmTestID)
+      
+        
+        }
       });
      
   }
@@ -96,10 +100,9 @@ export class TestDoneComponent implements OnInit {
 
     seq = 0;
 };
+calc(id){
 
-activateChart($event, id){
-  if(id==this.parmTestID)
-  this.parmTestID=0
+  
  this.count=[]
  this.Res=[]
  this.Res2=[]
@@ -110,12 +113,7 @@ activateChart($event, id){
     let HZ8000=actualData.HZ8000;
    this.category=actualData.Catagory;
     this.fileName=actualData.Name;
-    if(!actualData.Result8000){
-      this.updated=false
- 
-    }
-    else
-    this.updated=true
+  
    
     // this.fileName=this.fileName.split(".wav")
   
@@ -181,7 +179,14 @@ this.confision_matrix_function(this.category[0],this.Res2,"2")
     this.startAnimationForLineChart(dailySalesChart1);
 }, 100);
 })
-
+  
+}
+activateChart($event, id){
+ 
+this.calc(id)
+if(id==this.parmTestID){
+  this.parmTestID=0
+  }
 }
 sortvia(userName){
 

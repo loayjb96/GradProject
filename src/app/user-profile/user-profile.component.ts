@@ -18,6 +18,7 @@ export class UserProfileComponent implements OnInit {
   UserEmail:string;
   Uid: string;
   whenToShow: boolean;
+  length: number;
   
 
 
@@ -41,6 +42,10 @@ export class UserProfileComponent implements OnInit {
           this.UserPhone=Data.PhoneNumber;
           this.UserEmail=Data.Email;
           this.UserTests=Data.Tests;
+          if( this.UserTests)
+          this.length=this.UserTests.length
+          else
+          this.length=0
           console.log(this.Uid)
           if(user.uid==this.Uid){
           
