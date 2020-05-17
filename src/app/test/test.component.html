@@ -107,53 +107,104 @@
     
     
   </div> 
-  <div class="modal fade" id="Test" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="Test" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    
     <div class="modal-dialog modal-lg"  style="margin-top: 5%;">
       <div class="item-summary">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="item-summary">
-                <h4  class="alert alert-primary" style="text-align: center;">samplingrate 8000</h4>
-            
+              <h4  class="alert alert-primary" style="text-align: center;">Test ID: {{rand.toString()}}</h4>
+            <!--
                 
                 <address *ngIf='NewPost'class="alert alert-success">
                   <h3>API Response</h3>
                   <div *ngFor="let r of res.split(','); let i = index">
-                    <!-- <div *ngIf="i<selectedFile.length">
-                    <h4 style="color: black;">
-                {{FileName}}
-              </h4>
-                    <br/>
-                    </div> -->
                     {{r}} 
                     <br/>
-              </div> 
-                <!-- <p class="street-address">{{res}}</p> -->
-                
-                </address>
+              </div>
+                </address> -->
+                <div class="card-body table-responsive">
+                  <table class="table table-hover">
+                      <thead class="text-warning">
+                         <th>#</th>
+                          <th>File Name</th>
+                          <th>Duartion</th>
+                          <th>API Result</th>
+                          
+                      </thead>
+                    
+                      <tbody *ngIf='NewPost'class="alert alert-success" >
+                          
+                          <tr *ngFor= "let name  of selectedFile; let i = index" >
+                              <td>{{i+1}}</td>
+                              <td>{{name.name}}</td>
+                              <td >{{res[i].length}} Secound</td>
+                              <!--secound table-->
+                              <td>
+                                <div class="item-summary">
+                            
+                                  <div class="card-body table-responsive">
+                                    <table class="table table-hover">
+                                        <thead class="text-warning">
+                                           <th>Secound</th>
+                                            <th>Result</th>
+                                            
+                                        </thead>
+                                      
+                                        <tbody *ngIf='NewPost'>
+                                            
+                                            <tr *ngFor="let r of res[i];let j = index" >
+                                              <td>{{j+1}}</td>
+                                                <td>{{r}}</td>
+
+                                          
+                                            
+                                            </tr >
+                                           
+                                          
+                                        </tbody>
+                                      
+                                    </table>
+                                    
+                                </div>
+                                  </div>
+
+
+
+
+
+
+                              </td>
+                             
+                             <!---->
+                          
+                          </tr >
+                         
+                        
+                      </tbody>
+                    
+                  </table>
+                  
+              </div>
                 </div>
             </div>
-            <div class="col-md-6 ml-auto">
+            <!-- <div class="col-md-6 ml-auto">
               <div class="item-summary">
                 <h4  class="alert alert-primary" style="text-align: center;">samplingrate 44100</h4>
                
                 <address *ngIf='NewPost1' class="alert alert-success">
                   <h3>API Response</h3>
                   <div *ngFor="let r2 of res2.split(','); let i = index">
-                    <!-- <div *ngIf="i<selectedFile.length">
-                      <h4 style="color: black;">
-                      {{FileName}}
-                    </h4>
-                          <br/>
-                          </div> -->
+      
                           {{r2}} 
                           <br/>
               </div> 
                 
                 </address>
                 </div>
-            </div>
+            </div> -->
           </div>
     
 
@@ -161,14 +212,10 @@
       </div>
   </div>
   <div class="center text-center" >  
-    <button data-toggle="modal" data-target="#Test" data-dismiss="modal" style="margin: 10px;" class="btn btn-info" (click)="navigateToPage()" >Show More Info</button>  
+    <button data-toggle="modal" data-target="#Test" data-dismiss="modal" style="margin: 10px;" class="btn btn-danger" >Cancel</button> 
+    <button data-toggle="modal" data-target="#Test" data-dismiss="modal" style="margin: 10px;" class="btn btn-info" (click)="navigateToPage()" >Show More Info</button>
+
   </div> 
   </div>
-  <!-- {{NewPost |async| json}} -->
-
-  <!-- <div *ngFor="let post of Posts | 
-  async">
-    {{post | json}}
-  </div>  -->
 
 </div>  
