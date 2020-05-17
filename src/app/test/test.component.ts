@@ -84,6 +84,7 @@ export class TestComponent  {
   selectedFile: File[] = [];
 
   async preview(files,event) {
+    console.log('inside preview ')
     this.activate=true
     this.selectedFile=[]
     if (files.length === 0)
