@@ -91,6 +91,7 @@ export class TestComponent  {
       return;
       this.pathWithFile=""
       var filesAmount = event.target.files.length;
+      alert(event.target.duration)
      
       for (let i = 0; i < filesAmount; i++) {
         this.ExtractPath();

@@ -8,18 +8,57 @@
   
     
    
-      <div style="margin-left: 3.5%;" *ngFor="let cat of Category | async ;let i = index" >
-      <div  class="top-droppable folder tooltiper tooltiper-up sonar-emitter" data-tooltip="0 file" id="folder3" on-mouseover='playCurrentSound(cat.Url)' on-mouseout="stopCurrentSound()" (click)='PassInfo(cat)'  data-toggle="modal" data-target="#contact">
-        <div class="sonar-wave" style="background-image: url('./assets/img/sidebar-1.jpg' );">
+     <div class="row justify-content-center" style="align-items: center;">
+        <div class="card col-md-3" style="margin-left: 1%; border-radius: 10%; "   *ngFor="let cat of Category | async ;let i = index"  >
+          <h5 class="card-title justify-content-center" style="text-align: center;" >{{cat.Name.replace(".wav","")}}</h5>
+         
+          <div class="card-body">
+           
+            <section class="item-card center" style="background-color: #5cb85c;; border-radius: 5%;" >
+              <div style="margin-left: 2%;"  class="item-summary">
+    
+              <p style="color: #ffff;" class="venue">Category</p>
+              <address class="address">
+              <p style="color: #ffff;" class="street-address">{{cat.Path}}</p>
+              
+              </address>
+              </div>
+              
+              <div style="margin-left: 2%;"  class="item-time-date">
+              <time style="color: #ffff;" class="date" datetime="2018-10-16">{{cat.Date}}</time>
+              
+              </div>
+              
+              </section>
+            
+              <audio style="width: 90%;" controls class="embed-responsive-item">
+                  <source src={{cat.Url}}>
+              </audio>
+       
+          </div>
+        </div>
+      </div>
+   
+        
+<!-- 
+        <div class="col-sm-4 col-sm-offset-4 embed-responsive embed-responsive-4by3">
+          <audio controls class="embed-responsive-item">
+              <source src={{cat.Url}}>
+          </audio>
+      </div>
+        <div  class="top-droppable folder tooltiper tooltiper-up sonar-emitter" data-tooltip="0 file" id="folder3" on-mouseover='playCurrentSound(cat.Url)' on-mouseout="stopCurrentSound()" (click)='PassInfo(cat)'  data-toggle="modal" data-target="#contact">
+        <div class="sonar-wave" >
+         
         <i class="fa fa-music" aria-hidden="true"></i>
         <i class="fa fa-check" aria-hidden="true"></i>
-       
-        <p style="font-weight: 500; font-family: Arial, Helvetica, sans-serif; color:black;">{{cat.Name}}</p>
+      
+        <p style="font-weight: 500; font-family: Arial, Helvetica, sans-serif; color:black;">{{cat.Name.replace(".wav","")}}</p>
         
       </div>
     </div>
+
       </div>
-   
+    -->
       
 
  
@@ -31,6 +70,7 @@
   <div class="modal-dialog modal-sm"  style="margin-top: 5%;">
   <section class="item-card center" style="background-color: #5cb85c;; border-radius: 5%;" >
     <div style="margin-left: 2%;"  class="item-summary">
+      
     <h2 class="title" style="color: #ffff;">{{info}}</h2>
     <p style="color: #ffff;" class="venue">Category</p>
     <address class="address">

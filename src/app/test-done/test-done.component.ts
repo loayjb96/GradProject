@@ -120,7 +120,7 @@ calc(id){
 for(let i=0,j=0,k=0;i<HZ8000.length,j<this.fileName.length,k<HZ44100.length;i++,j++,k++){
 this.Res.push( HZ8000[i].split(" ")[0]);
 this.Res2.push(HZ44100[k].split(" ")[0]);
-this.fileName[i]=this.fileName[i].split(".wav")
+this.fileName[i]=this.fileName[i].replace(".wav","")
 this.count.push(i+1)
 }
 console.log(this.count)

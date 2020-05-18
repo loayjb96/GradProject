@@ -16,10 +16,17 @@ export class DashboardComponent implements OnInit {
   Test: Observable<any[]> ;
   testCount:Array<number>=[];
   data:Array<number>=[];
+  data2:Array<number>=[];
   Testers:Array<number>=[];
   testId:Array<number>=[];
   avergae:any;
+  avergae2:any;
   count:any;
+  data44100: Array<number>=[];
+  data244100: Array<number>=[];
+  avergae44100: any;
+  avergae244100: any;
+  count44100: any;
   constructor(private db:AngularFirestore) { }
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
@@ -80,7 +87,11 @@ export class DashboardComponent implements OnInit {
   ngOnInit( 
   ) {
     this. avergae=0
+    this. avergae2=0
     this.count=0
+    this. avergae44100=0
+    this. avergae244100=0
+    this.count44100=0
 
     this.usersCollection = this.db.collection<any>('users')
     this.contacts = this.usersCollection.valueChanges()
@@ -90,13 +101,29 @@ export class DashboardComponent implements OnInit {
       for(let k=0;k<res.length;k++){
         if(res[k].Result8000){
        this.data.push(res[k].Result8000[0])
+       this.data2.push(res[k].Result8000[1])
+
        this.avergae+=res[k].Result8000[0]
+       this.avergae2+=res[k].Result8000[1]
        this.count++
        
         }
+        if(res[k].Result44100){
+          this.data44100.push(res[k].Result44100[0])
+          this.data244100.push(res[k].Result44100[1])
+   
+          this.avergae44100+=res[k].Result44100[0]
+          this.avergae244100+=res[k].Result44100[1]
+          this.count44100++
+          
+           }
       this.testId.push(res[k].TestId)
       }
+     
       this.avergae/=this.count
+      this.avergae2/=this.count
+      this.avergae44100/=this.count44100
+      this.avergae244100/=this.count44100
        this.activateCharts()
        
    });
@@ -127,15 +154,18 @@ export class DashboardComponent implements OnInit {
     const dataDailySalesChart: any = {
       labels: this.testId,
       series: [
-       this.data
+       this.data,
+       this.data44100
       ]
          
       
   };
   const dataDailySalesChart1: any = {
-    labels: ['1', '2', '3', '4', '5', '6', '7'],
+    labels: this.testId,
     series: [
-        [142, 106, 57,107, 126, 78, 88]
+       this.data2,
+       this.data244100
+    
     ]
 };
 
@@ -167,11 +197,30 @@ export class DashboardComponent implements OnInit {
   }
   const optionsDailySalesChart1: any = {
     lineSmooth: Chartist.Interpolation.cardinal({
-        tension: 0
-    }),
-    low:50,
-    high: 250, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-    chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
+      tension: 10
+  }),
+  
+ 
+  low: 0,
+  high: this.data2.length, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+  chartPadding: { top: 0, right: 0, bottom: -1, left: 0},
+  
+  axisX: {
+    
+    name:'Test',
+    onlyInteger: true,
+},
+
+axisY: {
+  showGrid:true,
+  low:Math.min(...this.data2),
+        high:Math.max(...this.data2)+0.1,
+  type: Chartist.AutoScaleAxis,
+  ticks: this.data2,
+
+  offset:40,
+ 
+}
 }
 
   var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
