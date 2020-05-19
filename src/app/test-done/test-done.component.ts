@@ -5,6 +5,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as Chartist from 'chartist';
 import { stringify } from 'querystring';
+
+import * as firebase from 'firebase/app';
 @Component({
   selector: 'app-test-done',
   templateUrl: './test-done.component.html',
@@ -42,6 +44,7 @@ export class TestDoneComponent implements OnInit {
   FalseFiscovery: number;
   FalseNegative: number;
   Matthews: number;
+  testerid: any;
 
   
   constructor(private route: ActivatedRoute,private router: Router,private db:AngularFirestore,private af:AngularFireAuth) {
@@ -65,6 +68,7 @@ export class TestDoneComponent implements OnInit {
         
         }
       });
+  
      
   }
   startAnimationForLineChart(chart){
@@ -109,20 +113,31 @@ calc(id){
   this.id=id
   this.db.collection("Tests").doc(this.id.toString()).get().toPromise().then(result => {
     const actualData = result.data();
+    if( actualData ){
     let HZ44100=actualData.HZ44100;
     let HZ8000=actualData.HZ8000;
    this.category=actualData.Catagory;
     this.fileName=actualData.Name;
   
-   
+    
     // this.fileName=this.fileName.split(".wav")
   
-for(let i=0,j=0,k=0;i<HZ8000.length,j<this.fileName.length,k<HZ44100.length;i++,j++,k++){
+for(let i=0;i<HZ8000.length;i++){
 this.Res.push( HZ8000[i].split(" ")[0]);
-this.Res2.push(HZ44100[k].split(" ")[0]);
-this.fileName[i]=this.fileName[i].replace(".wav","")
+
 this.count.push(i+1)
 }
+for(let j=0 ;j<this.fileName.length;j++){
+ 
+  this.fileName[j]=this.fileName[j].replace(".wav","")
+
+  }
+  for(let k=0;k<HZ44100.length;k++){
+    
+    this.Res2.push(HZ44100[k].split(" ")[0]);
+  
+
+    }
 console.log(this.count)
 console.log(this.Res)
 console.log(this.category[0])
@@ -130,6 +145,7 @@ this.confision_matrix_function(this.category[0],this.Res,"1")
 this.confision_matrix_function(this.category[0],this.Res2,"2")
 // this. splitted12 = HZ44100[0].split(" ").slice(1); 
 // this. splitted22 = HZ44100[1].split(" ").slice(1); 
+  }
   const dataDailySalesChart: any = {
     labels:  this.Res,
     
@@ -196,8 +212,9 @@ sortvia(userName){
 resetSort(){
   this.Name='all'
 }
-assign(id){
+assign(id,testerid){
  this.testId=id
+ this.testerid=testerid
 }
 delete(){
   
@@ -206,6 +223,8 @@ delete(){
 }).catch(function(error) {
     console.error("Error removing document: ", error);
 });
+this.db.collection("users").doc(this.testerid).update({"Tests":firebase.firestore.FieldValue.arrayRemove(this.testId.toString())})
+
 }
 cross_matches(arr1,arr2){
 var n = arr1
@@ -278,7 +297,7 @@ if(str==1){
     // alert(this.accuracy)
     if(this.updated==false){
 
-    this.Resarray.push(this.accuracy,this.f1,this.precision,this.recall)
+    this.Resarray.push(this.accuracy,this.f1,this.precision,this.recall,this.FalseNegative)
     this.db.collection("Tests").doc(this.id.toString()).set({
      Result8000: this.Resarray
     }, { merge: true });
@@ -290,8 +309,9 @@ if(str==2){
   this. f12 = 2*tp/(2*tp+fp+fn);
   this. precision2 = tp/(tp+fp);
   this. recall2 = tp/(tp+fn);
+  this.FalseNegative=fn/p;
   if(this.updated==false){
-  this.Resarray.push(this.accuracy2,this.f12,this.precision2,this.recall2)
+  this.Resarray.push(this.accuracy2,this.f12,this.precision2,this.recall2,this.FalseNegative)
     this.db.collection("Tests").doc(this.id.toString()).set({
      Result44100: this.Resarray
     }, { merge: true });

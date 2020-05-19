@@ -17,15 +17,23 @@ export class DashboardComponent implements OnInit {
   testCount:Array<number>=[];
   data:Array<number>=[];
   data2:Array<number>=[];
+  data3:Array<number>=[];
+  data4:Array<number>=[];
   Testers:Array<number>=[];
   testId:Array<number>=[];
   avergae:any;
   avergae2:any;
+  avergae3:any;
+  avergae4:any;
   count:any;
   data44100: Array<number>=[];
   data244100: Array<number>=[];
+  data344100: Array<number>=[];
+  data444100: Array<number>=[];
   avergae44100: any;
   avergae244100: any;
+  avergae344100: any;
+  avergae444100: any;
   count44100: any;
   constructor(private db:AngularFirestore) { }
   startAnimationForLineChart(chart){
@@ -88,6 +96,7 @@ export class DashboardComponent implements OnInit {
   ) {
     this. avergae=0
     this. avergae2=0
+    this. avergae4=0
     this.count=0
     this. avergae44100=0
     this. avergae244100=0
@@ -102,15 +111,20 @@ export class DashboardComponent implements OnInit {
         if(res[k].Result8000){
        this.data.push(res[k].Result8000[0])
        this.data2.push(res[k].Result8000[1])
+       this.data3.push(res[k].Result8000[2])
+       this.data4.push(res[k].Result8000[3])
 
        this.avergae+=res[k].Result8000[0]
        this.avergae2+=res[k].Result8000[1]
+       this.avergae4+=res[k].Result8000[3]
        this.count++
        
         }
         if(res[k].Result44100){
           this.data44100.push(res[k].Result44100[0])
           this.data244100.push(res[k].Result44100[1])
+          this.data344100.push(res[k].Result44100[2])
+          this.data444100.push(res[k].Result44100[3])
    
           this.avergae44100+=res[k].Result44100[0]
           this.avergae244100+=res[k].Result44100[1]
@@ -122,6 +136,7 @@ export class DashboardComponent implements OnInit {
      
       this.avergae/=this.count
       this.avergae2/=this.count
+      this.avergae4/=this.count
       this.avergae44100/=this.count44100
       this.avergae244100/=this.count44100
        this.activateCharts()
@@ -233,9 +248,10 @@ axisY: {
   /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
 
   const dataCompletedTasksChart: any = {
-      labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
+      labels: this.testId,
       series: [
-          [230, 750, 450, 300, 280, 240, 200, 190]
+          this.data4,
+          this.data444100
       ]
   };
 
@@ -244,8 +260,25 @@ axisY: {
           tension: 0
       }),
       low: 0,
-      high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+      high: this.data4.length, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
       chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
+       
+  axisX: {
+    
+    name:'Test',
+    onlyInteger: true,
+},
+
+axisY: {
+  showGrid:true,
+  low:Math.min(...this.data4),
+        high:Math.max(...this.data4)+0.1,
+  type: Chartist.AutoScaleAxis,
+  ticks: this.data4,
+
+  offset:40,
+ 
+}
       
   }
 
@@ -306,9 +339,10 @@ axisY: {
 
 //##############################################
 var datawebsiteViewsChart1 = {
-labels: ['1', '2', '3', '4', '5','6','7'],
+labels: this.testId,
 series: [
-[62, 33, 44, 38, 85,50]
+this.data3,
+this.data344100
 
 ]
 };
@@ -317,7 +351,7 @@ axisX: {
     showGrid: false
 },
 low: 0,
-high: 100,
+high: this.data3.length,
 chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
 };
 var responsiveOptions1: any[] = [

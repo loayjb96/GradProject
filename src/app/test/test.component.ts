@@ -8,6 +8,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { BlankRow } from 'app/blank-row';
 import { AngularFirestore } from '@angular/fire/firestore';
 import{Post} from './../posts'
+import * as firebase from 'firebase/app';
 import {Observable} from 'rxjs/Observable'
 import 'rxjs/add/operator/retry'
 import 'rxjs/add/operator/catch'
@@ -71,6 +72,7 @@ export class TestComponent  {
   len: number[]=[];
   Data: {};
   Data2: {};
+  testerid: string;
   
 
   constructor(
@@ -151,6 +153,7 @@ export class TestComponent  {
       this.db.collection("users").doc(this.SystemUser.uid).get().toPromise().then(result => {
         const actualData = result.data();
         this.UserName=actualData.fullName;
+        this.testerid=actualData.Uid;
         this.UserRole=actualData.Role;
         this.test=actualData.Tests;
         this.index=1;
@@ -291,9 +294,10 @@ x=0
   this.test.push(this.str)
     let Tests=this.test 
     console.log(Tests)
-     this.db.collection("users").doc(user.uid).set({
-      Tests,
-      }, { merge: true });
+    //  this.db.collection("users").doc(user.uid).set({
+    //   Tests,
+    //   }, { merge: true });
+    this.db.collection("users").doc(user.uid).update({"Tests":firebase.firestore.FieldValue.arrayUnion(this.str)})
    }
   
   }
@@ -333,7 +337,7 @@ this.done=false;
       this.FileNames.push(this.selectedFile[i].name)
       console.log(this.res)
 
-      this.Data={TesterName:this.UserName,Catagory:this.path,HZ8000:this.final,
+      this.Data={TesterName:this.UserName,TesterId:this.testerid,Catagory:this.path,HZ8000:this.final,
         HZ44100:this.final2,time:this.now,TestId:this.rand,Name:this.FileNames}
         console.log("dd  ",this.Data)
       // this.db.collection('Tests').doc(this.rand.toString()).set(this.Data)
@@ -359,7 +363,7 @@ this.done=false;
     } 
     this.final2.push(this.ResTemp[0])  
     
-    this.Data2={TesterName:this.UserName,Catagory:this.path,HZ8000:this.final,
+    this.Data2={TesterName:this.UserName,TesterId:this.testerid,Catagory:this.path,HZ8000:this.final,
       HZ44100:this.final2,time:this.now,TestId:this.rand,Name:this.FileNames}
       console.log("dd  ",this.Data2)
     // this.db.collection('Tests').doc(this.rand.toString()).set(this.Data2)
