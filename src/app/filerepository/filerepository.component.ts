@@ -32,11 +32,11 @@ export class FilerepositoryComponent implements OnInit {
  
     // var profileUrl =new Observable<string> );
 
-       const ref = this.storage.ref('Animal/lion');
-       var profileUrl = ref.getDownloadURL();
-       console.log('lion ',profileUrl)
+      //  const ref = this.storage.ref('Animal/lion');
+      //  var profileUrl = ref.getDownloadURL();
+      //  console.log('lion ',profileUrl)
        
-  
+// there is no need foe this 
 
 }
 urrentSound(url):void{
@@ -62,6 +62,7 @@ PassInfo(cat):void{
     this.newDate1=this.newDate[1]
     this.url=cat.Url
 console.log(this.newDate)
+console.log('our url for ',this.info,"is",this.url)
 
 
 }
