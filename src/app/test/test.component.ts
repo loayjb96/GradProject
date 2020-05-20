@@ -142,10 +142,7 @@ export class TestComponent  {
         localStorage.setItem('testObject', JSON.stringify(user));
         var SystemUser = localStorage.getItem('testObject');
 
-      } else {
-        // No user is signed in.
-        alert("not signed")
-      }
+      } 
     });
     var SystemUser = localStorage.getItem('testObject');
     this.SystemUser= JSON.parse(SystemUser)

@@ -87,6 +87,9 @@
                       <div class="stats">
                           <i class="material-icons">access_time</i> updated 4 minutes ago
                       </div>
+                      <button mat-raised-button type="button" (click)="assign(1)" matTooltip="Show In Table " data-toggle="modal" data-target="#Tableshape" [matTooltipPosition]="'above'" class="btn btn-info btn-link btn-md btn-just-icon">
+                        <i class="material-icons">table_chart</i>
+                    </button>
                   </div>
               </div>
           </div>
@@ -124,6 +127,9 @@
                     <div class="stats">
                         <i class="material-icons">access_time</i> updated 4 minutes ago
                     </div>
+                    <button mat-raised-button type="button" (click)="assign(2)" matTooltip="Show In Table " data-toggle="modal" data-target="#Tableshape" [matTooltipPosition]="'above'" class="btn btn-info btn-link btn-md btn-just-icon">
+                        <i class="material-icons">table_chart</i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -159,6 +165,9 @@
                     <div class="stats">
                         <i class="material-icons">access_time</i> campaign sent 2 days ago
                     </div>
+                    <button mat-raised-button type="button" (click)="assign(3)" matTooltip="Show In Table " data-toggle="modal" data-target="#Tableshape" [matTooltipPosition]="'above'" class="btn btn-info btn-link btn-md btn-just-icon">
+                        <i class="material-icons">table_chart</i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -175,6 +184,7 @@
                       <div class="stats">
                           <i class="material-icons">access_time</i> campaign sent 2 days ago
                       </div>
+                      
                   </div>
               </div>
           </div>
@@ -505,3 +515,104 @@
       </div>
   </div>
 </div>
+  
+  <!-- Modal -->
+  <div  class="modal fade" id="Tableshape" tabindex="-1" role="dialog" aria-labelledby="Tableshape" aria-hidden="true">
+    <div style="width: fit-content;" class="modal-dialog" role="document" >
+      <div class="modal-content" style="width: 120%;">
+        <div class="modal-header text-center">
+            
+          <h5  class="modal-title text-center" id="Tableshape">Table shape</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body"  >
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-chart">
+                      
+                        <div class="card-body">
+                            
+                            <div class="card">
+                                <div class="card-header card-header-info">
+                                  <h4 class="card-title">{{Measure}} Meature values</h4>
+                                  
+                              </div>
+                                  <div class="card-body table-responsive">
+                                      <table class="table table-hover">
+                                          <thead class="text-warning">
+                                              <th>Test ID</th>
+                                              <th>Measure</th>
+                                              <th>Sampling Rate 8000</th>
+                                              <th>Sampling Rate 44100</th>
+                                              
+                                              <th>Time</th>
+                                             
+                                              
+                                          </thead>
+                                          <tbody *ngIf="tablenum==1">
+                                      
+                                              <tr *ngFor="let r of res ; index as i" >
+                                                <td>{{res[i].TestId}}</td>
+                                                <td>{{Measure}}</td>
+                                                <td>{{res[i].Result8000[0]|number}}</td>
+                                                <td>{{res[i].Result44100[0]|number}}</td>
+                                                <td>{{res[i].time}}</td>
+                                               
+                                              </tr >
+                                             
+                                             
+                                             
+                                            
+                                          </tbody>
+                                          <tbody *ngIf="tablenum==2">
+                                      
+                                            <tr *ngFor="let r of res ; index as i" >
+                                              <td>{{res[i].TestId}}</td>
+                                              <td>{{Measure}}</td>
+                                              <td>{{res[i].Result8000[1]|number}}</td>
+                                              <td>{{res[i].Result44100[1]|number}}</td>
+                                              <td>{{res[i].time}}</td>
+                                             
+                                            </tr >
+                                           
+                                           
+                                           
+                                          
+                                        </tbody>
+                                        <tbody *ngIf="tablenum==3">
+                                      
+                                            <tr *ngFor="let r of res ; index as i" >
+                                              <td>{{res[i].TestId}}</td>
+                                              <td>{{Measure}}</td>
+                                              <td>{{res[i].Result8000[3]|number}}</td>
+                                              <td>{{res[i].Result44100[3]|number}}</td>
+                                              <td>{{res[i].time}}</td>
+                                             
+                                            </tr >
+                                           
+                                           
+                                           
+                                          
+                                        </tbody>
+                                      </table>
+
+                          </div>
+                          </div>
+                        </div>
+                     
+                      
+                    </div>
+                </div>
+                
+              
+                </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        
+        </div>
+      </div>
+    </div>
+  </div>

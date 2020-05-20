@@ -35,6 +35,9 @@ export class DashboardComponent implements OnInit {
   avergae344100: any;
   avergae444100: any;
   count44100: any;
+  res: any[];
+  Measure: string;
+  tablenum: number=0;
   constructor(private db:AngularFirestore) { }
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
@@ -107,6 +110,7 @@ export class DashboardComponent implements OnInit {
     this.TestCollection = this.db.collection<any>('Tests')
     this.Test = this.TestCollection.valueChanges()
     this.Test.subscribe(res => {
+      this.res=res
       for(let k=0;k<res.length;k++){
         if(res[k].Result8000){
        this.data.push(res[k].Result8000[0])
@@ -406,5 +410,15 @@ var websiteViewsChart3 = new Chartist.Bar('#websiteViewsChart3', datawebsiteView
 this.startAnimationForBarChart(websiteViewsChart3);
 //##############################################
   }
+  assign(tablenum){
+    this.tablenum=tablenum
+    if(tablenum==1)
+    this.Measure="Accuracy"
+    if(tablenum==2)
+    this.Measure="F1_Score"
+    if(tablenum==3)
+    this.Measure="Recall"
+  }
 
 }
+
