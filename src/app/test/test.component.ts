@@ -49,7 +49,7 @@ export class TestComponent  {
   NewPost:Observable<any>
   res:string[][]=[]
   data:any=[]
-  res2: string[]=[]
+  res2: string[][]=[]
    ResArray1: [string, string] = ["",""];
    ResArray2: [string, string] = ["",""];
    ResTemp: [string] = [""];
@@ -73,6 +73,11 @@ export class TestComponent  {
   Data: {};
   Data2: {};
   testerid: string;
+  Error: boolean[]=[];
+  Error2: boolean[]=[];
+  show1:boolean=true
+  show2:boolean=false
+  audio: HTMLAudioElement;
   
 
   constructor(
@@ -93,7 +98,7 @@ export class TestComponent  {
       return;
       this.pathWithFile=""
       var filesAmount = event.target.files.length;
-      alert(event.target.duration)
+     
      
       for (let i = 0; i < filesAmount; i++) {
         this.ExtractPath();
@@ -287,10 +292,10 @@ x=0
        this.test=actualData.Tests;
       // this.test.push(actualData.Tests)
   })
-  console.log(this.test)
+ 
   this.test.push(this.str)
     let Tests=this.test 
-    console.log(Tests)
+    
     //  this.db.collection("users").doc(user.uid).set({
     //   Tests,
     //   }, { merge: true });
@@ -309,8 +314,10 @@ this.done=false;
    header=header.set('accept','application/json')
    let options = {headers:header};
    for(let i=0;i<this.selectedFile.length;i++){
+    this.Error[this.selectedFile[i].name]=true
+    this.Error2[this.selectedFile[i].name]=true
     this.res[i]=[]
-    this.res2=[]
+    this.res2[i]=[]
     this.FileName=this.selectedFile[i].name
    const formData: FormData = new FormData();
    formData.append('audiofile', this.selectedFile[i]);
@@ -325,21 +332,24 @@ this.done=false;
       for (var j=0; j<data.events.length;j++){
       this.len.push(data.events.length)
      this.res[i].push(data.events[j].events)
-     console.log(this.res)
+    
      this.ResArray1[0]=this.ResArray1[0].concat(" "+data.events[j].events)
      this.ResArray1[1]=this.ResArray1[1].concat(" "+data.events[j].time)
      this.ResTemp[0]=this.ResTemp[0].concat(data.events[j].events+" ")
       }
       this.final.push(this.ResTemp[0])
       this.FileNames.push(this.selectedFile[i].name)
-      console.log(this.res)
+     
 
       this.Data={TesterName:this.UserName,TesterId:this.testerid,Catagory:this.path,HZ8000:this.final,
         HZ44100:this.final2,time:this.now,TestId:this.rand,Name:this.FileNames}
-        console.log("dd  ",this.Data)
-      // this.db.collection('Tests').doc(this.rand.toString()).set(this.Data)
 
-   })
+   },
+   error=>{ console.log('oops', error)
+   this.Error[this.selectedFile[i].name]=false
+   console.log("file : "+ this.selectedFile[i].name)
+  }
+   )
    }
    
    else{
@@ -350,7 +360,8 @@ this.done=false;
     
     this.ResTemp=[""]
     for (var k=0; k<data.events.length;k++){
-      this.res2.push(data.events[k].event)
+   
+      this.res2[i].push(data.events[k].events)
   
    this.ResArray2[0]=this.ResArray2[0].concat(" "+data.events[k].events)
    this.ResArray2[1]= this.ResArray2[1].concat(" "+data.events[k].time)
@@ -362,9 +373,14 @@ this.done=false;
     
     this.Data2={TesterName:this.UserName,TesterId:this.testerid,Catagory:this.path,HZ8000:this.final,
       HZ44100:this.final2,time:this.now,TestId:this.rand,Name:this.FileNames}
-      console.log("dd  ",this.Data2)
-    // this.db.collection('Tests').doc(this.rand.toString()).set(this.Data2)
- })
+     
+
+    },
+    error=>{ console.log('oops', error)
+    this.Error2[this.selectedFile[i].name]=false
+    console.log("file : "+ this.selectedFile[i].name)
+  }
+ )
 }
 
 
@@ -374,6 +390,8 @@ this.done=false;
  
 this.ResArray1=["",""]
 this.ResArray2=["",""]
+console.log(this.Error)
+console.log(this.Error2)
   }
   navigateToPage(){
     this.db.collection('Tests').doc(this.rand.toString()).set(this.Data)
@@ -381,5 +399,27 @@ this.ResArray2=["",""]
     this.router.navigate(['/TestsDone'], { queryParams: { TestId: this.rand.toString() } });
     // this.router.navigateByUrl('/TestsDone');
   }
+ switch(){
+   
+   this.show2=this.show1;
+   this.show1=!this.show1
+   console.log("show1= "+this.show1,"show2= "+this.show2 )
+ }
+ playaudio(file){
+  var url = URL.createObjectURL(file);
+  if(this.audio)
+  this.stopCurrentSound()
+  this.audio = new Audio();
+  this.audio.src = url;
+  this.audio.load();
+  this.audio.play();
+ 
+ }
+ stopCurrentSound():void{
+
+  this.audio.pause();
+  
+
+}
   
 }

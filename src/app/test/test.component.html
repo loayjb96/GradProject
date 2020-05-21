@@ -75,19 +75,61 @@
     </div>
   </div>
 </div>
-  <div class="card" >
+  <div  *ngIf="Enable" class="card" >
     <div class="card-header">Form
     
       <div class="input-group">
     <div class="input-group ">
-      <button  class="btn btn-success btn-file" [disabled]="!Enable">     
+      <button  class="btn btn-success btn-file center text-center">     
 
           Upload File<input #file type="file" [disabled]="!Enable"  (change)="preview(file.files,$event)" id="imgInp" multiple>
       </button>
   </div>
 
-  <div *ngIf="path.length">
-    <h3 *ngFor="let temp of selectedFile">{{temp.name}}</h3>
+  <div class="center text-center" *ngIf="selectedFile.length>0">
+    <div class="card ">
+      <div class="card-header card-header-info">
+        <h4 class="card-title">{{selectedFile.length}} files uploaded</h4>
+        
+    </div>
+    
+    <div class="card-body table-responsive">
+      <table class="table table-hover">
+          <thead class="text-warning">
+            <th>#</th>
+              <th>File Name</th>
+              <th>Play/Pause</th>           
+          </thead>
+          <tbody >
+      
+              <tr *ngFor="let temp of selectedFile; index as i"  >
+                <td>{{i+1}}</td>
+                <td>{{temp.name}}</td>
+             
+                <td class="text-center">  
+                  <a class="add" title="Play Sound" data-toggle="tooltip"><i class="material-icons" (click)="playaudio(temp)">play_arrow</i></a>
+                  <a class="delete" title="Stop Sound" data-toggle="modal" data-target="#exampleModal" ><i class="material-icons" (click)="stopCurrentSound()">pause_circle_filled</i></a>
+                </td> 
+
+               
+              </tr >
+             
+             
+             
+            
+          </tbody>
+      
+        
+      
+           
+           
+           
+          
+        
+      </table>
+      </div>
+
+</div>
   </div>
       </div>
     </div>
@@ -114,8 +156,15 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
+            
               <div class="item-summary">
               <h4  class="alert alert-primary" style="text-align: center;">Test ID: {{rand}}</h4>
+              <h5   style="text-align: center;" *ngIf="show1;else showAnother">Sampling Rate 8000</h5>
+              <ng-template #showAnother>
+                                              
+                <h5   style="text-align: center;" >Sampling Rate 44100</h5>
+              
+              </ng-template>
             <!--
                 
                 <address *ngIf='NewPost'class="alert alert-success">
@@ -132,6 +181,7 @@
                           <th>File Name</th>
                           <th>Duartion</th>
                           <th>API Result</th>
+                     
                           
                       </thead>
                     
@@ -142,10 +192,10 @@
                               <td>{{name.name}}</td>
                               <td >{{res[i].length}} Secound</td>
                               <!--secound table-->
-                              <td>
+                              <td *ngIf="show1">
                                 <div class="item-summary">
                             
-                                  <div class="card-body table-responsive">
+                                  <div *ngIf="Error[name.name]==true;else ShowError"class="card-body table-responsive">
                                     <table class="table table-hover">
                                         <thead class="text-warning">
                                            <th>Secound</th>
@@ -166,17 +216,65 @@
                                           
                                         </tbody>
                                       
+                                      
                                     </table>
                                     
                                 </div>
+                               
+                                <ng-template #ShowError>
+                                              
+                                  <table class="table ">
+                                   
+                                      <p  class="alert alert-danger">  The server responded with a status of 500 (Internal Server Error)
+                                      
+                                    </p> 
+                                  
+                                </table>
+                                
+                                </ng-template>
                                   </div>
 
 
-
-
-
-
                               </td>
+                              <td *ngIf="show2">
+                                <div class="item-summary">
+                                <div *ngIf="Error2[name.name]==true  ;else ShowError1"class="card-body table-responsive">
+                                  <table class="table table-hover">
+                                      <thead class="text-warning">
+                                         <th>Secound</th>
+                                          <th>Result</th>
+                                          
+                                      </thead>
+                                    
+                                      <tbody *ngIf='NewPost1'>
+                                          
+                                        <tr *ngFor="let r2 of res2[i];let k = index" >
+                                          <td>{{k+1}}</td>
+                                            <td>{{r2}}</td>
+
+                                      
+                                        
+                                        </tr >
+                                       
+                                      
+                                    </tbody>
+                                    
+                                  </table>
+                                  
+                              </div>
+                              <ng-template #ShowError1>
+                                              
+                                <table class="table ">
+                                 
+                                    <p  class="alert alert-danger">  The server responded with a status of 500 (Internal Server Error)
+                                    
+                                  </p> 
+                                
+                              </table>
+                              
+                              </ng-template>
+                                </div>
+                                </td>
                              
                              <!---->
                           
@@ -184,37 +282,35 @@
                          
                         
                       </tbody>
+                      
                     
                   </table>
                   
               </div>
                 </div>
             </div>
-            <!-- <div class="col-md-6 ml-auto">
-              <div class="item-summary">
-                <h4  class="alert alert-primary" style="text-align: center;">samplingrate 44100</h4>
-               
-                <address *ngIf='NewPost1' class="alert alert-success">
-                  <h3>API Response</h3>
-                  <div *ngFor="let r2 of res2.split(','); let i = index">
-      
-                          {{r2}} 
-                          <br/>
-              </div> 
-                
-                </address>
-                </div>
-            </div> -->
+         
           </div>
     
 
         </div>
       </div>
   </div>
+  <div class="center text-center" >
+  <label class="toggle-label">
+    <input type="checkbox" (click)="switch()"  data-target="#Test">
+    <span class="back">
+<span class="toggle"></span>
+    <span class="label on"> 8000</span>
+    <span class="label off">44100</span>
+    </span>
+</label>
+</div>
   <div class="center text-center" >  
+  
     <button data-toggle="modal" data-target="#Test" data-dismiss="modal" style="margin: 10px;" class="btn btn-danger" >Cancel</button> 
-    <button data-toggle="modal" data-target="#Test" data-dismiss="modal" style="margin: 10px;" class="btn btn-info" (click)="navigateToPage()" >Show More Info</button>
-
+    <button data-toggle="modal" data-target="#Test" data-dismiss="modal" style="margin: 10px;" class="btn btn-info" (click)="navigateToPage()" >Save Result</button>
+   
   </div> 
   </div>
 

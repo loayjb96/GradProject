@@ -45,7 +45,7 @@ this.audio.src = url;
 this.audio.load();
 this.audio.play();
 
-  console.log(url)
+
 }
 stopCurrentSound():void{
 
