@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
 import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
-
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,6 +12,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class DashboardComponent implements OnInit {
   usersCollection;
   contacts: Observable<any[]> ;
+  CategoryCollection;
+  Category: Observable<any[]> ;
   TestCollection;
   Test: Observable<any[]> ;
   testCount:Array<number>=[];
@@ -38,7 +40,8 @@ export class DashboardComponent implements OnInit {
   res: any[];
   Measure: string;
   tablenum: number=0;
-  constructor(private db:AngularFirestore) { }
+  len: number;
+  constructor(private db:AngularFirestore,private router:Router) { }
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
       seq = 0;
@@ -109,6 +112,8 @@ export class DashboardComponent implements OnInit {
     this.contacts = this.usersCollection.valueChanges()
     this.TestCollection = this.db.collection<any>('Tests')
     this.Test = this.TestCollection.valueChanges()
+    this.usersCollection = this.db.collection<any>('Category')
+    this.contacts = this.usersCollection.valueChanges()
     this.Test.subscribe(res => {
       this.res=res
       for(let k=0;k<res.length;k++){
@@ -161,6 +166,9 @@ export class DashboardComponent implements OnInit {
      this.activateCharts()
      
  });
+ this.contacts.subscribe(res=>{
+   this.len=res.length
+ })
   
   
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
@@ -419,6 +427,11 @@ this.startAnimationForBarChart(websiteViewsChart3);
     if(tablenum==3)
     this.Measure="Recall"
   }
-
+  navigatetousers(){
+    this.router.navigate(['/Users']);
+  }
+  navigatetotests(){
+    this.router.navigate(['/TestsDone']);
+  }
 }
 
