@@ -112,8 +112,8 @@ export class DashboardComponent implements OnInit {
     this.contacts = this.usersCollection.valueChanges()
     this.TestCollection = this.db.collection<any>('Tests')
     this.Test = this.TestCollection.valueChanges()
-    this.usersCollection = this.db.collection<any>('Category')
-    this.contacts = this.usersCollection.valueChanges()
+    this.CategoryCollection = this.db.collection<any>('Category')
+    this.Category = this.CategoryCollection.valueChanges()
     this.Test.subscribe(res => {
       this.res=res
       for(let k=0;k<res.length;k++){
@@ -166,10 +166,10 @@ export class DashboardComponent implements OnInit {
      this.activateCharts()
      
  });
- this.contacts.subscribe(res=>{
-   this.len=res.length
- })
-  
+
+  this.Category.subscribe(res=>{
+    this.len=res.length
+  })
   
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
@@ -433,5 +433,9 @@ this.startAnimationForBarChart(websiteViewsChart3);
   navigatetotests(){
     this.router.navigate(['/TestsDone']);
   }
+  navigatetoaudio(){
+    this.router.navigate(['/filerepository']);
+  }
+
 }
 
