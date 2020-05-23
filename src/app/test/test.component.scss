@@ -140,4 +140,17 @@ table.table td a.add i {
   .toggle-label input[type=checkbox]:checked+.back .label.off {
     color: #ddd;
   }
+
+  // #topscroll {
+  //   position: absolute;
+
+  //   display: block;
+  //   margin-top: -10px;
+  // }
+  #upbutton{
+    position: fixed;
+
+    margin-top: -10px;
+    margin-left: -10px;
+  }
   /*switch on-off */
