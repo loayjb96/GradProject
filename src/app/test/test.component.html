@@ -5,7 +5,7 @@
   <div class="card">  
     <div class="card-body">  
       <div class="table-responsive cnstr-record">  
-        <table class="table table-bordered">  
+        <table class="table table-bordered" id="topscroll">  
           <thead>  
             <tr>  
               <th style="width: fit-content;" >Roll No</th>  
@@ -50,15 +50,20 @@
            
             </tr>  
             
-          </tbody>  
+          </tbody> 
+ 
         </table> 
          
       </div>
         
     </div>  
   </div> 
+  
   <div *ngIf="show" class="center text-center" >  
     <button style="margin: 10px;" class="btn btn-primary" (click)="addBlankRow()">Add Category</button>  
+    <!-- <button style="margin: 10px;" class="btn btn-primary" (click)="addBlankRow()">Add Category</button>   -->
+
+
   </div>  
  
   <div *ngIf="path.length">
@@ -132,6 +137,7 @@
 
 </div>
   </div>
+  
       </div>
     </div>
     
@@ -313,7 +319,9 @@
     <button data-toggle="modal" data-target="#Test" data-dismiss="modal" style="margin: 10px;" class="btn btn-info" (click)="navigateToPage()" >Save Result</button>
    
   </div> 
+
   </div>
+  <button   style="margin: 10px;"  class="btn btn-primary" id="upbutton" (click)="gotoTop()">up👆</button> 
 
 </div>  
 </html>
