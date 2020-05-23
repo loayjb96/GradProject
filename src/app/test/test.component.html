@@ -1,6 +1,6 @@
 
 
-
+<html>
 <div class="col-12 col-md-12" style="margin-top: 5%;">  
   <div class="card">  
     <div class="card-body">  
@@ -82,8 +82,9 @@
     <div class="input-group ">
       <button  class="btn btn-success btn-file center text-center">     
 
-          Upload File<input #file type="file" [disabled]="!Enable"  (change)="preview(file.files,$event)" id="imgInp" multiple>
+          Upload File<input #file type="file"  [disabled]="!Enable"  (change)="preview(file.files,$event)"  id="imgInp" multiple>
       </button>
+      <button (click)="scroll(target)">scroll</button>
   </div>
 
   <div class="center text-center" *ngIf="selectedFile.length>0">
@@ -135,12 +136,12 @@
     </div>
     
   </div> 
-  <div *ngIf="Enable && activate" class="d-flex justify-content-center">
-    <div class="spinner-border" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
+  <div   *ngIf="Enable && activate" class="d-flex justify-content-center">
+    <div class="loader text-center">
+      <span class="span"></span>
   </div>
-  <div *ngIf="check" class="center text-center" >  
+  </div>
+  <div *ngIf="check" class=" text-center" >  
     <button data-toggle="modal" data-target="#Test" style="margin: 10px;" class="btn btn-warning" [disabled]="!check" (click) ="createPosts()" >Commeit new test</button>  
   </div> 
  
@@ -149,7 +150,7 @@
     
     
   </div> 
-  <div class="modal fade" id="Test" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+  <div #target  class="modal fade" id="Test" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
     
     <div class="modal-dialog modal-lg"  style="margin-top: 5%;">
       <div class="item-summary">
@@ -315,3 +316,4 @@
   </div>
 
 </div>  
+</html>

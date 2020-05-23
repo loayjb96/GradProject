@@ -89,8 +89,13 @@ export class TestComponent  {
     }
   
   selectedFile: File[] = [];
-
+  scroll(el: HTMLElement) {
+    console.log(el)
+    el.scrollIntoView();
+}
   async preview(files,event) {
+   
+    this.check=false
     console.log('inside preview ')
     this.activate=true
     this.selectedFile=[]
