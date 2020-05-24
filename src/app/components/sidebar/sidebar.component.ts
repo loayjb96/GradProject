@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule ,NavigationEnd} from '@angular/router';
 import { AuthService } from 'app/auth/login/auth.service';
 
 declare const $: any;
@@ -20,12 +20,18 @@ export const ROUTES: RouteInfo[] = [
   
     
 ];
+// export const routing = RouterModule.forRoot(appRoutes, { scrollPositionRestoration: 'top' });
+
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  styleUrls: ['./sidebar.component.css'],
+  // template: '<router-outlet (activate)="onActivate($event, outlet)" #outlet></router-outlet> 
+
 })
+
+
 export class SidebarComponent implements OnInit {
   menuItems: any[];
 
@@ -33,6 +39,13 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
+  //   this.router.events.subscribe((evt) => {
+  //     if (!(evt instanceof NavigationEnd)) {
+  //         return;
+  //     }
+  //     window.scrollTo(0, 0)
+  // });//not working   till now 
+
   }
   isMobileMenu() {
       if ($(window).width() > 991) {
