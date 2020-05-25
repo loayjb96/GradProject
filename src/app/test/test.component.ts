@@ -32,6 +32,8 @@ export class TestComponent  {
   public imagePath:File;
   imgURL: any;
   name:string;
+  isShow: boolean;
+  topPosToStartShowing = 100;
   downloadURL:any;
   delteurl:string;
   contacts:any[];
@@ -146,7 +148,7 @@ export class TestComponent  {
   hideMultiSelectedSubjectDropdown: boolean[] = [];  
   hideMultiSelectedSubjectDropdownAll: boolean[] = [];  
   ngOnInit() { 
-   
+   this.checkScroll()
     this.af.auth.onAuthStateChanged(function(user) {
       if (user!=null) {
         localStorage.setItem('testObject', JSON.stringify(user));
@@ -426,5 +428,29 @@ console.log(this.Error2)
   
 
 }
+gotoTop() {
+  window.scroll({ 
+    top: 0, 
+    left: 0, 
+    behavior: 'smooth' 
+  });
+}
+checkScroll() {
+      
+  // window의 scroll top
+  // Both window.pageYOffset and document.documentElement.scrollTop returns the same result in all the cases. window.pageYOffset is not supported below IE 9.
+
+  const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+  console.log('[scroll]', scrollPosition);
   
+  
+  if (scrollPosition >= this.topPosToStartShowing) {
+    this.isShow = true;
+    this.gotoTop()
+  } else {
+    this.isShow = false;
+    this.gotoTop()
+  }
+}
 }

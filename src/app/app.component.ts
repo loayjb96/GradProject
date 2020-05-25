@@ -22,8 +22,10 @@ export class AppComponent  {
 
     console.log('[scroll]', scrollPosition);
     
+    
     if (scrollPosition >= this.topPosToStartShowing) {
       this.isShow = true;
+      this.gotoTop()
     } else {
       this.isShow = false;
     }

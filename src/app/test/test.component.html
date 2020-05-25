@@ -1,6 +1,6 @@
 
 
-<html>
+
 <div class="col-12 col-md-12" style="margin-top: 5%;">  
   <div class="card">  
     <div class="card-body">  
@@ -89,7 +89,7 @@
 
           Upload File<input #file type="file"  [disabled]="!Enable"  (change)="preview(file.files,$event)"  id="imgInp" multiple>
       </button>
-      <button (click)="scroll(target)">scroll</button>
+      <!-- <button (click)="scroll(target)">scroll</button> -->
   </div>
 
   <div class="center text-center" *ngIf="selectedFile.length>0">
@@ -321,7 +321,6 @@
   </div> 
 
   </div>
-  <button   style="margin: 10px;"  class="btn btn-primary" id="upbutton" (click)="gotoTop()">up👆</button> 
+  <button   style="margin: 10px;"  class="btn btn-primary" id="upbutton" (click)="checkScroll()">up👆</button> 
 
 </div>  
-</html>
