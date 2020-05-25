@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule ,NavigationEnd} from '@angular/router';
 import { AuthService } from 'app/auth/login/auth.service';
+import { NgModel } from '@angular/forms';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -20,6 +21,7 @@ export const ROUTES: RouteInfo[] = [
   
     
 ];
+
 // export const routing = RouterModule.forRoot(appRoutes, { scrollPositionRestoration: 'top' });
 
 
@@ -30,15 +32,30 @@ export const ROUTES: RouteInfo[] = [
   // template: '<router-outlet (activate)="onActivate($event, outlet)" #outlet></router-outlet> 
 
 })
+// @NgModel
+
+
+
 
 
 export class SidebarComponent implements OnInit {
   menuItems: any[];
 
-  constructor(private router: Router,public authService: AuthService) { }
+  constructor(private router: Router,public authService: AuthService) { 
+  //   this.router.events.subscribe(evt => {
+  //     console.log(event.currentTarget)
+  //     // document.querySelector('sidebar-wrapper').scrollTop = 0;
+
+  //     if (evt instanceof NavigationEnd) {
+  //       // document.querySelector('sidebar-wrapper').scrollTop = 0;
+  //     }
+  // });
+    
+  }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
+    
   //   this.router.events.subscribe((evt) => {
   //     if (!(evt instanceof NavigationEnd)) {
   //         return;
@@ -47,6 +64,8 @@ export class SidebarComponent implements OnInit {
   // });//not working   till now 
 
   }
+  // console.log(" pressed ")
+
   isMobileMenu() {
       if ($(window).width() > 991) {
           return false;
@@ -58,4 +77,5 @@ export class SidebarComponent implements OnInit {
     console.log("loged")
 
   }
+ 
 }
