@@ -32,9 +32,7 @@ export class FilerepositoryComponent implements OnInit {
  
     // var profileUrl =new Observable<string> );
 
-       const ref = this.storage.ref('Animal/lion');
-       var profileUrl = ref.getDownloadURL();
-       console.log('lion ',profileUrl)
+     
        
   
 
