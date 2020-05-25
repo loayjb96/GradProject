@@ -26,11 +26,9 @@ export class AdminLayoutComponent implements OnInit {
       if (isWindows && !document.getElementsByTagName('body')[0].classList.contains('sidebar-mini')) {
           // if we are on windows OS we activate the perfectScrollbar function
 
-          
           document.getElementsByTagName('body')[0].classList.add('perfect-scrollbar-on');
       } else {
           document.getElementsByTagName('body')[0].classList.remove('perfect-scrollbar-off');
-          // added this ti scroll top 
       }
       const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
       const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
@@ -39,8 +37,6 @@ export class AdminLayoutComponent implements OnInit {
           this.lastPoppedUrl = ev.url;
       });
        this.router.events.subscribe((event:any) => {
-        window.scrollTo(0, 0);
-console.log(" admin")
           if (event instanceof NavigationStart) {
              if (event.url != this.lastPoppedUrl)
                  this.yScrollStack.push(window.scrollY);
@@ -53,9 +49,7 @@ console.log(" admin")
          }
       });
       this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
-          //added log here 
-          console.log(" route diff in admin")
-           elemMainPanel.scrollTop = 0;
+        //    elemMainPanel.scrollTop = 0;
         //    elemSidebar.scrollTop = 0;
       });
       if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {

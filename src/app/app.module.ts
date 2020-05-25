@@ -21,7 +21,6 @@ import {
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { environment } from 'environments/environment';
 import { from } from 'rxjs';
-import { root } from 'rxjs/internal/util/root';
 
 
 
@@ -63,7 +62,4 @@ import { root } from 'rxjs/internal/util/root';
   providers: [AuthService],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
-
-
-}
+export class AppModule { }
