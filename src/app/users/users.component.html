@@ -20,7 +20,7 @@
         
         <div class="card-body table-responsive">
   
-          <a class="add" title="Add new user" data-toggle="modal" data-target="#UserCreationModal" ><i class="large material-icons">add</i></a>
+          <a *ngIf="role=='Admin'" class="add" title="Add new user" data-toggle="modal" data-target="#UserCreationModal" ><i class="large material-icons">add</i></a>
           
             <table class="table table-hover">
                 <thead class="text-warning">
@@ -43,7 +43,7 @@
                   
                   <td class="text-center">  
                     <a class="edit" title="Show details" data-toggle="tooltip"><i class="material-icons" (click)="onEnterSite(user)">chat</i></a>
-                    <a class="delete" title="Delete" data-toggle="modal" data-target="#exampleModal" ><i class="material-icons" (click)="openDialogForDeletion(user.$key=user)">delete</i></a>
+                    <a *ngIf="role=='Admin'"class="delete" title="Delete" data-toggle="modal" data-target="#exampleModal" ><i class="material-icons" (click)="openDialogForDeletion(user.$key=user)">delete</i></a>
                   </td> 
               
                 </tbody>
