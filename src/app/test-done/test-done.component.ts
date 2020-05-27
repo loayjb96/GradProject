@@ -45,6 +45,7 @@ export class TestDoneComponent implements OnInit {
   FalseNegative: number;
   Matthews: number;
   testerid: any;
+  count2: any;
 
   
   constructor(private route: ActivatedRoute,private router: Router,private db:AngularFirestore,private af:AngularFireAuth) {
@@ -108,6 +109,7 @@ calc(id){
 
   
  this.count=[]
+ this.count2=[]
  this.Res=[]
  this.Res2=[]
   this.id=id
@@ -135,6 +137,7 @@ for(let j=0 ;j<this.fileName.length;j++){
   for(let k=0;k<HZ44100.length;k++){
     
     this.Res2.push(HZ44100[k].split(" ")[0]);
+    this.count2.push(k+1)
   
 
     }
@@ -143,8 +146,7 @@ console.log(this.Res)
 console.log(this.category[0])
 this.confision_matrix_function(this.category[0],this.Res,"1")
 this.confision_matrix_function(this.category[0],this.Res2,"2")
-// this. splitted12 = HZ44100[0].split(" ").slice(1); 
-// this. splitted22 = HZ44100[1].split(" ").slice(1); 
+
   }
   const dataDailySalesChart: any = {
     labels:  this.Res,
@@ -167,9 +169,9 @@ this.confision_matrix_function(this.category[0],this.Res2,"2")
     chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
   }
   const dataDailySalesChart1: any = {
-    labels: this.Res,
+    labels: this.Res2,
     series: [
-        this.count
+        this.count2
     ]
   };
 

@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { AngularFireAuth } from '@angular/fire/auth';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -41,7 +43,7 @@ export class DashboardComponent implements OnInit {
   Measure: string;
   tablenum: number=0;
   len: number;
-  constructor(private db:AngularFirestore,private router:Router) { }
+  constructor(private db:AngularFirestore, private af:AngularFireAuth,private router:Router) { }
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
       seq = 0;
@@ -100,6 +102,7 @@ export class DashboardComponent implements OnInit {
   };
   ngOnInit( 
   ) {
+  
     this. avergae=0
     this. avergae2=0
     this. avergae4=0
@@ -153,7 +156,7 @@ export class DashboardComponent implements OnInit {
    });
    this.contacts.subscribe(res => {
     for(let k=0;k<res.length;k++){
-     console.log(res[k])
+    
      this.Testers.push(res[k].fullName)
      if(res[k].Tests)
      this.testCount.push(res[k].Tests.length)
@@ -161,8 +164,7 @@ export class DashboardComponent implements OnInit {
      this.testCount.push(0)
   
     }
-    console.log(this.Testers)
-    console.log(this.testCount)
+
      this.activateCharts()
      
  });
@@ -177,7 +179,7 @@ export class DashboardComponent implements OnInit {
 
   }
   activateCharts(){
-    console.log(this.data);
+    
     const dataDailySalesChart: any = {
       labels: this.testId,
       series: [
@@ -436,6 +438,7 @@ this.startAnimationForBarChart(websiteViewsChart3);
   navigatetoaudio(){
     this.router.navigate(['/filerepository']);
   }
+ 
 
 }
 

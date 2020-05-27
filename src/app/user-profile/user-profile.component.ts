@@ -36,7 +36,7 @@ export class UserProfileComponent implements OnInit {
         this.db.collection('users').doc(this.Uid).get().toPromise().then(result => {
           const user =this.af.auth.currentUser;
           const Data = result.data()
-          console.log(Data);
+          
           this.UserName=Data.fullName;
           this.UserRole=Data.Role;
           this.UserPhone=Data.PhoneNumber;
@@ -46,7 +46,7 @@ export class UserProfileComponent implements OnInit {
           this.length=this.UserTests.length
           else
           this.length=0
-          console.log(this.Uid)
+        
           if(user.uid==this.Uid){
           
             this.whenToShow=true;
@@ -66,7 +66,7 @@ export class UserProfileComponent implements OnInit {
          this.UserPhone=actualData.PhoneNumber;
          this.UserEmail=actualData.Email;
          this.UserTests=actualData.Tests
-         console.log(actualData)
+        
      })
     
 

@@ -287,9 +287,10 @@
                                       <tbody>
                                   
                                           <tr *ngFor="let name of fileName;let i = index ">
-                                            <td style="font-weight: 500; background-color: chocolate;" *ngIf="category==Res[i]; else loggedOut1">{{name}} </td>
-                                            <td style="font-weight: 500; background-color: chocolate;" *ngIf="category==Res[i]; else loggedOut2">{{Res[i]}} </td>
-                                            <td style="font-weight: 500; background-color: chocolate;" *ngIf="category==Res[i]; else loggedOut3">{{category}} </td>
+                                            
+                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==Res[i]; else loggedOut1">{{name}} </td>
+                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==Res[i]; else loggedOut2">{{Res[i]}} </td>
+                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==Res[i]; else loggedOut3">{{category}} </td>
                                             <ng-template #loggedOut1>
                                               <td>{{name}}</td>
                                           
