@@ -7,6 +7,7 @@ import * as Chartist from 'chartist';
 import { stringify } from 'querystring';
 
 import * as firebase from 'firebase/app';
+import { AuthService } from 'app/auth/login/auth.service';
 @Component({
   selector: 'app-test-done',
   templateUrl: './test-done.component.html',
@@ -46,17 +47,37 @@ export class TestDoneComponent implements OnInit {
   Matthews: number;
   testerid: any;
   count2: any;
+  role: any;
 
   
-  constructor(private route: ActivatedRoute,private router: Router,private db:AngularFirestore,private af:AngularFireAuth) {
+  constructor(private route: ActivatedRoute,private router: Router,public authService: AuthService,private db:AngularFirestore,private af:AngularFireAuth) {
     
   }
 
   ngOnInit() {
+    let uid=this.authService.getToken()
+
+ 
+   
+
+  console.log(this.role)
     this.usersCollection = this.db.collection<any>('users')
     this.contacts = this.usersCollection.valueChanges()
     this.TestCollection = this.db.collection<any>('Tests')
     this.Test = this.TestCollection.valueChanges()
+    this.contacts.subscribe(value=>{for(let i=0;i<value.length;i++){
+
+      if(value[i].Uid==uid)
+      this.assign1(value[i].Role )
+     
+     
+     
+         }
+        
+      
+         })
+       
+    
     this.route
       .queryParams
       .subscribe(params => {
@@ -70,7 +91,11 @@ export class TestDoneComponent implements OnInit {
         }
       });
   
-     
+      
+  }
+  assign1(role){
+    console.log(role)
+    this.role=role
   }
   startAnimationForLineChart(chart){
     let seq: any, delays: any, durations: any;

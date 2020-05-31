@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { DialogOverviewExampleDialog } from '../dialog-overview-example-dialog/dialog-overview-example-dialog.component';
 import { Observable } from 'rxjs';
 import { DeleteWarnComponent } from '../delete-warn/delete-warn.component';
+import { AuthService } from 'app/auth/login/auth.service';
 
 
 @Component({
@@ -28,15 +29,29 @@ export class UsersComponent implements OnInit {
   ErrorMessage:string= '';
   array={};
   data: any;
+  role: any;
 
 
-  constructor(private route: ActivatedRoute,private router: Router,private db:AngularFirestore,private af:AngularFireAuth,public dialog: MatDialog) {
+  constructor(private route: ActivatedRoute,private router: Router,public authService: AuthService,private db:AngularFirestore,private af:AngularFireAuth,public dialog: MatDialog) {
     this.usersCollection = db.collection<any>('users')
     this.contacts = this.usersCollection.valueChanges()
 
    }
 
   ngOnInit() {
+    let uid=this.authService.getToken()
+
+ 
+   
+    this.db.collection("users").doc(uid).get().toPromise().then(result => {
+ 
+      const actualData = result.data();
+      this.role=actualData.Role;
+ 
+   
+
+  })
+  console.log(this.role)
   }
   openDialog(): void {
     const pass={name:this.name,email:this.Email,Role:this.Role,Password:this.Password};

@@ -58,10 +58,10 @@
     <div  class="card-body " >
       
     <div class="row">
-     <div class="col-md-2">
+     <div  class="col-md-2">
         
         
-            <button style="margin-top: -20%;" mat-raised-button type="button" (click)="assign(test.TestId)" matTooltip="Remove Test" data-toggle="modal" data-target="#TestDeletion" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
+            <button *ngIf="role=='Admin'" style="margin-top: -20%;" mat-raised-button type="button" (click)="assign(test.TestId)" matTooltip="Remove Test" data-toggle="modal" data-target="#TestDeletion" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
                 <i class="material-icons">close</i>
             </button>
      
@@ -94,7 +94,7 @@
  <div class="col-md-2">
     
     
-        <button style="margin-top: -20%;" mat-raised-button type="button" (click)="assign(test.TestId,test.TesterId)" matTooltip="Remove Test" data-toggle="modal" data-target="#TestDeletion" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
+        <button *ngIf="role=='Admin'" style="margin-top: -20%;" mat-raised-button type="button" (click)="assign(test.TestId,test.TesterId)" matTooltip="Remove Test" data-toggle="modal" data-target="#TestDeletion" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
             <i class="material-icons">close</i>
         </button>
  
@@ -354,10 +354,10 @@
 
 
 
-  <div  class="modal fade" id="TestDeletion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div   class="modal fade" id="TestDeletion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div style="width: fit-content;" class="modal-dialog" role="document" >
       <div class="modal-content" style="width: 120%;">
-        <div class="modal-header text-center">
+        <div  class="modal-header text-center">
             
           <h5  class="modal-title text-center" id="exampleModalLongTitle">Remove Test</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
