@@ -7,6 +7,8 @@ import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { LoginComponent } from '../../auth/login/login.component';
 import {AuthService} from '../../auth/login/auth.service'
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
+import { UserInboxComponent } from '../../user-inbox/user-inbox.component';
+
 import { UsersComponent } from '../../users/users.component';
 import { DialogOverviewExampleDialog } from '../../dialog-overview-example-dialog/dialog-overview-example-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -15,7 +17,8 @@ import { TestComponent } from '../../test/test.component';
 import { TestDoneComponent } from '../../test-done/test-done.component';
 import { FilerepositoryComponent } from '../../filerepository/filerepository.component';
 
-
+// import{UserInboxComponent} from 'app/user-inbox/user-inbox.component'
+// 
 
 
 
@@ -57,6 +60,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     TestComponent,
     TestDoneComponent,
     FilerepositoryComponent,
+    // UserInboxComponent,
    
 
   ],
