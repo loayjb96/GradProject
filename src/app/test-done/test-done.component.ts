@@ -306,21 +306,23 @@ confision_matrix_function(catagory,expected_value_api,str){
     x=1
     if(y==0)
     y=1
-if(str==1){
+if(str==1){// 8000
   console.log("tp: "+tp+" tn: "+tn+" fp: "+fp+" fn: "+fn)
     this. accuracy = (tp+tn)/(p+n);
     this. f1 = 2*tp/(2*tp+fp+fn);
     this. precision = tp/(x);
     this. recall = tp/(p);
-    if(n==0)
-    this.Specifity=tn/(1);
-    else
-    this.Specifity=tn/(n);
-    this.NegativePredictive=tn/(y);
-    this.FalsePositive=fp/n;
-    this.FalseFiscovery=fp/x;
+    // TN TRUE NEGTIVE ' SO FAR GIVES ZERO 
+    // fP SP FAR  give zero 
+    // if(n==0)
+    // this.Specifity=tn/(1);
+    // else
+    // this.Specifity=tn/(n);
+    // this.NegativePredictive=tn/(y);
+    // this.FalsePositive=fp/n;
+    // this.FalseFiscovery=fp/x;
     this.FalseNegative=fn/p;
-    this.Matthews=(tp*tn-fp*fn)/Math.sqrt((x)*(p)*(n)*(y))
+    // this.Matthews=(tp*tn-fp*fn)/Math.sqrt((x)*(p)*(n)*(y))
     // alert(this.accuracy)
     if(this.updated==false){
 
