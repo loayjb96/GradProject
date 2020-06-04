@@ -55,10 +55,10 @@ export class NavbarComponent implements OnInit {
         const user =this.af.auth.currentUser; 
         this.router.navigateByUrl(`/Profile?Data=${user.uid}`)
       }
-    go_to_message():void{
-        const user =this.af.auth.currentUser; 
-        this.router.navigateByUrl(`/User-Inbox?Data=${user.uid}`)
-    }
+    // go_to_message():void{
+    //     const user =this.af.auth.currentUser; 
+    //     this.router.navigateByUrl(`/User-Inbox?Data=${user.uid}`)
+    // }
     sidebarOpen() {
         const toggleButton = this.toggleButton;
         const body = document.getElementsByTagName('body')[0];

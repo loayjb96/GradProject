@@ -60,7 +60,6 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     TestComponent,
     TestDoneComponent,
     FilerepositoryComponent,
-    // UserInboxComponent,
    
 
   ],

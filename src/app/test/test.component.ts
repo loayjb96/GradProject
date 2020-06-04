@@ -80,7 +80,10 @@ export class TestComponent  {
   show1:boolean=true
   show2:boolean=false
   audio: HTMLAudioElement;
-  
+  filesAmount: number;
+  myfiles:any;
+  myevent:any;
+  buttonDisabled: boolean;
 
   constructor(
     private storage: AngularFireStorage,public db:AngularFirestore,
@@ -96,23 +99,35 @@ export class TestComponent  {
     el.scrollIntoView();
 }
   async preview(files,event) {
-   
+    // this.buttonDisabled=!this.buttonDisabled;
+    // this.buttonDisabled = true;
+
+    console.log("first event  ",event)
+    //added beloow 
+   this.myfiles=files;
+   this.myevent=event;
     this.check=false
+
+    ////
     console.log('inside preview ')
-    this.activate=true
+    console.log(files)
+    this.activate=false
+
+    // this.activate=true
     this.selectedFile=[]
     if (files.length === 0)
       return;
       this.pathWithFile=""
-      var filesAmount = event.target.files.length;
+      this. filesAmount = event.target.files.length;
      
      
-      for (let i = 0; i < filesAmount; i++) {
+      for (let i = 0; i < this.filesAmount; i++) {
         this.ExtractPath();
+        console.log(" inside previe fill path is ",this.ExtractPath)
     this.selectedFile.push(<File>event.target.files[i]);
  
     var mimeType = files[i].type;
-    console.log(event.currentTarget)
+    // console.log(event.currentTarget)
     var reader = new FileReader();
     this.imagePath = files;
     reader.readAsDataURL(event.target.files[i]); 
@@ -121,24 +136,28 @@ export class TestComponent  {
       this.imgURL = reader.result; 
     
     }
-    
-     this.storage.ref(this.fullPath).child(this.selectedFile[i].name).put(this.selectedFile[i], {contentType: mimeType}).then(() => {
-      this.pathWithFile=this.fullPath.concat("/").concat(this.selectedFile[i].name);
+           this.check=true;
+
+    // console.log(" stor ",this.fullPath)
+// this we will move somere else 
+    //  this.storage.ref(this.fullPath).child(this.selectedFile[i].name).put(this.selectedFile[i], {contentType: mimeType}).then(() => {
+    //   this.pathWithFile=this.fullPath.concat("/").concat(this.selectedFile[i].name);
       
-      this.downloadURL= this.storage.ref(this.pathWithFile).getDownloadURL().subscribe(result => {
-       if(i==filesAmount-1)
-       this.check=true;
-       this.activate=false
-        this.now = new Date().toLocaleString();
-        this.delteurl=result;
-        const Data={Url:result,Path:this.fullPath,Name:this.selectedFile[i].name,Date:this.now}
+    //   this.downloadURL= this.storage.ref(this.pathWithFile).getDownloadURL().subscribe(result => {
+    //    if(i==this.filesAmount-1)
+    //    this.check=true;
+    //    this.activate=false
+    //     this.now = new Date().toLocaleString();
+    //     this.delteurl=result;
+    //     const Data={Url:this.delteurl,Path:this.fullPath,Name:this.selectedFile[i].name,Date:this.now}
   
 
       
-        this.db.collection('Category').doc(this.selectedFile[i].name).set(Data)
+    //     this.db.collection('Category').doc(this.selectedFile[i].name).set(Data)
    
-        })
-     }) 
+    //     })
+    //  }) 
+    
     }
   }
   blankRowArray: Array < BlankRow > = [];  
@@ -148,6 +167,7 @@ export class TestComponent  {
   hideMultiSelectedSubjectDropdown: boolean[] = [];  
   hideMultiSelectedSubjectDropdownAll: boolean[] = [];  
   ngOnInit() { 
+ this.buttonDisabled=true;
    this.checkScroll()
     this.af.auth.onAuthStateChanged(function(user) {
       if (user!=null) {
@@ -176,7 +196,8 @@ export class TestComponent  {
     this.fullPath="";
    
   }
-  OnCategoryCheked(x:any,i:any){
+  
+OnCategoryCheked(x:any,i:any){
    
     this.path[i]=x;
     this.temp=x;
@@ -285,8 +306,9 @@ x=0
 
   }
   createPosts(){
- 
-   
+
+ console.log(" createpost  length is ",this.filesAmount)
+ this.send_file()
     this.FileNames=[]
     this.rand=Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
     this.str=this.rand.toString()
@@ -308,7 +330,10 @@ x=0
     //   }, { merge: true });
     this.db.collection("users").doc(user.uid).update({"Tests":firebase.firestore.FieldValue.arrayUnion(this.str)})
    }
-  
+  //  this.buttonDisabled=true;// this will give us option to save after upload 
+   //to fire base 
+   this.buttonDisabled=!this.buttonDisabled;
+
   }
   ApiREquest(channel){
   // this.final=[];
@@ -435,6 +460,39 @@ gotoTop() {
     behavior: 'smooth' 
   });
 }
+send_file(){
+  var files=this.myfiles;
+ var event=this.myevent;
+  // var mimeType = files[i].type;
+  console.log(" send file function ")
+  for (let i = 0; i < this.filesAmount; i++) {
+//     this.selectedFile.push(<File>event.target.files[i]);
+// //
+    var mimeType = files[i].type;
+
+  this.storage.ref(this.fullPath).child(this.selectedFile[i].name).put(this.selectedFile[i], {contentType: mimeType}).then(() => {
+    this.pathWithFile=this.fullPath.concat("/").concat(this.selectedFile[i].name);
+    
+    this.downloadURL= this.storage.ref(this.pathWithFile).getDownloadURL().subscribe(result => {
+     if(i==this.filesAmount-1)
+    //  this.check=true;
+     this.activate=false
+      this.now = new Date().toLocaleString();
+      this.delteurl=result;
+      const Data={Url:this.delteurl,Path:this.fullPath,Name:this.selectedFile[i].name,Date:this.now}
+
+
+    
+      this.db.collection('Category').doc(this.selectedFile[i].name).set(Data)
+ 
+      })
+   }) 
+}
+this.check=true
+this.buttonDisabled=!this.buttonDisabled;
+
+};
+
 checkScroll() {
       
   // window의 scroll top

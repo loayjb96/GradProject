@@ -78,7 +78,7 @@ export class SidebarComponent implements OnInit {
     console.log(role)
     this.role=role
   }
-  isMobileMenu() {
+   isMobileMenu() {
       if ($(window).width() > 991) {
           return false;
       }
