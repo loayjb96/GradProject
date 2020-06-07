@@ -4,6 +4,7 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
 import { Router } from '@angular/router';
 import {AuthService} from '../../auth/login/auth.service'
 import { AngularFireAuth } from '@angular/fire/auth';
+import { GlobalService } from 'app/global.service';
 
 @Component({
   selector: 'app-navbar',
@@ -20,13 +21,16 @@ export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
     Uid:string;
+    Message: any;
+    length: any;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router,public authService: AuthService,private af:AngularFireAuth) {
+    constructor(location: Location,  private element: ElementRef,private global:GlobalService, private router: Router,public authService: AuthService,private af:AngularFireAuth) {
       this.location = location;
           this.sidebarVisible = false;
     }
 
     ngOnInit(){
+  this.getMessages()
         this.visibale=true;
         this.authnticated=true;
       this.listTitles = ROUTES.filter(listTitle => listTitle);
@@ -142,5 +146,13 @@ export class NavbarComponent implements OnInit {
           }
       }
       return 'Dashboard';
+    }
+    getMessages(){
+      this.Message=this.global.GenaerateMessagesForUser()
+
+     this.Message.subscribe(value=>{this.length=(value.length)})
+    }
+    goToMessages(){
+        this.router.navigate(['/Messages']);
     }
 }

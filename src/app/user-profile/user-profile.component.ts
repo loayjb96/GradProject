@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Http } from '@angular/http';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import{GlobalService} from '../global.service'
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -18,6 +18,12 @@ export class UserProfileComponent implements OnInit {
   UserEmail:string;
   Uid: string;
   whenToShow: boolean;
+  length: number;
+  Message=""
+  id: any;
+  CurrentUserName: string;
+  CurrentUserEmail: string;
+  SystemUser: any;
   
 
 
@@ -25,7 +31,7 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private storage: AngularFireStorage,private db:AngularFirestore,
     private af:AngularFireAuth,
-    private route: ActivatedRoute,private router:Router,private http:Http
+    private route: ActivatedRoute,private router:Router,private http:Http,private global:GlobalService
     ) { 
 
     }
@@ -35,13 +41,17 @@ export class UserProfileComponent implements OnInit {
         this.db.collection('users').doc(this.Uid).get().toPromise().then(result => {
           const user =this.af.auth.currentUser;
           const Data = result.data()
-          console.log(Data);
+          
           this.UserName=Data.fullName;
           this.UserRole=Data.Role;
           this.UserPhone=Data.PhoneNumber;
           this.UserEmail=Data.Email;
           this.UserTests=Data.Tests;
-          console.log(this.Uid)
+          if( this.UserTests)
+          this.length=this.UserTests.length
+          else
+          this.length=0
+        
           if(user.uid==this.Uid){
           
             this.whenToShow=true;
@@ -56,12 +66,10 @@ export class UserProfileComponent implements OnInit {
     if(user!=null){
       this.db.collection("users").doc(user.uid).get().toPromise().then(result => {
          const actualData = result.data();
-         this.UserName=actualData.fullName;
-         this.UserRole=actualData.Role;
-         this.UserPhone=actualData.PhoneNumber;
-         this.UserEmail=actualData.Email;
-         this.UserTests=actualData.Tests
-         console.log(actualData)
+         this.CurrentUserName=actualData.fullName;
+         this.CurrentUserEmail=actualData.Email;
+         this.id=actualData.Uid
+        
      })
     
 
@@ -69,11 +77,29 @@ export class UserProfileComponent implements OnInit {
     
      
     }
+    else
+    {
+      var SystemUser =localStorage.getItem('LoggedIn')
+      this.db.collection("users").doc(SystemUser).get().toPromise().then(result => {
+        const actualData = result.data();
+        this.CurrentUserName=actualData.fullName;
+        this.CurrentUserEmail=actualData.Email;
+        this.id=actualData.Uid
+       
+    })
+  
+    }
     this.route.queryParams.subscribe(params => {
     
       this.Uid=params['Data'];
       this.afterGotUidFromQueryParam()
     })
+  }
+  print(){
+    
+    const Data={Email:this.CurrentUserEmail,Name:this.CurrentUserName,Message:this.Message,Date:new Date().toLocaleString()}
+
+    this.global.GenerateNewMessage(this.Uid,Data)
   }
 
 }

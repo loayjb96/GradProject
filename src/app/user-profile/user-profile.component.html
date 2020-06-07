@@ -19,7 +19,7 @@
                             <div class="col-md-12 col-sm-12 user-detail-section2 pull-left">
                                 <div class="border"></div>
                                 <p>Tests</p>
-                                <span>{{UserTests.length}}</span>
+                                <span>{{length}}</span>
                             </div>                           
                         </div>
                        
@@ -131,12 +131,12 @@
                     </div>
                     <div class="form-group">
                         <label for="txtPhone">Message</label>
-						<textarea class="form-control" rows="5" id="comment"></textarea>
+						<textarea class="form-control" rows="5" id="comment" [(ngModel)]="Message"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-success"  data-dismiss="modal">Send</button>
+                    <button type="button" class="btn btn-success"  data-dismiss="modal" (click)="print()">Send</button>
                 </div>
             </div>
         </div>

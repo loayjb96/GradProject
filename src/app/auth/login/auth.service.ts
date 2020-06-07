@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { ElementSchemaRegistry } from '@angular/compiler';
 
 @Injectable()
 export class AuthService {
-  private LoggedInStatus=JSON.parse(localStorage.getItem('LoggedIn')||'false')
+  // private LoggedInStatus=JSON.parse(localStorage.getItem('LoggedIn')||'false')
   ErrorMessage :string= '';
   token: string;
 public Role:string;
@@ -41,7 +42,7 @@ public Role:string;
               }
             )
 
-     localStorage.setItem('LoggedIn','true')
+     localStorage.setItem('LoggedIn',this.afAuth.auth.currentUser.uid)
 
         }
       )
@@ -56,7 +57,7 @@ public Role:string;
 
         else if (errorCode == 'auth/wrong-password') {
           this.ErrorMessage=' password is Incorrect ';
-          console.log('סיסמה שגויה');
+        
           return this.ErrorMessage;          ;     
         }
 
@@ -80,15 +81,22 @@ public Role:string;
   }
 
   getToken() {
-    this.afAuth.auth.currentUser.getIdToken()
-      .then(
-        (token: string) => this.token = token
-      );
-    return this.token;
+    // this.afAuth.auth.currentUser.getIdToken()
+    //   .then(
+    //     (token: string) => this.token = token
+    //   );
+    // return this.token;
+    if(this.afAuth.auth.currentUser)
+    return  this.afAuth.auth.currentUser.uid
+    else
+    return localStorage.getItem('LoggedIn')
+
   }
 
   isAuthenticated() {
-    return this.checkLogin
+    if( this.checkLogin)
+    return true
+    return false
   }
   /// addedd   
   resetPasswordInit(email: string) { 
@@ -104,7 +112,7 @@ public Role:string;
 return this.Role
 }
 get checkLogin(){
-  return JSON.parse(localStorage.getItem('LoggedIn'))
+  return localStorage.getItem('LoggedIn')
 }
 
 
