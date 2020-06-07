@@ -6,6 +6,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ElementSchemaRegistry } from '@angular/compiler';
 import 'rxjs/Rx';
+//s
 import { map } from 'rxjs/operators';
 
 @Injectable()
