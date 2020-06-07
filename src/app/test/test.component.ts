@@ -300,7 +300,7 @@ x=0
 
   }
   createPosts(){
- 
+    this.buttonDisabled=true;
    
     this.FileNames=[]
     this.rand=Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
