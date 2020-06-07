@@ -50,20 +50,65 @@
 </div>
 <div class="header-body">
   
-<div class="row">
-  
+<div class="row ">
+ 
 <div *ngFor="let test of Test | async" class="col-md-6">
-<div *ngIf="Name==test.TesterName || Name=='all' " class="card card-stats mb-4 mb-xl-0 alert alert-dark" style="border-radius: 20%;">
+  <div *ngIf="test.TestId==parmTestID "  class=" glow-on-hover card card-stats mb-4 mb-xl-0 alert alert-dark" style="border-radius: 20%;">
+        
+    <div  class="card-body " >
+      
+    <div class="row">
+     <div  class="col-md-2">
+        
+        
+            <button *ngIf="role=='Admin'" style="margin-top: -20%;" mat-raised-button type="button" (click)="assign(test.TestId)" matTooltip="Remove Test" data-toggle="modal" data-target="#TestDeletion" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
+                <i class="material-icons">close</i>
+            </button>
+     
+            </div>
+    <div class="col"  data-toggle="modal" data-target="#StatModal" (click)='activateChart($evet, test.TestId)' >
+        
+    <h5 class="card-title text-uppercase font-weight-boldtext-center text-center">Test ID:{{test.TestId}}</h5>
+    <h4 class="h4 font-weight-boldtext-center text-center" style="color: black;">Made By: {{test.TesterName}}</h4>
+    </div>
     
-<div  class="card-body"  data-toggle="modal" data-target="#StatModal" (click)='activateChart($event, test.TestId)'>
+    <div class="col-md-2">
+      
+    <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+    <i style="margin-right: 15%;" class="fas fa-chart-bar"></i>
+    </div>
+    </div>
+    </div>
+    <p class="mt-3 mb-0 text-muted text-sm text-center">
+    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> </span>
+    <span class=" text-center">{{test.time}}</span> 
+    
+    </p>
+    </div>
+    </div>
+<div *ngIf="Name==test.TesterName || Name=='all' && parmTestID==0 " class="card card-stats mb-4 mb-xl-0 alert alert-dark" style="border-radius: 20%;">
+    
+<div  class="card-body " >
+  
 <div class="row">
-<div class="col">
+ <div class="col-md-2">
+    
+    
+        <button *ngIf="role=='Admin'" style="margin-top: -20%;" mat-raised-button type="button" (click)="assign(test.TestId,test.TesterId)" matTooltip="Remove Test" data-toggle="modal" data-target="#TestDeletion" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-md btn-just-icon">
+            <i class="material-icons">close</i>
+        </button>
+ 
+        </div>
+<div class="col"  data-toggle="modal" data-target="#StatModal" (click)='activateChart($event, test.TestId)' >
+    
 <h5 class="card-title text-uppercase font-weight-boldtext-center text-center">Test ID:{{test.TestId}}</h5>
-<h4 class="h4 font-weight-boldtext-center text-center">Made By: {{test.TesterName}}</h4>
+<h4 class="h4 font-weight-boldtext-center text-center" style="color: black;">Made By: {{test.TesterName}}</h4>
 </div>
-<div class="col-auto">
+
+<div class="col-md-2">
+  
 <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-<i class="fas fa-chart-bar"></i>
+<i style="margin-right: 15%;" class="fas fa-chart-bar"></i>
 </div>
 </div>
 </div>
@@ -72,14 +117,18 @@
 <span class=" text-center">{{test.time}}</span> 
 
 </p>
-
-
-
 </div>
 </div>
 </div>
 
 </div>
+
+
+<div class="row ">
+  
+  
+  
+  </div>
 </div>
 </div>
 </div>
@@ -118,25 +167,98 @@
                         <div class="card-footer">
                            
                                   <div class="card">
-                                   
+                                    <div class="card-header card-header-info">
+                                      <h4 class="card-title">Confusion matrix values</h4>
+                                      
+                                  </div>
                                       <div class="card-body table-responsive">
                                           <table class="table table-hover">
                                               <thead class="text-warning">
-                                                  <th>Accuracy</th>
-                                                  <th>F1 Score</th>
-                                                  <th>Precision</th>
-                                                  <th>Recall</th>
+                                                  <th>Measure</th>
+                                                  <th>Value</th>
+                                                  <th>Derivations</th>
+                                                 
                                                   
                                               </thead>
                                               <tbody>
-                                                  
+                                          
                                                   <tr >
-                                                    <td>{{accuracy*100|number}}%</td>
-                                                    <td>{{f1*100|number}}%</td>
-                                                    <td>{{precision*100|number}}%</td>
+                                                    <td>Recall</td>
                                                     <td>{{recall*100|number}}%</td>
+                                                    <td>TPR = TP / (TP + FN)</td>
+                                                   
+                                                  </tr >
+                                                  <tr >
+                                                    
+                                                    <td>Specifity</td>
+                                                    <td>{{Specifity*100|number}}%</td>
+                                                    <td>SPC = TN / (FP + TN)</td>
                                                   
                                                   </tr >
+                                                  <tr >
+                                                  
+                                                    <td>Precision</td>
+                                                    <td>{{precision*100|number}}%</td>
+                                                    <td>PPV = TP / (TP + FP)</td>
+                                                   
+                                                  </tr >
+                                                  <tr >
+                                                   
+                                                    <td>Negative Predictive Value</td>
+                                                    <td>{{NegativePredictive*100|number}}%</td>
+                                                    <td>NPV = TN / (TN + FN)</td>
+                                                    
+                                                  </tr >
+                                                  <tr >
+                                                 
+                                                    <td>False Positive Rate</td>
+                                                    <td>{{FalsePositive*100|number}}%</td>
+                                                  
+                                                    <td>FPR = FP / (FP + TN)</td>
+                                                
+                                                  </tr >
+                                                  <tr >
+                                             
+                                                    <td>False Discovery Rate</td>
+                                                    <td>{{FalseFiscovery*100|number}}%</td>
+                                                   
+                                                    <td>FDR = FP / (FP + TP)</td>
+                                               
+                                                  </tr >
+                                                  <tr >
+                                    
+                                                    <td>False Negative Rate</td>
+                                                    <td>{{FalseNegative*100|number}}%</td>
+                                                
+                                                    <td>FNR = FN / (FN + TP)</td>
+                                                 
+                                                  </tr >
+                                                  <tr >
+                                                
+                                                    <td>Accuracy</td>
+                                                    <td>{{accuracy*100|number}}%</td>
+                                                    <td>ACC = (TP + TN) / (P + N)</td>
+                                                   
+                                                  </tr >
+                                                  <tr >
+                                                  
+                                                    <td>F1 Score</td>
+                                                    <td>{{f1*100|number}}%</td>
+                                                    
+                                                    <td>F1 = 2TP / (2TP + FP + FN)</td>
+                                                  </tr >
+                                                  <tr >
+                                                  
+                                                   
+                                                 
+                                                    
+                                                    <td>Matthews Correlation Coefficient</td>
+                                                    <td>{{Matthews*100|number}}%</td>
+                                                    <td>TP*TN - FP*FN / sqrt((TP+FP)*(TP+FN)*(TN+FP)*(TN+FN))</td>
+                                                  </tr >
+                                                
+                                               
+                                                 
                                                  
                                                 
                                               </tbody>
@@ -144,15 +266,63 @@
  
                               </div>
                               </div>
+                              
                            
                         </div>
                         <div class="card-footer">
-                            <div class="stats">
+                          <div class="card">
+                            <div class="card-header card-header-primary">
+                              <h4 class="card-title">Audio Files Included in this Test</h4>
+                              
+                          </div>
+                              <div class="card-body table-responsive">
+                                  <table class="table table-hover">
+                                      <thead class="text-warning">
+                                          <th>File</th>
+                                          <th>Returned Value</th>
+                                          <th>Expected Value</th>
+                                         
+                                          
+                                      </thead>
+                                      <tbody>
+                                  
+                                          <tr *ngFor="let name of fileName;let i = index ">
+                                            
+                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==Res[i]; else loggedOut1">{{name}} </td>
+                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==Res[i]; else loggedOut2">{{Res[i]}} </td>
+                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==Res[i]; else loggedOut3">{{category}} </td>
+                                            <ng-template #loggedOut1>
+                                              <td>{{name}}</td>
+                                          
+                                            </ng-template>
+                                            <ng-template #loggedOut2>
+                                              
+                                              <td>{{Res[i]}}</td>
+                                            
+                                            </ng-template>
+                                            <ng-template #loggedOut3>
+                                             
+                                            <td>{{category}}</td>
+                                            </ng-template>
+                                            
+                                            </tr>
+                                           
+                                         
+                                         
+                                         
+                                        
+                                      </tbody>
+                                  </table>
+
+                      </div>
+                      </div>
+                            <!-- <div class="stats">
                                 <i class="material-icons">access_time</i> updated 4 minutes ago
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
+                
                 <div class="col-md-12">
                     <div class="card card-chart">
                         <div class="card-header card-header-primary">
@@ -178,6 +348,32 @@
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         
         </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div   class="modal fade" id="TestDeletion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div style="width: fit-content;" class="modal-dialog" role="document" >
+      <div class="modal-content" style="width: 120%;">
+        <div  class="modal-header text-center">
+            
+          <h5  class="modal-title text-center" id="exampleModalLongTitle">Remove Test</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body"  >
+            <p>Are you sure you want to delete this test</p>
+    
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+          <button (click)="delete()" type="button" class="btn btn-success" data-dismiss="modal">Yes</button>
+        
+        </div>
+      
       </div>
     </div>
   </div>

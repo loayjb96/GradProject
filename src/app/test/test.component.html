@@ -5,48 +5,29 @@
   <div class="card">  
     <div class="card-body">  
       <div class="table-responsive cnstr-record">  
-        <table class="table table-bordered">  
+        <table class="table table-bordered" id="topscroll">  
           <thead>  
             <tr>  
-              <th width="30">Roll No</th>  
-              <th width="100"> Tester Name</th>  
-              <!-- <th width="50">Tested Algorithm</th>   -->
-              <th width="70">Category</th>  
+              <th style="width: fit-content;" >Roll No</th>  
+              <th style="width: fit-content;">Name</th>  
+             
+              <th style="width: fit-content;">Category</th>  
             
-              <th width="50">Delete</th>  
+              <th style="width: fit-content;">Actions</th>  
             </tr>  
           </thead>  
           <tbody>  
             <tr *ngFor="let row of blankRowArray; let i = index">  
-              <td>  
+              <td style="width: fit-content;">  
                 <input type="text" disabled class="form-control wp-30" [(ngModel)]="blankRowArray[i].RollNo"  
                   [ngModelOptions]="{standalone: true}">  
               </td>  
-              <td>  
+              <td style="width: fit-content;">  
                 <input type="text" disabled class="form-control wp-30" [(ngModel)]="blankRowArray[i].Name"  
                   [ngModelOptions]="{standalone: true}">  
               </td>  
-              <!-- <td>  
-                <select [disabled]=Enable [(ngModel)]="blankRowArray[i].Algorithm" [ngModelOptions]="{standalone: true}"  
-                  class="form-control wp-70">  
-                  <option [ngValue]="0" disabled selected>--Choose--  
-                  </option>  
-                  <option [value]="1">Linear Regression</option>  
-                  <option [value]="2">Logistic Regression</option>  
-                  <option [value]="3">Support Vector Machines</option>  
-                  <option [value]="4">Random Forest</option>  
-                  <option [value]="5">Naïve Bayes Classification</option>  
-                  <option [value]="6">Ordinary Least Square Regression</option>  
-                  <option [value]="7">K-means</option>  
-                  <option [value]="8">Ensemble Methods</option>  
-                  <option [value]="9">Apriori Algorithm</option> 
-                  <option [value]="10">Principal Component Analysis</option>  
-                  <option [value]="11">Singular Value Decomposition</option>  
-                  <option [value]="12">Reinforcement or Semi-Supervised Machine Learning</option> 
-                  <option [value]="13">Independent Component Analysis</option>    
-                </select>  
-              </td>   -->
-              <td>  
+
+              <td style="width: fit-content;">  
                 <input list="Category" name="myBrowser" [(ngModel)]="blankRowArray[i].Catagory" (change)="OnCategoryCheked(blankRowArray[i].Catagory,i)"  
                 [ngModelOptions]="{standalone: true}" class="form-control wp-80" >
                 
@@ -60,20 +41,31 @@
               </td>  
              
               <td style="align-items: center;">  
-                <button (click)="deleteRow(i)" class="btn btn-danger">Delete Row</button>  
+                <!-- <button (click)="deleteRow(i)" class="btn btn-danger">Delete Row</button> 
+                <button style="margin: 10px;" class="btn btn-primary" (click)="addBlankRow()">Add Category</button>  -->
+                <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons" *ngIf="this.blankRowArray[i].Catagory!=''"  (click)="addBlankRow(i)">&#xE03B;</i></a>
+                <!-- <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a> -->
+                <a class="delete" title="Delete" data-toggle="tooltip" (click)="deleteRow(i)"><i class="material-icons">&#xE872;</i></a>
               </td>  
+           
             </tr>  
             
-          </tbody>  
+          </tbody> 
+ 
         </table> 
          
       </div>
         
     </div>  
   </div> 
-  <div class="center text-center" >  
+  
+  <div *ngIf="show" class="center text-center" >  
     <button style="margin: 10px;" class="btn btn-primary" (click)="addBlankRow()">Add Category</button>  
+    <!-- <button style="margin: 10px;" class="btn btn-primary" (click)="addBlankRow()">Add Category</button>   -->
+
+
   </div>  
+ 
   <div *ngIf="path.length">
     <h3  class="text-center">
       Path
@@ -88,24 +80,71 @@
     </div>
   </div>
 </div>
-  <div class="card" >
+  <div  *ngIf="Enable" class="card" >
     <div class="card-header">Form
     
       <div class="input-group">
     <div class="input-group ">
-      <button  class="btn btn-success btn-file" [disabled]="!Enable">     
+      <button  class="btn btn-success btn-file center text-center">     
 
-          Upload File<input #file type="file" [disabled]="!Enable"  (change)="preview(file.files,$event)" id="imgInp" multiple>
+          Upload File<input #file type="file"  [disabled]="!Enable"  (change)="preview(file.files,$event)"  id="imgInp" multiple>
       </button>
+   
   </div>
-  <div *ngIf="path.length">
-    <h3 *ngFor="let temp of selectedFile">{{temp.name}}</h3>
+
+  <div class="center text-center" *ngIf="selectedFile.length>0">
+    <div class="card ">
+      <div class="card-header card-header-info">
+        <h4 class="card-title">{{selectedFile.length}} files uploaded</h4>
+        
+    </div>
+    
+    <div class="card-body table-responsive">
+      <table class="table table-hover">
+          <thead class="text-warning">
+            <th>#</th>
+              <th>File Name</th>
+              <th>Play/Pause</th>           
+          </thead>
+          <tbody >
+      
+              <tr *ngFor="let temp of selectedFile; index as i"  >
+                <td>{{i+1}}</td>
+                <td>{{temp.name}}</td>
+             
+                <td class="text-center">  
+                  <a class="add" title="Play Sound" data-toggle="tooltip"><i class="material-icons" (click)="playaudio(temp)">play_arrow</i></a>
+                  <a class="delete" title="Stop Sound" data-toggle="modal" data-target="#exampleModal" ><i class="material-icons" (click)="stopCurrentSound()">pause_circle_filled</i></a>
+                </td> 
+
+               
+              </tr >
+             
+             
+             
+            
+          </tbody>
+      
+        
+      
+           
+    
+      </table>
+      </div>
+
+</div>
   </div>
+  
       </div>
     </div>
     
   </div> 
-  <div class="center text-center" >  
+  <div   *ngIf="Enable && activate" class="d-flex justify-content-center">
+    <div class="loader text-center">
+      <span class="span"></span>
+  </div>
+  </div>
+  <div *ngIf="check" class=" text-center" >  
     <button data-toggle="modal" data-target="#Test" style="margin: 10px;" class="btn btn-warning" [disabled]="!check" (click) ="createPosts()" >Commeit new test</button>  
   </div> 
  
@@ -114,68 +153,168 @@
     
     
   </div> 
-  <div class="modal fade" id="Test" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div #target  class="modal fade" id="Test" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    
     <div class="modal-dialog modal-lg"  style="margin-top: 5%;">
       <div class="item-summary">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-6">
-              <div class="item-summary">
-                <h4  class="alert alert-primary" style="text-align: center;">samplingrate 8000</h4>
+            <div class="col-md-12">
             
-                
-                <address *ngIf='NewPost'class="alert alert-success">
-                  <h3>API Response</h3>
-                  <div *ngFor="let r of res.split(','); let i = index">
-                    <!-- <div *ngIf="i<selectedFile.length">
-                    <h4 style="color: black;">
-                {{FileName}}
-              </h4>
-                    <br/>
-                    </div> -->
-                    {{r}} 
-                    <br/>
-              </div> 
-                <!-- <p class="street-address">{{res}}</p> -->
-                
-                </address>
-                </div>
-            </div>
-            <div class="col-md-6 ml-auto">
               <div class="item-summary">
-                <h4  class="alert alert-primary" style="text-align: center;">samplingrate 44100</h4>
-               
-                <address *ngIf='NewPost1' class="alert alert-success">
-                  <h3>API Response</h3>
-                  <div *ngFor="let r2 of res2.split(','); let i = index">
-                    <!-- <div *ngIf="i<selectedFile.length">
-                      <h4 style="color: black;">
-                      {{FileName}}
-                    </h4>
-                          <br/>
-                          </div> -->
-                          {{r2}} 
-                          <br/>
-              </div> 
-                
-                </address>
+              <h4  class="alert alert-primary" style="text-align: center;">Test ID: {{rand}}</h4>
+              <h5   style="text-align: center;" *ngIf="show1;else showAnother">Sampling Rate 8000</h5>
+              <ng-template #showAnother>
+                                              
+                <h5   style="text-align: center;" >Sampling Rate 44100</h5>
+              
+              </ng-template>
+                        
+                <div class="card-body table-responsive">
+                  <table class="table table-hover">
+                      <thead class="text-warning">
+                         <th>#</th>
+                          <th>File Name</th>
+                          <th>Duartion</th>
+                          <th>API Result</th>
+                     
+                          
+                      </thead>
+                    
+                      <tbody *ngIf='NewPost'class="alert alert-success" >
+                          
+                          <tr *ngFor= "let name  of selectedFile; let i = index">
+                            
+                              <td>{{i+1}}</td>
+                              <td>{{name.name}}</td>
+                              <td >{{res[i].length}} Secound</td>
+                              <!--secound table-->
+                              <td *ngIf="show1">
+                                <div class="item-summary">
+                            
+                                  <div *ngIf="Error[name.name]==true;else ShowError"class="card-body table-responsive">
+                                    <table class="table table-hover">
+                                        <thead class="text-warning">
+                                           <th>Secound</th>
+                                            <th>Result</th>
+                                            
+                                        </thead>
+                                      
+                                        <tbody *ngIf='NewPost'>
+                                            
+                                            <tr *ngFor="let r of res[i];let j = index" >
+                                              <td>{{j+1}}</td>
+                                                <td>{{r}}</td>
+
+                                          
+                                            
+                                            </tr >
+                                           
+                                         
+                                        </tbody>
+                                      
+                                      
+                                    </table>
+                                    
+                                </div >
+                               
+                                <ng-template #ShowError >
+                                              
+                                  <table class="table ">
+                                   
+                                      <p  class="alert alert-danger">  The server responded with a status of 500 (Internal Server Error)
+                                      
+                                    </p> 
+                                  
+                                </table>
+                                
+                                </ng-template>
+                                  </div>
+
+
+                              </td>
+                              <td *ngIf="show2">
+                                <div class="item-summary">
+                                <div *ngIf="Error2[name.name]==true  ;else ShowError1"class="card-body table-responsive">
+                                  <table class="table table-hover">
+                                      <thead class="text-warning">
+                                         <th>Secound</th>
+                                          <th>Result</th>
+                                          
+                                      </thead>
+                                    
+                                      <tbody *ngIf='NewPost1'>
+                                          
+                                        <tr *ngFor="let r2 of res2[i];let k = index" >
+                                          <td>{{k+1}}</td>
+                                            <td>{{r2}}</td>
+
+                                      
+                                        
+                                        </tr >
+                                       
+                                      
+                                    </tbody>
+                                    
+                                  </table>
+                                  
+                              </div>
+                              <ng-template #ShowError1>
+                                              
+                                <table class="table ">
+                                 
+                                    <p  class="alert alert-danger">  The server responded with a status of 500 (Internal Server Error)
+                                    
+                                  </p> 
+                                
+                              </table>
+                              
+                              </ng-template>
+                                </div>
+                                </td>
+                             
+                             <!---->
+                          
+                          </tr >
+                         
+                        
+                      </tbody>
+                      
+                    
+                  </table>
+                  
+              </div>
                 </div>
             </div>
+         
           </div>
     
 
         </div>
       </div>
   </div>
+  <div class="center text-center" >
+  <label class="toggle-label">
+    <input type="checkbox" (click)="switch()"  data-target="#Test">
+    <span class="back">
+<span class="toggle"></span>
+    <span class="label on"> 8000</span>
+    <span class="label off">44100</span>
+    </span>
+</label>
+</div>
   <div class="center text-center" >  
-    <button data-toggle="modal" data-target="#Test" data-dismiss="modal" style="margin: 10px;" class="btn btn-info" >Show More Info</button>  
-  </div> 
-  </div>
-  <!-- {{NewPost |async| json}} -->
+  
+    <button data-toggle="modal" data-target="#Test" data-dismiss="modal" style="margin: 10px;" class="btn btn-danger" >Cancel</button> 
 
-  <!-- <div *ngFor="let post of Posts | 
-  async">
-    {{post | json}}
-  </div>  -->
+    <button data-toggle="modal" data-target="#Test" data-dismiss="modal" style="margin: 10px;" class="btn btn-info" (click)="navigateToPage()"  >Save Result</button>
+    <!-- here whe disable the save button tilll we send the data  -->
+    <button data-toggle="modal" data-target="#Test" data-dismiss="modal" style="margin: 10px;" class="btn btn-info" (click)="navigateToPage()" *ngIf="done" >Save Result</button>
+
+   
+  </div> 
+
+  </div>
+
 
 </div>  

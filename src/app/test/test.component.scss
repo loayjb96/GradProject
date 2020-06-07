@@ -42,3 +42,168 @@
     box-sizing: border-box;
     margin-top: -0.2em;
   }
+  table.table th i {
+    font-size: 13px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+table.table th:last-child {
+    width: 100px;
+}
+table.table td a {
+cursor: pointer;
+    display: inline-block;
+    margin: 0 5px;
+min-width: 24px;
+}    
+table.table td a.add {
+    color: #27C46B;
+}
+table.table td a.edit {
+    color: #FFC107;
+}
+table.table td a.delete {
+    color: #E34724;
+}
+table.table td i {
+    font-size: 19px;
+}
+table.table td a.add i {
+    font-size: 24px;
+  margin-right: -1px;
+    position: relative;
+    top: 3px;
+}    
+/*switch on-off */
+.toggle-label {
+    position: relative;
+    width: 300px;
+    height: 30px;
+    margin-top: 10px;
+  }
+  .toggle-label input[type=checkbox] { 
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 15%;
+  }
+  .toggle-label input[type=checkbox]+.back {
+      position: absolute;
+      width: 100%;
+      height: 30px;
+      left: 0;
+      top: 0;
+      border-radius: 50px;
+      border: 1px solid #000;
+      transition: background 150ms linear;
+  }
+  .toggle-label input[type=checkbox]:checked+.back {
+      border: 1px solid #000;
+      cursor: pointer;
+  }
+  
+  .toggle-label input[type=checkbox]+.back .toggle {
+    display: block;
+    position: absolute;
+    content: ' ';
+    background: #000;
+    width: 50%; 
+    height: 100%;
+    transition: margin 150ms linear;
+    border: 1px solid #808080;
+    border-radius: 50px;
+  }
+  .toggle-label input[type=checkbox]:checked+.back .toggle {
+    margin-left: 150px;
+  }
+  .toggle-label .label {
+    display: block;
+    position: absolute;
+    width: 50%;
+    color: #ddd;
+    line-height: 24px;
+    text-align: center;
+    font-size: 10px;
+  }
+  .toggle-label .label.on { left: 0px; }
+  .toggle-label .label.off { right: 0px; }
+  
+  .toggle-label input[type=checkbox]:checked+.back .label.on {
+    color: #000;
+  }
+  .toggle-label input[type=checkbox]+.back .label.off {
+    color: #000;
+      cursor: pointer;
+  }
+  .toggle-label input[type=checkbox]:checked+.back .label.off {
+    color: #ddd;
+  }
+  /*switch on-off */
+  .loader{
+
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.6);
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  .span{
+    position: absolute;
+    transform: translate(-50%, 50%);
+    width: 120px; 
+    height: 120px;
+    
+    border: 5px solid #262626;
+    z-index: 1;
+    animation: animar 2.5s linear infinite;
+  }
+  .span:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #262626;
+    animation: animarbg 2.5s linear infinite;
+  }
+  
+  @keyframes animar {
+      0% {
+          transform: translate(-50%, 50%) rotate(0deg);
+      }
+      25% {
+          transform: translate(-50%, 50%) rotate(180deg);
+      }
+      50% {
+          transform: translate(-50%, 50%) rotate(180deg);
+      }
+      75% {
+          transform: translate(-50%, 50%) rotate(360deg);
+      }
+      100% {
+          transform: translate(-50%, 50%) rotate(360deg);
+      }
+  }
+  @keyframes animarbg {
+      0% {
+          height: 0;
+      }
+      25% {
+          height: 0;
+      }
+      50% {
+          height: 100%;
+      }
+      75% {
+          height: 100%;
+      }
+      100% {
+          height: 0;
+      }
+  }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { AngularFireStorage } from '@angular/fire/storage/storage';
 
 @Component({
   selector: 'app-filerepository',
@@ -9,6 +10,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./filerepository.component.scss']
 })
 export class FilerepositoryComponent implements OnInit {
+  
   CategoryCollection;
   Category: Observable<any[]> ;
   subCategory:any
@@ -26,25 +28,30 @@ export class FilerepositoryComponent implements OnInit {
   }
  
 
-  constructor(private route: ActivatedRoute,private router: Router,private db:AngularFirestore) {
+  constructor(private route: ActivatedRoute,private router: Router,private db:AngularFirestore,private storage: AngularFireStorage) {
  
+    // var profileUrl =new Observable<string> );
 
+     
+       
   
 
 }
-playCurrentSound(url):void{
+urrentSound(url):void{
   this.audio = new Audio();
 this.audio.src = url;
 this.audio.load();
 this.audio.play();
 
-  console.log(url)
+
 }
 stopCurrentSound():void{
 
   this.audio.pause();
 }
 PassInfo(cat):void{
+  console.log('passinfo')
+  console.log(cat)
   this.info=cat.Name
   this.path=cat.Path
     this.date=cat.Date
@@ -56,7 +63,9 @@ console.log(this.newDate)
 
 
 }
+
   async fetchFileFromStorage(){
  
 }
+
 }
