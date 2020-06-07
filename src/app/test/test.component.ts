@@ -80,17 +80,7 @@ export class TestComponent  {
   show1:boolean=true
   show2:boolean=false
   audio: HTMLAudioElement;
-  filesAmount: number;
-  myfiles:any;
-  myevent:any;
-  // buttonDisabled: boolean;
-
-  constructor(
-    private storage: AngularFireStorage,public db:AngularFirestore,
-    private af:AngularFireAuth,
-    private route: ActivatedRoute,private router:Router,private http:HttpClient,private http1: Http
     ) { 
-  
     }
   
   selectedFile: File[] = [];
@@ -99,13 +89,7 @@ export class TestComponent  {
     el.scrollIntoView();
 }
   async preview(files,event) {
-    // this.buttonDisabled=!this.buttonDisabled;
-    // this.buttonDisabled = true;
-
-    console.log("first event  ",event)
-    //added beloow 
-   this.myfiles=files;
-   this.myevent=event;
+   
     this.check=false
 
     ////
@@ -157,7 +141,6 @@ export class TestComponent  {
    
         })
      }) 
-    
     }
   }
   blankRowArray: Array < BlankRow > = [];  
@@ -306,9 +289,8 @@ x=0
 
   }
   createPosts(){
-
- console.log(" createpost  length is ",this.filesAmount)
-//  this.send_file()
+ 
+   
     this.FileNames=[]
     this.rand=Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
     this.str=this.rand.toString()
@@ -330,10 +312,7 @@ x=0
     //   }, { merge: true });
     this.db.collection("users").doc(user.uid).update({"Tests":firebase.firestore.FieldValue.arrayUnion(this.str)})
    }
-  //  this.buttonDisabled=true;// this will give us option to save after upload 
-   //to fire base 
-  //  this.buttonDisabled=!this.buttonDisabled;
-
+  
   }
   ApiREquest(channel){
   // this.final=[];
@@ -398,7 +377,7 @@ this.done=false;
    this.ResArray2[0]=this.ResArray2[0].concat(" "+data.events[k].events)
    this.ResArray2[1]= this.ResArray2[1].concat(" "+data.events[k].time)
    this.ResTemp[0]=this.ResTemp[0].concat(data.events[k].events+" ")
-   this.done=true;
+   
   
     } 
     this.final2.push(this.ResTemp[0])  
@@ -429,7 +408,7 @@ console.log(this.Error2)
     this.db.collection('Tests').doc(this.rand.toString()).set(this.Data)
     this.db.collection('Tests').doc(this.rand.toString()).set(this.Data2)
     this.router.navigate(['/TestsDone'], { queryParams: { TestId: this.rand.toString() } });
-    // this.router.navigateByUrl('/TestsDone');
+  
   }
  switch(){
    
@@ -460,39 +439,6 @@ gotoTop() {
     behavior: 'smooth' 
   });
 }
-send_file(){
-  var files=this.myfiles;
- var event=this.myevent;
-  // var mimeType = files[i].type;
-  console.log(" send file function ")
-  for (let i = 0; i < this.filesAmount; i++) {
-//     this.selectedFile.push(<File>event.target.files[i]);
-// //
-    var mimeType = files[i].type;
-
-  this.storage.ref(this.fullPath).child(this.selectedFile[i].name).put(this.selectedFile[i], {contentType: mimeType}).then(() => {
-    this.pathWithFile=this.fullPath.concat("/").concat(this.selectedFile[i].name);
-    
-    this.downloadURL= this.storage.ref(this.pathWithFile).getDownloadURL().subscribe(result => {
-     if(i==this.filesAmount-1)
-    //  this.check=true;
-     this.activate=false
-      this.now = new Date().toLocaleString();
-      this.delteurl=result;
-      const Data={Url:this.delteurl,Path:this.fullPath,Name:this.selectedFile[i].name,Date:this.now}
-
-
-    
-      this.db.collection('Category').doc(this.selectedFile[i].name).set(Data)
- 
-      })
-   }) 
-}
-this.check=true
-// this.buttonDisabled=!this.buttonDisabled;
-
-};
-
 checkScroll() {
       
   // window의 scroll top

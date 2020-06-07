@@ -21,6 +21,8 @@ import {
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { environment } from 'environments/environment';
 import { from } from 'rxjs';
+import { GlobalService } from './global.service';
+
 
 
 
@@ -50,6 +52,7 @@ import { from } from 'rxjs';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+
     
   
     
@@ -59,7 +62,7 @@ import { from } from 'rxjs';
    
 
   ],
-  providers: [AuthService],
+  providers: [AuthService,GlobalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
