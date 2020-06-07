@@ -14,7 +14,6 @@ import { DeleteWarnComponent } from '../../delete-warn/delete-warn.component';
 import { TestComponent } from '../../test/test.component';
 import { TestDoneComponent } from '../../test-done/test-done.component';
 import { FilerepositoryComponent } from '../../filerepository/filerepository.component';
-import {GlobalService} from '../../global.service'
 
 
 
@@ -31,7 +30,6 @@ import {
   
 } from '@angular/material';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import { MessagesComponent } from 'app/messages/messages.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -48,31 +46,22 @@ import { MessagesComponent } from 'app/messages/messages.component';
     AngularFireStorageModule,
     
   ],
- 
+  // providers: [AuthService],
   declarations: [
     DashboardComponent,
     LoginComponent,
     UserProfileComponent,
-    MessagesComponent,
     UsersComponent,
     DialogOverviewExampleDialog,
     DeleteWarnComponent,
     TestComponent,
     TestDoneComponent,
     FilerepositoryComponent,
-    
    
 
   ],
- 
   entryComponents:[DialogOverviewExampleDialog,DeleteWarnComponent]
 })
 
 
-export class AdminLayoutModule {
-
-
-
-
-  
-}
+export class AdminLayoutModule {}
