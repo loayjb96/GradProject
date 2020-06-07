@@ -7,7 +7,6 @@ import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { LoginComponent } from '../../auth/login/login.component';
 import {AuthService} from '../../auth/login/auth.service'
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
-import { UserInboxComponent } from '../../user-inbox/user-inbox.component';
 
 import { UsersComponent } from '../../users/users.component';
 import { DialogOverviewExampleDialog } from '../../dialog-overview-example-dialog/dialog-overview-example-dialog.component';
