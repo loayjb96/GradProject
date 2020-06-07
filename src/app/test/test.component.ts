@@ -373,7 +373,7 @@ this.done=false;
    this.ResArray2[0]=this.ResArray2[0].concat(" "+data.events[k].events)
    this.ResArray2[1]= this.ResArray2[1].concat(" "+data.events[k].time)
    this.ResTemp[0]=this.ResTemp[0].concat(data.events[k].events+" ")
-   this.done=true;
+   
   
     } 
     this.final2.push(this.ResTemp[0])  
@@ -404,7 +404,7 @@ console.log(this.Error2)
     this.db.collection('Tests').doc(this.rand.toString()).set(this.Data)
     this.db.collection('Tests').doc(this.rand.toString()).set(this.Data2)
     this.router.navigate(['/TestsDone'], { queryParams: { TestId: this.rand.toString() } });
-    // this.router.navigateByUrl('/TestsDone');
+  
   }
  switch(){
    
