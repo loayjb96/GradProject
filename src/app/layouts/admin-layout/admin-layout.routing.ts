@@ -8,7 +8,6 @@ import {TestComponent} from '../../test/test.component'
 import { TestDoneComponent } from '../../test-done/test-done.component';
 import { FilerepositoryComponent } from 'app/filerepository/filerepository.component';
 import { IsAdminGuard } from 'app/is-admin-guard/is-admin.guard';
-import {MessagesComponent} from '../../messages/messages.component'
 
 
 
@@ -21,7 +20,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'Users',      component: UsersComponent, canActivate: [IsAdminGuard] },
     { path: 'TestsDone',      component: TestDoneComponent  ,canActivate: [IsAdminGuard]},
     { path: 'filerepository',      component: FilerepositoryComponent  ,canActivate: [IsAdminGuard]},
-    { path: 'Messages',      component: MessagesComponent  ,canActivate: [IsAdminGuard]},
 
    
 ];
