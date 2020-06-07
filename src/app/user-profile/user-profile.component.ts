@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Http } from '@angular/http';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router, ActivatedRoute } from '@angular/router';
-import{GlobalService} from '../global.service'
+
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -19,11 +19,6 @@ export class UserProfileComponent implements OnInit {
   Uid: string;
   whenToShow: boolean;
   length: number;
-  Message=""
-  id: any;
-  CurrentUserName: string;
-  CurrentUserEmail: string;
-  SystemUser: any;
   
 
 
@@ -31,7 +26,7 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private storage: AngularFireStorage,private db:AngularFirestore,
     private af:AngularFireAuth,
-    private route: ActivatedRoute,private router:Router,private http:Http,private global:GlobalService
+    private route: ActivatedRoute,private router:Router,private http:Http
     ) { 
 
     }
@@ -66,9 +61,11 @@ export class UserProfileComponent implements OnInit {
     if(user!=null){
       this.db.collection("users").doc(user.uid).get().toPromise().then(result => {
          const actualData = result.data();
-         this.CurrentUserName=actualData.fullName;
-         this.CurrentUserEmail=actualData.Email;
-         this.id=actualData.Uid
+         this.UserName=actualData.fullName;
+         this.UserRole=actualData.Role;
+         this.UserPhone=actualData.PhoneNumber;
+         this.UserEmail=actualData.Email;
+         this.UserTests=actualData.Tests
         
      })
     
@@ -77,29 +74,11 @@ export class UserProfileComponent implements OnInit {
     
      
     }
-    else
-    {
-      var SystemUser =localStorage.getItem('LoggedIn')
-      this.db.collection("users").doc(SystemUser).get().toPromise().then(result => {
-        const actualData = result.data();
-        this.CurrentUserName=actualData.fullName;
-        this.CurrentUserEmail=actualData.Email;
-        this.id=actualData.Uid
-       
-    })
-  
-    }
     this.route.queryParams.subscribe(params => {
     
       this.Uid=params['Data'];
       this.afterGotUidFromQueryParam()
     })
-  }
-  print(){
-    
-    const Data={Email:this.CurrentUserEmail,Name:this.CurrentUserName,Message:this.Message,Date:new Date().toLocaleString()}
-
-    this.global.GenerateNewMessage(this.Uid,Data)
   }
 
 }
