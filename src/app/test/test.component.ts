@@ -404,7 +404,7 @@ console.log(this.Error2)
     this.db.collection('Tests').doc(this.rand.toString()).set(this.Data)
     this.db.collection('Tests').doc(this.rand.toString()).set(this.Data2)
     this.router.navigate(['/TestsDone'], { queryParams: { TestId: this.rand.toString() } });
-  
+  //upload
   }
  switch(){
    
