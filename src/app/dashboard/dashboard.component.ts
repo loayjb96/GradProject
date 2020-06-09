@@ -205,7 +205,7 @@ export class DashboardComponent implements OnInit {
       
      
       low: 0,
-      high: this.data.length, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+      high:Math.max(...this.data)+15,// creative tim: we recommend you to set the high sa the biggest value + something for a better look
       chartPadding: { top: 0, right: 0, bottom: -1, left: 0},
       axisX: {
         
@@ -216,7 +216,7 @@ export class DashboardComponent implements OnInit {
     axisY: {
       showGrid:true,
       low:Math.min(...this.data),
-            high:Math.max(...this.data)+0.1,
+            high:Math.max(...this.data)+0.5,
       type: Chartist.AutoScaleAxis,
       ticks: this.data,
     
@@ -231,7 +231,7 @@ export class DashboardComponent implements OnInit {
   
  
   low: 0,
-  high: this.data2.length, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+  high: this.data2.length+5, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
   chartPadding: { top: 0, right: 0, bottom: -1, left: 0},
   
   axisX: {
@@ -243,7 +243,7 @@ export class DashboardComponent implements OnInit {
 axisY: {
   showGrid:true,
   low:Math.min(...this.data2),
-        high:Math.max(...this.data2)+0.1,
+        high:Math.max(...this.data2)+0.5,
   type: Chartist.AutoScaleAxis,
   ticks: this.data2,
 
@@ -274,7 +274,7 @@ axisY: {
           tension: 0
       }),
       low: 0,
-      high: this.data4.length, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+      high: this.data4.length+2, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
       chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
        
   axisX: {
@@ -286,7 +286,7 @@ axisY: {
 axisY: {
   showGrid:true,
   low:Math.min(...this.data4),
-        high:Math.max(...this.data4)+0.1,
+        high:Math.max(...this.data4)+0.5,
   type: Chartist.AutoScaleAxis,
   ticks: this.data4,
 
@@ -365,7 +365,7 @@ axisX: {
     showGrid: false
 },
 low: 0,
-high: this.data3.length,
+high:Math.max(...this.data3),
 chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
 };
 var responsiveOptions1: any[] = [
@@ -387,9 +387,9 @@ this.startAnimationForBarChart(websiteViewsChart1);
 
 //##############################################
 var datawebsiteViewsChart2 = {
-labels: ['1', '2', '3', '4', '5','6','7'],
+labels: this.testId,
 series: [
-[22, 13, 24, 48, 85,40]
+  this.data444100
 
 ]
 };
@@ -403,21 +403,7 @@ var websiteViewsChart2 = new Chartist.Bar('#websiteViewsChart2', datawebsiteView
 this.startAnimationForBarChart(websiteViewsChart2);
 //##############################################
 //##############################################
-var datawebsiteViewsChart3 = {
-labels: ['1', '2', '3', '4', '5','6','7'],
-series: [
-[82, 73, 84, 68, 85,60]
 
-]
-};
-
-
-
-
-var websiteViewsChart3 = new Chartist.Bar('#websiteViewsChart3', datawebsiteViewsChart3, optionswebsiteViewsChart1, responsiveOptions1);
-
-//start animation for the Emails Subscription Chart
-this.startAnimationForBarChart(websiteViewsChart3);
 //##############################################
   }
   assign(tablenum){
