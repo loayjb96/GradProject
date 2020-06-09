@@ -17,7 +17,7 @@ export class GlobalService {
 
  
   GenerateNewMessage(id,Data){
-alert(Data.Message)
+
     this.db.collection("users").doc(id).collection("PrivateMessages").add(Data)
     
     
@@ -44,7 +44,7 @@ alert(Data.Message)
       }
       GenaerateMessagesForUser(){
         this.GetUser();
-     alert(localStorage.getItem('LoggedIn'))
+   
    
         this.Message=this.db.collection("users").doc(localStorage.getItem('LoggedIn')).collection('PrivateMessages').snapshotChanges().pipe(
           map(actions => actions.map(a => {
