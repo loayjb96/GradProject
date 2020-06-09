@@ -109,6 +109,7 @@ export class DashboardComponent implements OnInit {
     this.count=0
     this. avergae44100=0
     this. avergae244100=0
+    this. avergae444100=0
     this.count44100=0
 
     this.usersCollection = this.db.collection<any>('users')
@@ -137,9 +138,9 @@ export class DashboardComponent implements OnInit {
           this.data244100.push(res[k].Result44100[1])
           this.data344100.push(res[k].Result44100[2])
           this.data444100.push(res[k].Result44100[3])
-   
           this.avergae44100+=res[k].Result44100[0]
           this.avergae244100+=res[k].Result44100[1]
+          this.avergae444100+=res[k].Result44100[3]
           this.count44100++
           
            }
@@ -151,6 +152,7 @@ export class DashboardComponent implements OnInit {
       this.avergae4/=this.count
       this.avergae44100/=this.count44100
       this.avergae244100/=this.count44100
+      this.avergae444100/=this.count44100
        this.activateCharts()
        
    });
@@ -378,8 +380,6 @@ axisX: {
 }
 }]
 ];
-
-
 var websiteViewsChart1 = new Chartist.Bar('#websiteViewsChart1', datawebsiteViewsChart1, optionswebsiteViewsChart1, responsiveOptions1);
 
 //start animation for the Emails Subscription Chart
