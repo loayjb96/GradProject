@@ -145,6 +145,7 @@ export class DashboardComponent implements OnInit {
           this.data44100.push(res[k].Result44100[0])
           this.data244100.push(res[k].Result44100[1])
           this.data344100.push(res[k].Result44100[2])
+          this.data444100.push(res[k].Result44100[3])
           this.data544100.push(res[k].Result44100[4])
          
           this.avergae44100+=res[k].Result44100[0]
