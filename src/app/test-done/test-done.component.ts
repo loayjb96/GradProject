@@ -312,15 +312,15 @@ if(str==1){
     this. f1 = 2*tp/(2*tp+fp+fn);
     this. precision = tp/(x);
     this. recall = tp/(p);
-    if(n==0)
-    this.Specifity=tn/(1);
-    else
-    this.Specifity=tn/(n);
-    this.NegativePredictive=tn/(y);
-    this.FalsePositive=fp/n;
-    this.FalseFiscovery=fp/x;
+    // if(n==0)
+    // // this.Specifity=tn/(1);
+    // else
+    // this.Specifity=tn/(n);
+    // this.NegativePredictive=tn/(y);
+    // this.FalsePositive=fp/n;
+    // this.FalseFiscovery=fp/x;
     this.FalseNegative=fn/p;
-    this.Matthews=(tp*tn-fp*fn)/Math.sqrt((x)*(p)*(n)*(y))
+    // this.Matthews=(tp*tn-fp*fn)/Math.sqrt((x)*(p)*(n)*(y))
     // alert(this.accuracy)
     if(this.updated==false){
 
