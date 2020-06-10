@@ -43,6 +43,10 @@ export class DashboardComponent implements OnInit {
   Measure: string;
   tablenum: number=0;
   len: number;
+  data544100: Array<number>=[];
+  data5:  Array<number>=[];
+  avergae544100: any;
+  avergae5: any;
   constructor(private db:AngularFirestore, private af:AngularFireAuth,private router:Router) { }
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
@@ -106,10 +110,12 @@ export class DashboardComponent implements OnInit {
     this. avergae=0
     this. avergae2=0
     this. avergae4=0
+    this.avergae5=0;
     this.count=0
     this. avergae44100=0
     this. avergae244100=0
     this. avergae444100=0
+    this.avergae544100=0;
     this.count44100=0
 
     this.usersCollection = this.db.collection<any>('users')
@@ -126,10 +132,12 @@ export class DashboardComponent implements OnInit {
        this.data2.push(res[k].Result8000[1])
        this.data3.push(res[k].Result8000[2])
        this.data4.push(res[k].Result8000[3])
+       this.data5.push(res[k].Result8000[4])
 
        this.avergae+=res[k].Result8000[0]
        this.avergae2+=res[k].Result8000[1]
        this.avergae4+=res[k].Result8000[3]
+       this.avergae5+=res[k].Result8000[4]
        this.count++
        
         }
@@ -137,10 +145,12 @@ export class DashboardComponent implements OnInit {
           this.data44100.push(res[k].Result44100[0])
           this.data244100.push(res[k].Result44100[1])
           this.data344100.push(res[k].Result44100[2])
-          this.data444100.push(res[k].Result44100[3])
+          this.data544100.push(res[k].Result44100[4])
+         
           this.avergae44100+=res[k].Result44100[0]
           this.avergae244100+=res[k].Result44100[1]
           this.avergae444100+=res[k].Result44100[3]
+          this.avergae544100+=res[k].Result44100[4]
           this.count44100++
           
            }
@@ -150,9 +160,11 @@ export class DashboardComponent implements OnInit {
       this.avergae/=this.count
       this.avergae2/=this.count
       this.avergae4/=this.count
+      this.avergae5/=this.count
       this.avergae44100/=this.count44100
       this.avergae244100/=this.count44100
       this.avergae444100/=this.count44100
+      this.avergae544100/=this.count44100
        this.activateCharts()
        
    });
@@ -389,7 +401,9 @@ this.startAnimationForBarChart(websiteViewsChart1);
 var datawebsiteViewsChart2 = {
 labels: this.testId,
 series: [
-  this.data444100
+  this.data5,
+  this.data544100
+
 
 ]
 };

@@ -87,15 +87,13 @@
                 
                         </div>
                       <h4 style="font-weight: 500;"  class="card-title" style="font-weight: 500;">Average Algortim Accuraccy </h4>
-                      <p class="card-category">
+
+                  </div>
+                  <div class="card-footer">
+                    <p class="card-category">
                         <span class="text-success"><i class="fa fa-long-arrow-up"></i> {{avergae|number}}% </span> Is the average accuracy  in the 8000 tests .</p>
                       <p class="card-category">
                           <span class="text-danger"><i class="fa fa-long-arrow-up"></i> {{avergae44100|number}}% </span> Is the average accuracy  in the 44100 tests .</p>
-                  </div>
-                  <div class="card-footer">
-                      <div class="stats">
-                          <i class="material-icons">access_time</i> updated 4 minutes ago
-                      </div>
                       <button mat-raised-button type="button" (click)="assign(1)" matTooltip="Show In Table " data-toggle="modal" data-target="#Tableshape" [matTooltipPosition]="'above'" class="btn btn-info btn-link btn-md btn-just-icon">
                         <i class="material-icons">table_chart</i>
                     </button>
@@ -129,15 +127,13 @@
                       
                         
                     <h4  style="font-weight: 500;" class="card-title">Average Algortim F1-Score </h4>
+
+                </div>
+                <div class="card-footer">
                     <p class="card-category">
                         <span class="text-success"><i class="fa fa-long-arrow-up"></i> {{avergae2|number}}% </span> Is the average F1_Score  in the 8000 tests .</p>
                         <p class="card-category">
                             <span class="text-danger"><i class="fa fa-long-arrow-up"></i> {{avergae244100|number}}% </span> Is the average F1_Score  in the 44100 tests .</p>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">access_time</i> updated 4 minutes ago
-                    </div>
                     <button mat-raised-button type="button" (click)="assign(2)" matTooltip="Show In Table " data-toggle="modal" data-target="#Tableshape" [matTooltipPosition]="'above'" class="btn btn-info btn-link btn-md btn-just-icon">
                         <i class="material-icons">table_chart</i>
                     </button>
@@ -171,15 +167,13 @@
                 
                         </div>
                     <h4  style="font-weight: 500;" class="card-title">Average Algortim Recall </h4>
+
+                </div>
+                <div class="card-footer">
                     <p class="card-category">
                         <span class="text-success"><i class="fa fa-long-arrow-up"></i> {{avergae4|number}}% </span> Is the average Recall  in the 8000 tests .</p>
                     <p class="card-category">
                         <span class="text-danger"><i class="fa fa-long-arrow-up"></i> {{avergae444100|number}}% </span> Is the average Recall  in the 44100 tests .</p>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">access_time</i> campaign sent 2 days ago
-                    </div>
                     <button mat-raised-button type="button" (click)="assign(3)" matTooltip="Show In Table " data-toggle="modal" data-target="#Tableshape" [matTooltipPosition]="'above'" class="btn btn-info btn-link btn-md btn-just-icon">
                         <i class="material-icons">table_chart</i>
                     </button>
@@ -210,7 +204,26 @@
                     </div>
                     <div class="card-body">
                         <h4 style="font-weight: 500;"  class="card-title"> Precision  </h4>
-                        <p class="card-category">our classes </p>
+                        <div class="float-right text-danger">
+                       
+                       
+                       
+                     
+                            <p class="text-muted" style="font-weight: 600;">  &nbsp;Sampling Rate 8000
+                              <span class="material-icons">
+                              
+                                  maximize 
+                                  </span>
+                          </p> 
+                          <br>
+                          <p style="font-weight: 600;">  Sampling Rate 44100
+                              <span class="material-icons">
+                              
+                                  maximize 
+                                  </span>
+                          </p> 
+                      
+                              </div>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
@@ -226,12 +239,33 @@
                         </div>
                         <div class="card-body">
                             <h4 style="font-weight: 500;" class="card-title"> False Negative Rate </h4>
-                            <p class="card-category">our classes </p>
+                            <div class="float-right text-danger">
+                       
+                       
+                       
+                     
+                                <p class="text-muted" style="font-weight: 600;">  &nbsp;Sampling Rate 8000
+                                  <span class="material-icons">
+                                  
+                                      maximize 
+                                      </span>
+                              </p> 
+                              <br>
+                              <p style="font-weight: 600;">  Sampling Rate 44100
+                                  <span class="material-icons">
+                                  
+                                      maximize 
+                                      </span>
+                              </p> 
+                          
+                                  </div>
                         </div>
                         <div class="card-footer">
-                            <div class="stats">
-                                <i class="material-icons">access_time</i> campaign sent 2 days ago
-                            </div>
+                            <p class="card-category">
+                                <span class="text-success"><i class="fa fa-long-arrow-up"></i> {{avergae5|number}}% </span> Is the average accuracy  in the 8000 tests .</p>
+                              <p class="card-category">
+                                  <span class="text-danger"><i class="fa fa-long-arrow-up"></i> {{avergae544100|number}}% </span> Is the average accuracy  in the 44100 tests .</p>
+                            
                         </div>
                     </div>
                 </div>
