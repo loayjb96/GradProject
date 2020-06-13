@@ -14,13 +14,34 @@
   <hr>
 <div class="row" >
   <div class="">
+    
     <div class="card">
         <div class="card-header card-header-danger">
             <h4 class="card-title">Company Testers</h4>
             <p class="card-category">Sort Tests by the Names Down . </p>
+            <body>
+              <div class="container h-100">
+                <div class="d-flex justify-content-center h-100">
+                  <div class="searchbar">
+                    <input class="search_input" type="text" name="" placeholder="Search...">
+                    <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+                  </div>
+                </div>
+              </div>
+            </body>
+        </div>
+        <div class="center text-center" >
+          <label class="toggle-label">
+            <input type="checkbox" (click)="switch()" >
+            <span class="back">
+        <span class="toggle"></span>
+            <span class="label on"> Tester Name</span>
+            <span class="label off">Test ID</span>
+            </span>
+        </label>
         </div>
         <div class="card-body table-responsive">
-            <table class="table table-hover">
+            <table *ngIf="show1" class="table table-hover">
                 <thead class="text-warning">
                     <th>ID</th>
                     <th>Name</th>
@@ -39,6 +60,28 @@
                   
                 </tbody>
             </table>
+            <table *ngIf="show2" class="table table-hover">
+              <thead class="text-warning">
+                <th>#</th>
+                  <th>Test ID</th>
+                  <th>Test Date</th>
+                 
+                  
+              </thead>
+              <tbody *ngFor="let t of Test | async; index as i">
+                  
+                  <tr  (click)="sortvia(t.TestId)" >
+                      <td>{{i+1}}</td>
+                      <td>{{t.TestId}}</td>
+                      <td>{{t.time}}</td>
+                  
+                  
+                  </tr >
+                 
+                
+              </tbody>
+          </table>
+
             <div class="center text-center" >  
             <button  style="border-radius: 20%;"  class="btn btn-info " (click)="resetSort()"> Reset Sort</button>
             </div>
@@ -86,7 +129,7 @@
     </p>
     </div>
     </div>
-<div *ngIf="Name==test.TesterName || Name=='all' && parmTestID==0 " class="card card-stats mb-4 mb-xl-0 alert alert-dark" style="border-radius: 20%;">
+<div *ngIf="Name==test.TesterName || Name=='all' ||Name==test.TestId && parmTestID==0 " class="card card-stats mb-4 mb-xl-0 alert alert-dark" style="border-radius: 20%;">
     
 <div  class="card-body " >
   
@@ -163,7 +206,19 @@
                             <h4 style="font-weight: 500;"  class="card-title" style="font-weight: 500;">Algortim Accuraccy </h4>
                             <p class="card-category">
                                 <span class="text-success">Algortim Accuracy in this test: {{accuracy}} </span> </p>
-                        </div>
+                        </div>    <div class="card card-chart">
+                          <div class="card-header card-header-primary">
+                              <h4 style="text-align: center;">Sampling rate 44100 </h4>
+                             
+                              <div class="ct-chart" id="dailySalesChart1"></div>
+                          </div>
+                          <div class="card-body">
+                              <h4 style="font-weight: 500;"  class="card-title" style="font-weight: 500;">Algortim Accuraccy </h4>
+                              <p class="card-category">
+                                  <span class="text-success">Algortim Accuracy in this test: {{accuracy2}} </span> </p>
+                          </div>
+                        
+                      </div>
                         <div class="card-footer">
                            
                                   <div class="card">
@@ -175,61 +230,33 @@
                                           <table class="table table-hover">
                                               <thead class="text-warning">
                                                   <th>Measure</th>
-                                                  <th>Value</th>
+                                                  <th>Value SR 8000</th>
+                                                  <th>Value SR 44100</th>
                                                   <th>Derivations</th>
-                                                 
-                                                  
                                               </thead>
                                               <tbody>
                                           
                                                   <tr >
                                                     <td>Recall</td>
                                                     <td>{{recall*100|number}}%</td>
+                                                    <td>{{recall2*100|number}}%</td>
                                                     <td>TPR = TP / (TP + FN)</td>
                                                    
                                                   </tr >
-                                                  <!-- <tr >
-                                                    
-                                                    <td>Specifity</td>
-                                                    <td>{{Specifity*100|number}}%</td>
-                                                    <td>SPC = TN / (FP + TN)</td>
-                                                  
-                                                  </tr > -->
+                                              
                                                   <tr >
                                                   
                                                     <td>Precision</td>
                                                     <td>{{precision*100|number}}%</td>
+                                                    <td>{{precision2*100|number}}%</td>
                                                     <td>PPV = TP / (TP + FP)</td>
                                                    
                                                   </tr >
-                                                  <!-- <tr >
-                                                   
-                                                    <td>Negative Predictive Value</td>
-                                                    <td>{{NegativePredictive*100|number}}%</td>
-                                                    <td>NPV = TN / (TN + FN)</td>
-                                                    
-                                                  </tr > -->
-                                                  <!-- <tr >
-                                                 
-                                                    <td>False Positive Rate</td>
-                                                    <td>{{FalsePositive*100|number}}%</td>
-                                                  
-                                                    <td>FPR = FP / (FP + TN)</td>
-                                                
-                                                  </tr > -->
-                                                  <!-- <tr >
-                                             
-                                                    <td>False Discovery Rate</td>
-                                                    <td>{{FalseFiscovery*100|number}}%</td>
-                                                   
-                                                    <td>FDR = FP / (FP + TP)</td>
-                                               
-                                                  </tr > -->
                                                   <tr >
                                     
                                                     <td>False Negative Rate</td>
                                                     <td>{{FalseNegative*100|number}}%</td>
-                                                
+                                                    <td>{{FalseNegative2*100|number}}%</td>
                                                     <td>FNR = FN / (FN + TP)</td>
                                                  
                                                   </tr >
@@ -237,37 +264,22 @@
                                                 
                                                     <td>Accuracy</td>
                                                     <td>{{accuracy*100|number}}%</td>
-                                                    <td>ACC = (TP + TN) / (P + N)</td>
-                                                   
+                                                    <td>{{accuracy2*100|number}}%</td>
+                                                    <td>ACC = (TP + TN) / (P + N)</td> 
                                                   </tr >
                                                   <tr >
                                                   
                                                     <td>F1 Score</td>
                                                     <td>{{f1*100|number}}%</td>
+                                                    <td>{{f12*100|number}}%</td>
                                                     
                                                     <td>F1 = 2TP / (2TP + FP + FN)</td>
                                                   </tr >
-                                                  <!-- <tr >
-                                                  
-                                                   
-                                                 
-                                                    
-                                                    <td>Matthews Correlation Coefficient</td>
-                                                    <td>{{Matthews*100|number}}%</td>
-                                                    <td>TP*TN - FP*FN / sqrt((TP+FP)*(TP+FN)*(TN+FP)*(TN+FN))</td>
-                                                  </tr >
-                                                 -->
-                                               
-                                                 
-                                                 
-                                                
+                                        
                                               </tbody>
                                           </table>
- 
                               </div>
                               </div>
-                              
-                           
                         </div>
                         <div class="card-footer">
                           <div class="card">
@@ -279,7 +291,8 @@
                                   <table class="table table-hover">
                                       <thead class="text-warning">
                                           <th>File</th>
-                                          <th>Returned Value</th>
+                                          <th>Value SR8000</th>
+                                          <th>Value SR44100</th>
                                           <th>Expected Value</th>
                                          
                                           
@@ -288,23 +301,28 @@
                                   
                                           <tr *ngFor="let name of fileName;let i = index ">
                                             
-                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==Res[i]; else loggedOut1">{{name}} </td>
-                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==Res[i]; else loggedOut2">{{Res[i]}} </td>
-                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==Res[i]; else loggedOut3">{{category}} </td>
+                                            <td  style="font-weight: 500;" >{{name}} </td>
+                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==Res[i] else loggedOut2">{{Res[i]}} </td>
+                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==Res2[i] ; else loggedOut4">{{Res2[i]}} </td>
+                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==Res[i]||category==Res2[i]; else loggedOut3">{{category}} </td>
                                             <ng-template #loggedOut1>
                                               <td>{{name}}</td>
                                           
                                             </ng-template>
                                             <ng-template #loggedOut2>
                                               
-                                              <td>{{Res[i]}}</td>
+                                              <td class="alert alert-danger">{{Res[i]}}</td>
                                             
                                             </ng-template>
                                             <ng-template #loggedOut3>
                                              
-                                            <td>{{category}}</td>
+                                            <td  class="alert alert-danger">{{category}}</td>
                                             </ng-template>
+                                            <ng-template #loggedOut4>
+                                              
+                                              <td  class="alert alert-danger">{{Res2[i]}}</td>
                                             
+                                            </ng-template>
                                             </tr>
                                            
                                          
@@ -323,25 +341,7 @@
                     </div>
                 </div>
                 
-                <div class="col-md-12">
-                    <div class="card card-chart">
-                        <div class="card-header card-header-primary">
-                            <h4 style="text-align: center;">Sampling rate 44100 </h4>
-                           
-                            <div class="ct-chart" id="dailySalesChart1"></div>
-                        </div>
-                        <div class="card-body">
-                            <h4 style="font-weight: 500;"  class="card-title" style="font-weight: 500;">Algortim Accuraccy </h4>
-                            <p class="card-category">
-                                <span class="text-success">Algortim Accuracy in this test: {{accuracy2}} </span> </p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="stats">
-                                <i class="material-icons">access_time</i> updated 4 minutes ago
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          
                 </div>
         </div>
         <div class="modal-footer">

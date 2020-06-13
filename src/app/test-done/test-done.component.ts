@@ -44,10 +44,13 @@ export class TestDoneComponent implements OnInit {
   FalsePositive: number;
   FalseFiscovery: number;
   FalseNegative: number;
+  FalseNegative2: number;
   Matthews: number;
   testerid: any;
   count2: any;
   role: any;
+  show2: boolean=false;
+  show1: boolean=true;
 
   
   constructor(private route: ActivatedRoute,private router: Router,public authService: AuthService,private db:AngularFirestore,private af:AngularFireAuth) {
@@ -56,11 +59,6 @@ export class TestDoneComponent implements OnInit {
 
   ngOnInit() {
     let uid=this.authService.getToken()
-
- 
-   
-
-  console.log(this.role)
     this.usersCollection = this.db.collection<any>('users')
     this.contacts = this.usersCollection.valueChanges()
     this.TestCollection = this.db.collection<any>('Tests')
@@ -268,6 +266,13 @@ n.forEach((num1, index) => {
 });
 return counter_crosses
 }
+switch(){
+   this.resetSort()
+  this.show2=this.show1;
+  this.show1=!this.show1
+  this.ngOnInit()
+ 
+}
 confision_matrix_function(catagory,expected_value_api,str){
   this.Resarray=[]
   var arr2=expected_value_api
@@ -312,16 +317,7 @@ if(str==1){
     this. f1 = 2*tp/(2*tp+fp+fn);
     this. precision = tp/(x);
     this. recall = tp/(p);
-    // if(n==0)
-    // // this.Specifity=tn/(1);
-    // else
-    // this.Specifity=tn/(n);
-    // this.NegativePredictive=tn/(y);
-    // this.FalsePositive=fp/n;
-    // this.FalseFiscovery=fp/x;
     this.FalseNegative=fn/p;
-    // this.Matthews=(tp*tn-fp*fn)/Math.sqrt((x)*(p)*(n)*(y))
-    // alert(this.accuracy)
     if(this.updated==false){
 
     this.Resarray.push(this.accuracy,this.f1,this.precision,this.recall,this.FalseNegative)
@@ -336,7 +332,7 @@ if(str==2){
   this. f12 = 2*tp/(2*tp+fp+fn);
   this. precision2 = tp/(tp+fp);
   this. recall2 = tp/(tp+fn);
-  this.FalseNegative=fn/p;
+  this.FalseNegative2=fn/p;
   if(this.updated==false){
   this.Resarray.push(this.accuracy2,this.f12,this.precision2,this.recall2,this.FalseNegative)
     this.db.collection("Tests").doc(this.id.toString()).set({
