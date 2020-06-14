@@ -18,13 +18,13 @@
     <div class="card">
         <div class="card-header card-header-danger">
             <h4 class="card-title">Company Testers</h4>
-            <p class="card-category">Sort Tests by the Names Down . </p>
+            <p class="card-category">Sort Tests by Name or Test ID . </p>
             <body>
               <div class="container h-100">
                 <div class="d-flex justify-content-center h-100">
                   <div class="searchbar">
-                    <input class="search_input" type="text" name="" placeholder="Search...">
-                    <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+                    <input class="search_input" type="text"  [(ngModel)] = "Name"   placeholder="Search...">
+                    <a (click)="sortvia(Name)" class="search_icon"><i class="fas fa-search"></i></a>
                   </div>
                 </div>
               </div>
@@ -50,7 +50,7 @@
                 </thead>
                 <tbody *ngFor="let user of contacts | async; index as i">
                     
-                    <tr *ngIf="user.Role!='Viwer'" (click)="sortvia(user.fullName)" >
+                    <tr  *ngIf=" user.Role!='Viwer' && user.fullName.includes(Name)||Name=='all'" (click)="sortvia(user.fullName)" >
                         <td>{{i+1}}</td>
                         <td>{{user.fullName}}</td>
                         <td>{{user.Role}}</td>
@@ -129,7 +129,7 @@
     </p>
     </div>
     </div>
-<div *ngIf="Name==test.TesterName || Name=='all' ||Name==test.TestId && parmTestID==0 " class="card card-stats mb-4 mb-xl-0 alert alert-dark" style="border-radius: 20%;">
+<div *ngIf="test.TesterName.includes(Name) || Name=='all' ||test.TestId.toString().indexOf(Name) > -1 && parmTestID==0 " class="card card-stats mb-4 mb-xl-0 alert alert-dark" style="border-radius: 20%;">
     
 <div  class="card-body " >
   

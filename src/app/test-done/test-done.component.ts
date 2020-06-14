@@ -230,6 +230,7 @@ if(id==this.parmTestID){
   }
 }
 sortvia(userName){
+  alert(userName)
 
   this.Name=userName
   this.ngOnInit
