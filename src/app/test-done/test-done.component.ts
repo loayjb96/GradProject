@@ -51,6 +51,8 @@ export class TestDoneComponent implements OnInit {
   role: any;
   show2: boolean=false;
   show1: boolean=true;
+  R:string[]=[];;
+  R1:string[]=[];
 
   
   constructor(private route: ActivatedRoute,private router: Router,public authService: AuthService,private db:AngularFirestore,private af:AngularFireAuth) {
@@ -148,7 +150,10 @@ calc(id){
     // this.fileName=this.fileName.split(".wav")
   
 for(let i=0;i<HZ8000.length;i++){
-this.Res.push( HZ8000[i].split(" ")[0]);
+  // if(HZ8000[i].split(" ")[1]!="")
+this.Res.push( HZ8000[i].split(" ")[1]);
+let temp=HZ8000[i].split(" ")[0].replace(".wav","");
+this.R[temp]=HZ8000[i].split(" ")[1]
 
 this.count.push(i+1)
 }
@@ -158,15 +163,17 @@ for(let j=0 ;j<this.fileName.length;j++){
 
   }
   for(let k=0;k<HZ44100.length;k++){
-    
-    this.Res2.push(HZ44100[k].split(" ")[0]);
+    let temp=HZ44100[k].split(" ")[0].replace(".wav","");
+    this.R1[temp]=HZ44100[k].split(" ")[1]
+    // if(HZ44100[k].split(" ")[1]!="")
+    this.Res2.push(HZ44100[k].split(" ")[1]);
     this.count2.push(k+1)
   
 
     }
-console.log(this.count)
+
 console.log(this.Res)
-console.log(this.category[0])
+console.log(this.Res2)
 this.confision_matrix_function(this.category[0],this.Res,"1")
 this.confision_matrix_function(this.category[0],this.Res2,"2")
 
@@ -277,6 +284,7 @@ switch(){
 confision_matrix_function(catagory,expected_value_api,str){
   this.Resarray=[]
   var arr2=expected_value_api
+  console.log(arr2)
   // we want to find true postive true negtive 
   var tp =0;
   var tn=0;
@@ -332,7 +340,7 @@ if(str==2){
   this. accuracy2 = (tp+tn)/(p+n);
   this. f12 = 2*tp/(2*tp+fp+fn);
   this. precision2 = tp/(tp+fp);
-  this. recall2 = tp/(tp+fn);
+  this. recall2 = tp/(p);
   this.FalseNegative2=fn/p;
   if(this.updated==false){
   this.Resarray.push(this.accuracy2,this.f12,this.precision2,this.recall2,this.FalseNegative)

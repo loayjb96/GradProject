@@ -320,12 +320,13 @@ this.done=false;
    header=header.set('X-AbiliSense-API-Key','0479e58c-3258-11e8-b467-0ed5f89Tests')
    header=header.set('accept','application/json')
    let options = {headers:header};
+   this.FileNames=[];
    for(let i=0;i<this.selectedFile.length;i++){
     this.Error[this.selectedFile[i].name]=true
     this.Error2[this.selectedFile[i].name]=true
     this.res[i]=[]
     this.res2[i]=[]
-    this.FileName=this.selectedFile[i].name
+    this.FileNames.push(this.selectedFile[i].name)
    const formData: FormData = new FormData();
    formData.append('audiofile', this.selectedFile[i]);
    formData.append('samplingrate', channel);
@@ -334,26 +335,20 @@ this.done=false;
     
     this.NewPost=this.http.post(this.ROOT_URL,formData,options)
     this.NewPost.subscribe(data=>{
-      // this.res+=i+" "+this.selectedFile[i].name+","
-      this.ResTemp=[""]
+      this.ResTemp[0]=this.selectedFile[i].name.concat(" ");
       for (var j=0; j<data.events.length;j++){
       this.len.push(data.events.length)
      this.res[i].push(data.events[j].events)
-    
-     this.ResArray1[0]=this.ResArray1[0].concat(" "+data.events[j].events)
-     this.ResArray1[1]=this.ResArray1[1].concat(" "+data.events[j].time)
      this.ResTemp[0]=this.ResTemp[0].concat(data.events[j].events+" ")
       }
       this.final.push(this.ResTemp[0])
-      this.FileNames.push(this.selectedFile[i].name)
-     
-
       this.Data={TesterName:this.UserName,TesterId:this.testerid,Catagory:this.path,HZ8000:this.final,
         HZ44100:this.final2,time:this.now,TestId:this.rand,Name:this.FileNames}
-
    },
    error=>{ console.log('oops', error)
    this.Error[this.selectedFile[i].name]=false
+
+   this.final.push(this.selectedFile[i].name+" ")  
    console.log("file : "+ this.selectedFile[i].name)
   }
    )
@@ -365,13 +360,12 @@ this.done=false;
    this.NewPost1.subscribe(data=>{
     // this.res2= 'API Response ,'
     
-    this.ResTemp=[""]
+    this.ResTemp[0]=this.selectedFile[i].name.concat(" ");
     for (var k=0; k<data.events.length;k++){
    
       this.res2[i].push(data.events[k].events)
   
-   this.ResArray2[0]=this.ResArray2[0].concat(" "+data.events[k].events)
-   this.ResArray2[1]= this.ResArray2[1].concat(" "+data.events[k].time)
+
    this.ResTemp[0]=this.ResTemp[0].concat(data.events[k].events+" ")
    
   
@@ -384,7 +378,9 @@ this.done=false;
 
     },
     error=>{ console.log('oops', error)
+    this.final2.push(this.selectedFile[i].name+" ")   
     this.Error2[this.selectedFile[i].name]=false
+    
     console.log("file : "+ this.selectedFile[i].name)
   }
  )
@@ -410,7 +406,7 @@ console.log(this.Error2)
    
    this.show2=this.show1;
    this.show1=!this.show1
-   console.log("show1= "+this.show1,"show2= "+this.show2 )
+  
  }
  playaudio(file){
   var url = URL.createObjectURL(file);

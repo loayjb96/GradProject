@@ -302,16 +302,16 @@
                                           <tr *ngFor="let name of fileName;let i = index ">
                                             
                                             <td  style="font-weight: 500;" >{{name}} </td>
-                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==Res[i] else loggedOut2">{{Res[i]}} </td>
-                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==Res2[i] ; else loggedOut4">{{Res2[i]}} </td>
-                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==Res[i]||category==Res2[i]; else loggedOut3">{{category}} </td>
+                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==R[name]; else loggedOut2">{{R[name]}} </td>
+                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==R1[name] ; else loggedOut4">{{R1[name]}} </td>
+                                            <td class="alert alert-success" style="font-weight: 500;" *ngIf="category==R[name]||category==R1[name]; else loggedOut3">{{category}} </td>
                                             <ng-template #loggedOut1>
                                               <td>{{name}}</td>
                                           
                                             </ng-template>
                                             <ng-template #loggedOut2>
                                               
-                                              <td class="alert alert-danger">{{Res[i]}}</td>
+                                              <td class="alert alert-danger">{{R[name]}}</td>
                                             
                                             </ng-template>
                                             <ng-template #loggedOut3>
@@ -320,7 +320,7 @@
                                             </ng-template>
                                             <ng-template #loggedOut4>
                                               
-                                              <td  class="alert alert-danger">{{Res2[i]}}</td>
+                                              <td  class="alert alert-danger">{{R1[name]}}</td>
                                             
                                             </ng-template>
                                             </tr>
