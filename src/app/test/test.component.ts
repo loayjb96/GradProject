@@ -39,6 +39,7 @@ export class TestComponent  {
   contacts:any[];
   path:any[];
    final:Array<string>=[];
+   ErrorData:Array<string>=[];
    final2:Array<string>=[];
    FileNames:Array<string>=[];
   fullPath:string;
@@ -73,6 +74,7 @@ export class TestComponent  {
   activate: boolean;
   len: number[]=[];
   Data: {};
+  ErrorFile: {};
   Data2: {};
   testerid: string;
   Error: boolean[]=[];
@@ -347,9 +349,11 @@ this.done=false;
    },
    error=>{ console.log('oops', error)
    this.Error[this.selectedFile[i].name]=false
-
+   
+this.ErrorData.push(this.selectedFile[i].name.concat("+"+error.message+"+"+channel))
    this.final.push(this.selectedFile[i].name+" ")  
-   console.log("file : "+ this.selectedFile[i].name)
+   
+   console.log()
   }
    )
    }
@@ -371,17 +375,14 @@ this.done=false;
   
     } 
     this.final2.push(this.ResTemp[0])  
-    
     this.Data2={TesterName:this.UserName,TesterId:this.testerid,Catagory:this.path,HZ8000:this.final,
       HZ44100:this.final2,time:this.now,TestId:this.rand,Name:this.FileNames}
-     
-
     },
     error=>{ console.log('oops', error)
     this.final2.push(this.selectedFile[i].name+" ")   
     this.Error2[this.selectedFile[i].name]=false
-    
-    console.log("file : "+ this.selectedFile[i].name)
+    this.ErrorData.push(this.selectedFile[i].name.concat("+"+error.message+"+"+channel))
+    console.log(error)
   }
  )
 }
@@ -390,15 +391,17 @@ this.done=false;
   this.done=true;
   
   }
- 
+ this.ErrorFile={time:this.now,TestId:this.rand,Error:this.ErrorData}
 this.ResArray1=["",""]
 this.ResArray2=["",""]
 console.log(this.Error)
 console.log(this.Error2)
   }
   navigateToPage(){
+    
     this.db.collection('Tests').doc(this.rand.toString()).set(this.Data)
     this.db.collection('Tests').doc(this.rand.toString()).set(this.Data2)
+    this.db.collection('ApiErrors').doc(this.rand.toString()).set(this.ErrorFile)
     this.router.navigate(['/TestsDone'], { queryParams: { TestId: this.rand.toString() } });
   
   }

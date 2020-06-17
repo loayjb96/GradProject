@@ -16,6 +16,9 @@ export class DashboardComponent implements OnInit {
   contacts: Observable<any[]> ;
   CategoryCollection;
   Category: Observable<any[]> ;
+  ErrorCollection;
+  Error: Observable<any[]> ;
+  temp:string
   TestCollection;
   Test: Observable<any[]> ;
   testCount:Array<number>=[];
@@ -24,6 +27,12 @@ export class DashboardComponent implements OnInit {
   data3:Array<number>=[];
   data4:Array<number>=[];
   Testers:Array<number>=[];
+
+  T_ID:Array<any>=[];
+  ErrorAPi:Array<String>=[];
+  ErrorChannel:Array<String>=[];
+  FileName:Array<String>=[];
+  Time:Array<String>=[];
   testId:Array<number>=[];
   avergae:any;
   avergae2:any;
@@ -124,6 +133,8 @@ export class DashboardComponent implements OnInit {
     this.Test = this.TestCollection.valueChanges()
     this.CategoryCollection = this.db.collection<any>('Category')
     this.Category = this.CategoryCollection.valueChanges()
+    this.ErrorCollection = this.db.collection<any>('ApiErrors')
+    this.Error = this.ErrorCollection.valueChanges()
     this.Test.subscribe(res => {
       this.res=res
       for(let k=0;k<res.length;k++){
@@ -183,6 +194,19 @@ export class DashboardComponent implements OnInit {
      this.activateCharts()
      
  });
+ this.Error.subscribe(res=>{
+  for(let k=0;k<res.length;k++){
+    this.T_ID.push(res[k].TestId)
+    this.temp=res[k].Error;
+    this.ErrorAPi.push(this.temp)
+    console.log(this.ErrorAPi)
+   
+    // this.FileName.push(res[k].Error.split("+")[0])
+    // this.ErrorChannel.push(res[k].Error.split("+")[2])
+
+  }
+
+ })
 
   this.Category.subscribe(res=>{
     this.len=res.length
