@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AuthService } from 'app/auth/login/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -56,7 +57,8 @@ export class DashboardComponent implements OnInit {
   data5:  Array<number>=[];
   avergae544100: any;
   avergae5: any;
-  constructor(private db:AngularFirestore, private af:AngularFireAuth,private router:Router) { }
+  role: any;
+  constructor(private db:AngularFirestore, private af:AngularFireAuth,private router:Router,public authService: AuthService) { }
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
       seq = 0;
@@ -115,6 +117,15 @@ export class DashboardComponent implements OnInit {
   };
   ngOnInit( 
   ) {
+    let uid=this.authService.getToken()
+    this.db.collection("users").doc(uid).get().toPromise().then(result => {
+ 
+      const actualData = result.data();
+      this.role=actualData.Role;
+ 
+   
+
+  })
   
     this. avergae=0
     this. avergae2=0
@@ -465,5 +476,15 @@ this.startAnimationForBarChart(websiteViewsChart2);
   }
  
 
+  delete(ID){
+  
+    this.db.collection("ApiErrors").doc(String(ID)).delete().then(function() {
+      console.log("Document successfully deleted!");
+  }).catch(function(error) {
+      console.error("Error removing document: ", error);
+  });
+
+  
+  }
 }
 

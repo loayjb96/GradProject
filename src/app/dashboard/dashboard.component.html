@@ -277,7 +277,7 @@
             
        
       </div>
-      <div class="row">
+      <div *ngIf="role!='Viwer'" class="row">
           <div class="col-md-12">
               <div class="card">
                   <div class="card-header card-header-tabs card-header-primary">
@@ -288,7 +288,7 @@
                                 
                                   <li class="nav-item">
                                       <a mat-button class="nav-link" href="#profile" data-toggle="tab">
-                                          <i class="material-icons">code</i> Website
+                                          <i class="material-icons">code</i> Tasks
                                           <div class="ripple-container"></div>
                                       </a>
                                   </li>
@@ -308,6 +308,7 @@
                       
                         
                           <div class="tab-pane" id="messages">
+                            <a  class="add" title="Add new user" data-toggle="modal" data-target="#UserCreationModal" ><i class="large material-icons">add</i></a>
                               <table class="table">
                                   <tbody>
                                       <tr>
@@ -372,14 +373,15 @@
                                               </div>
                                           </td>
                                           <td>{{error.TestId}}</td>
-                                          <td> <p   matTooltip="Show In Table " data-toggle="modal" data-target="#ErrorModal" [matTooltipPosition]="'above'" class="btn btn-danger ">
+                                          <td> <p   matTooltip="Show In Table " data-toggle="modal" data-target="#ErrorModal" [matTooltipPosition]="'above'" class="btn btn-danger " style="border-radius: 50%;">
+                                              
                                             See full Error
                                           </p></td>
                                           <td class="td-actions text-right">
                                               <button mat-raised-button type="button" matTooltip="Edit Task" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
                                                   <i class="material-icons">edit</i>
                                               </button>
-                                              <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                              <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon" (click)="delete(error.TestId)">
                                                   <i class="material-icons">close</i>
                                               </button>
                                           </td>

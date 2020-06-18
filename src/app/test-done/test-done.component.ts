@@ -256,6 +256,7 @@ delete(){
 }).catch(function(error) {
     console.error("Error removing document: ", error);
 });
+alert(this.testId)
 this.db.collection("users").doc(this.testerid).update({"Tests":firebase.firestore.FieldValue.arrayRemove(this.testId.toString())})
 
 }
