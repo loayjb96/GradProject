@@ -308,10 +308,10 @@
                       
                         
                           <div class="tab-pane" id="messages">
-                            <a  class="add" title="Add new user" data-toggle="modal" data-target="#UserCreationModal" ><i class="large material-icons">add</i></a>
+                            <a  class="add" title="Add new Task" data-toggle="modal" data-target="#TaskModal" ><i class="large material-icons">add</i></a>
                               <table class="table">
                                   <tbody>
-                                      <tr>
+                                      <tr *ngFor="let msg of DashMsg  | async; index as i"class="td-actions text-right">
                                           <td>
                                               <div class="form-check">
                                                   <label class="form-check-label">
@@ -322,9 +322,9 @@
                                                   </label>
                                               </div>
                                           </td>
-                                          <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
+                                          <td >{{msg.Message}}
                                           </td>
-                                          <td class="td-actions text-right">
+                                          <td class="float-right" >
                                               <button mat-raised-button type="button" matTooltip="Edit Task" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
                                                   <i class="material-icons">edit</i>
                                               </button>
@@ -334,25 +334,8 @@
                                           </td>
                                       </tr>
                                       <tr>
-                                          <td>
-                                              <div class="form-check">
-                                                  <label class="form-check-label">
-                                                      <input class="form-check-input" type="checkbox" value="">
-                                                      <span class="form-check-sign">
-                                                          <span class="check"></span>
-                                                      </span>
-                                                  </label>
-                                              </div>
-                                          </td>
-                                          <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                          <td class="td-actions text-right">
-                                              <button mat-raised-button type="button" matTooltip="Edit Task" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">edit</i>
-                                              </button>
-                                              <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">close</i>
-                                              </button>
-                                          </td>
+                                        
+                                          
                                       </tr>
                                   </tbody>
                               </table>
@@ -576,6 +559,28 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="TaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Leave a Task To users</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Leave a Task Here!</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="Message"></textarea>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Exit</button>
+          <button type="button" class="btn btn-info" (click)="pinToBoard()" data-dismiss="modal">Pin to board</button>
         </div>
       </div>
     </div>

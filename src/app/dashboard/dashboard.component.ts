@@ -15,6 +15,8 @@ import { AuthService } from 'app/auth/login/auth.service';
 export class DashboardComponent implements OnInit {
   usersCollection;
   contacts: Observable<any[]> ;
+  DashMsgCollection;
+  DashMsg: Observable<any[]> ;
   CategoryCollection;
   Category: Observable<any[]> ;
   ErrorCollection;
@@ -24,6 +26,7 @@ export class DashboardComponent implements OnInit {
   Test: Observable<any[]> ;
   testCount:Array<number>=[];
   data:Array<number>=[];
+  Message=""
   data2:Array<number>=[];
   data3:Array<number>=[];
   data4:Array<number>=[];
@@ -58,6 +61,8 @@ export class DashboardComponent implements OnInit {
   avergae544100: any;
   avergae5: any;
   role: any;
+  CurrentUserName: any;
+  id: any;
   constructor(private db:AngularFirestore, private af:AngularFireAuth,private router:Router,public authService: AuthService) { }
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
@@ -117,11 +122,14 @@ export class DashboardComponent implements OnInit {
   };
   ngOnInit( 
   ) {
+    
     let uid=this.authService.getToken()
     this.db.collection("users").doc(uid).get().toPromise().then(result => {
  
       const actualData = result.data();
       this.role=actualData.Role;
+      this.CurrentUserName=actualData.fullName;
+      this.id=actualData.Uid
  
    
 
@@ -146,6 +154,8 @@ export class DashboardComponent implements OnInit {
     this.Category = this.CategoryCollection.valueChanges()
     this.ErrorCollection = this.db.collection<any>('ApiErrors')
     this.Error = this.ErrorCollection.valueChanges()
+    this.DashMsgCollection = this.db.collection<any>('DashMessages')
+    this.DashMsg = this.DashMsgCollection.valueChanges()
     this.Test.subscribe(res => {
       this.res=res
       for(let k=0;k<res.length;k++){
@@ -203,8 +213,10 @@ export class DashboardComponent implements OnInit {
     }
 
      this.activateCharts()
+   
      
  });
+this.DashMsg.subscribe(res=>{console.log(res)})
  this.Error.subscribe(res=>{
   for(let k=0;k<res.length;k++){
     this.T_ID.push(res[k].TestId)
@@ -486,5 +498,12 @@ this.startAnimationForBarChart(websiteViewsChart2);
 
   
   }
+  pinToBoard(){
+    const Data={Name:this.CurrentUserName,Message:this.Message,Date:new Date().toLocaleString()}
+    let rand=Math.floor(Math.random() * 6000) + 1  
+    this.db.collection("DashMessages").doc(rand.toLocaleString()).set(Data);
+
+  }
+ 
 }
 

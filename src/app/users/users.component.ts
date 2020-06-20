@@ -51,7 +51,7 @@ export class UsersComponent implements OnInit {
    
 
   })
-  console.log(this.role)
+
   }
   openDialog(): void {
     const pass={name:this.name,email:this.Email,Role:this.Role,Password:this.Password};
