@@ -315,7 +315,7 @@
                                           <td>
                                               <div class="form-check">
                                                   <label class="form-check-label">
-                                                      <input class="form-check-input" type="checkbox" value="" checked>
+                                                      <input class="form-check-input" type="checkbox" value="" [checked]="msg.Chek" (click)="chek(msg.Chek,msg.ID)">
                                                       <span class="form-check-sign">
                                                           <span class="check"></span>
                                                       </span>
@@ -324,11 +324,9 @@
                                           </td>
                                           <td >{{msg.Message}}
                                           </td>
-                                          <td class="float-right" >
-                                              <button mat-raised-button type="button" matTooltip="Edit Task" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
-                                                  <i class="material-icons">edit</i>
-                                              </button>
-                                              <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                          <td class="float-right"  style="padding-right:10px">
+                                              
+                                              <button mat-raised-button type="button" (click)="remove(msg.ID)" matTooltip="Remove" [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon">
                                                   <i class="material-icons">close</i>
                                               </button>
                                           </td>

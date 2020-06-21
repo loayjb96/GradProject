@@ -499,10 +499,24 @@ this.startAnimationForBarChart(websiteViewsChart2);
   
   }
   pinToBoard(){
-    const Data={Name:this.CurrentUserName,Message:this.Message,Date:new Date().toLocaleString()}
+   
     let rand=Math.floor(Math.random() * 6000) + 1  
-    this.db.collection("DashMessages").doc(rand.toLocaleString()).set(Data);
+    const Data={Name:this.CurrentUserName,Message:this.Message,ID:rand,Chek:false,Date:new Date().toLocaleString()}
+    this.db.collection("DashMessages").doc(String(rand)).set(Data);
 
+  }
+  remove(MessageId){
+    this.db.collection("DashMessages").doc(String(MessageId)).delete().then(function() {
+      console.log("Document successfully deleted!");
+  }).catch(function(error) {
+      console.error("Error removing document: ", error);
+  });
+  }
+  chek(chek,id){
+   
+  this.db.collection("DashMessages").doc(id.toString()).set({
+    Chek: !chek
+}, { merge: true });
   }
  
 }
