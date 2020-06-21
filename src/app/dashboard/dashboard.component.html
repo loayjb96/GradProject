@@ -14,7 +14,7 @@
                       </div>
                       <p class="card-category">OverAll Users</p>
                       <h3 class="card-title">{{Testers.length}}
-                          <small>Testers</small>
+                          <small>Users</small>
                       </h3>
                   </div>
                   <div class="card-footer">
@@ -283,7 +283,7 @@
                   <div class="card-header card-header-tabs card-header-primary">
                       <div class="nav-tabs-navigation">
                           <div class="nav-tabs-wrapper">
-                              <span class="nav-tabs-title">Tasks:</span>
+                              <span class="nav-tabs-title">System Board:</span>
                               <ul class="nav nav-tabs" data-tabs="tabs">
                                 
                                   <li class="nav-item">
@@ -343,18 +343,9 @@
                               <table class="table">
                                   <tbody>
                                       <tr *ngFor="let error of Error | async; index as i">
-                                          <td>
-                                              <div class="form-check">
-                                                  <label class="form-check-label">
-                                                      <input class="form-check-input" type="checkbox" value="">
-                                                      <span class="form-check-sign">
-                                                          <span class="check"></span>
-                                                      </span>
-                                                  </label>
-                                              </div>
-                                          </td>
-                                          <td>{{error.TestId}}</td>
-                                          <td> <p   matTooltip="Show In Table " data-toggle="modal" data-target="#ErrorModal" [matTooltipPosition]="'above'" class="btn btn-danger " style="border-radius: 50%;">
+                                        
+                                          <td style="font-weight: bolder;">{{error.TestId}}</td>
+                                          <td> <p  (click)="clicked(i)" matTooltip="Show In Table " data-toggle="modal" data-target="#ErrorModal" [matTooltipPosition]="'above'" class="btn btn-danger " style="border-radius: 50%;">
                                               
                                             See full Error
                                           </p></td>
@@ -518,7 +509,7 @@
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Api Error Responses</h5>
+          <h5 class="modal-title" id="exampleModalLabel">API Error Responses</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -536,11 +527,11 @@
                     </thead>
                     <tbody >
                 
-                        <tr *ngFor="let error of ErrorAPi[0];let i=index ">
-                            
-                          <td>{{error.toString().split("+")[0].replace(".wav","")}}</td>
-                          <td>{{error.toString().split("+")[1]}}</td>
-                          <td>{{error.toString().split("+")[2]}}</td>
+                        <tr *ngFor="let error of ErrorAPi[index];let i=index ">
+                            <td>1</td>
+                          <td style="font-weight: bolder;">{{error.toString().split("+")[0].replace(".wav","")}}</td>
+                          <td style="font-weight: bolder; color:red;">{{error.toString().split("+")[1]}}</td>
+                          <td style="font-weight: bolder;">{{error.toString().split("+")[2]}}</td>
                           
                         </tr >
                        

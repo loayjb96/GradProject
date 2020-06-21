@@ -63,6 +63,7 @@ export class DashboardComponent implements OnInit {
   role: any;
   CurrentUserName: any;
   id: any;
+  index: any;
   constructor(private db:AngularFirestore, private af:AngularFireAuth,private router:Router,public authService: AuthService) { }
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
@@ -518,6 +519,8 @@ this.startAnimationForBarChart(websiteViewsChart2);
     Chek: !chek
 }, { merge: true });
   }
- 
+  clicked(index){
+   this.index=index
+  }
 }
 
