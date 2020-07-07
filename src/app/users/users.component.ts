@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { DialogOverviewExampleDialog } from '../dialog-overview-example-dialog/dialog-overview-example-dialog.component';
 import { Observable } from 'rxjs';
 import { DeleteWarnComponent } from '../delete-warn/delete-warn.component';
+import { AuthService } from 'app/auth/login/auth.service';
 
 
 @Component({
@@ -17,56 +18,58 @@ export class UsersComponent implements OnInit {
   itemPrice: string;
   usersCollection;
   contacts: Observable<any[]> ;
-  Role: string="";
-  Name :string="";
-  Email :string="";
+
+  name:string;
+  Email:string;
+  Role:string;
+  message:string;
+  Password:string;
   Uid :string="";
   Message :string= '';
   ErrorMessage:string= '';
   array={};
+  data: any;
+  role: any;
 
-  constructor(private route: ActivatedRoute,private router: Router,private db:AngularFirestore,private af:AngularFireAuth,public dialog: MatDialog) {
+
+  constructor(private route: ActivatedRoute,private router: Router,public authService: AuthService,private db:AngularFirestore,private af:AngularFireAuth,public dialog: MatDialog) {
     this.usersCollection = db.collection<any>('users')
     this.contacts = this.usersCollection.valueChanges()
 
    }
 
   ngOnInit() {
+    let uid=this.authService.getToken()
+
+ 
+   
+    this.db.collection("users").doc(uid).get().toPromise().then(result => {
+ 
+      const actualData = result.data();
+      this.role=actualData.Role;
+ 
+   
+
+  })
+  console.log(this.role)
   }
   openDialog(): void {
-
-console.log("here")
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-
-      width: '600px',
-      height: '500px',
-      data: {Name: this.Name, Email: this.Email,Role: this.Role}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result){
-      console.log(result);
-      this.createNewUser(result);
-    
-    
-      }
-    });
+    const pass={name:this.name,email:this.Email,Role:this.Role,Password:this.Password};
+    console.log(pass)
+    this.createNewUser(pass);
+  }
+  selectChangeHandler (event: any) {
+   
+    this.Role = event.target.value;
+   
     
   }
   onEnterSite(data):void {
     this.router.navigateByUrl(`/Profile?Data=${data.Uid}`)
   }
   openDialogForDeletion(data): void {
-    const dialogRef = this.dialog.open(DeleteWarnComponent,{
-
-      width: '600px',
-      height: '300px',
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result.resp=='yes'){
-        console.log(data)
-      this.onDelete(data)
-      }
-    });
+   this.data=data
+  
   }
   createNewUser(resultPassed): void {
    
@@ -79,7 +82,7 @@ console.log("here")
    password=resultPassed.Password;
     }
     const Data= ({fullName: fullName,Email:email,
-     Role:UserRole,Uid:"",PhoneNumber:"" ,Birthday:"",Tests:[],Gender:""}) 
+     Role:UserRole,Uid:"",Password:password ,Birthday:"",Tests:[]}) 
     console.log(password);
     this.af.auth.createUserWithEmailAndPassword(email,password)
     .then((result) => {
@@ -121,17 +124,11 @@ async sendEmailVerification() {
   await this.af.auth.currentUser.sendEmailVerification()
   }
  
-  onDelete(data){
-    console.log(data);  
-    this.db.collection("users").doc(data.Uid).delete();
+  onDelete(){
+  
+    this.db.collection("users").doc(this.data.Uid).delete();
     
     
   }
-  // contacts = [
-  //   {id: 1, name: "Contact 001", description: "Contact 001 des", email: "c001@email.com",auth:"user"},
-  //   {id: 2, name: "Contact 002", description: "Contact 002 des", email: "c002@email.com",auth:"user"},
-  //   {id: 3, name: "Contact 003", description: "Contact 003 des", email: "c003@email.com",auth:"user"},
-  //   {id: 4, name: "Contact 004", description: "Contact 004 des", email: "c004@email.com",auth:"user"},
-  // ];
 
 }

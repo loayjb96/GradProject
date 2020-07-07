@@ -10,16 +10,17 @@ import { FilerepositoryComponent } from 'app/filerepository/filerepository.compo
 import { IsAdminGuard } from 'app/is-admin-guard/is-admin.guard';
 
 
-
 export const AdminLayoutRoutes: Routes = [
 
     { path: 'dashboard',      component: DashboardComponent ,canActivate: [IsAdminGuard]},
     { path: 'login',      component: LoginComponent },
     { path: 'Test',      component: TestComponent  ,canActivate: [IsAdminGuard]},
     { path: 'Profile',      component: UserProfileComponent  ,canActivate: [IsAdminGuard]},
+
     { path: 'Users',      component: UsersComponent, canActivate: [IsAdminGuard] },
     { path: 'TestsDone',      component: TestDoneComponent  ,canActivate: [IsAdminGuard]},
     { path: 'filerepository',      component: FilerepositoryComponent  ,canActivate: [IsAdminGuard]},
+
 
    
 ];

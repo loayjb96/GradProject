@@ -5,6 +5,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as Chartist from 'chartist';
 import { stringify } from 'querystring';
+
+import * as firebase from 'firebase/app';
+import { AuthService } from 'app/auth/login/auth.service';
 @Component({
   selector: 'app-test-done',
   templateUrl: './test-done.component.html',
@@ -33,17 +36,66 @@ export class TestDoneComponent implements OnInit {
   precision2: number;
   f12: number;
   updated: boolean=false;
+  testId: any;
+  parmTestID:any
+  class:any="card card-stats mb-4 mb-xl-0 alert alert-dark"
+  Specifity: number;
+  NegativePredictive: number;
+  FalsePositive: number;
+  FalseFiscovery: number;
+  FalseNegative: number;
+  Matthews: number;
+  testerid: any;
+  count2: any;
+  role: any;
+
   
-  constructor(private route: ActivatedRoute,private router: Router,private db:AngularFirestore,private af:AngularFireAuth) {
+  constructor(private route: ActivatedRoute,private router: Router,public authService: AuthService,private db:AngularFirestore,private af:AngularFireAuth) {
     
   }
 
   ngOnInit() {
+    let uid=this.authService.getToken()
+
+ 
+   
+
+  console.log(this.role)
     this.usersCollection = this.db.collection<any>('users')
     this.contacts = this.usersCollection.valueChanges()
     this.TestCollection = this.db.collection<any>('Tests')
     this.Test = this.TestCollection.valueChanges()
+    this.contacts.subscribe(value=>{for(let i=0;i<value.length;i++){
+
+      if(value[i].Uid==uid)
+      this.assign1(value[i].Role )
+     
+     
+     
+         }
+        
+      
+         })
+       
     
+    this.route
+      .queryParams
+      .subscribe(params => {
+        // Defaults to 0 if no query param provided.
+        this.parmTestID = +params['TestId'] || 0;
+        if(this.parmTestID!=0){
+          this.class=" glow-on-hover card card-stats mb-4 mb-xl-0 alert alert-dark"
+          this.calc(this.parmTestID)
+      
+        
+        }
+      });
+  
+      
+  }
+  assign1(role){
+    console.log(role)
+    this.role=role
   }
   startAnimationForLineChart(chart){
     let seq: any, delays: any, durations: any;
@@ -78,41 +130,49 @@ export class TestDoneComponent implements OnInit {
 
     seq = 0;
 };
+calc(id){
 
-activateChart($event, id){
+  
  this.count=[]
+ this.count2=[]
  this.Res=[]
  this.Res2=[]
   this.id=id
- 
   this.db.collection("Tests").doc(this.id.toString()).get().toPromise().then(result => {
     const actualData = result.data();
+    if( actualData ){
     let HZ44100=actualData.HZ44100;
     let HZ8000=actualData.HZ8000;
    this.category=actualData.Catagory;
     this.fileName=actualData.Name;
-    if(!actualData.Result8000){
-      this.updated=false
- 
-    }
-    else
-    this.updated=true
-   
+  
+    
     // this.fileName=this.fileName.split(".wav")
   
-for(let i=0,j=0,k=0;i<HZ8000.length,j<this.fileName.length,k<HZ44100.length;i++,j++,k++){
+for(let i=0;i<HZ8000.length;i++){
 this.Res.push( HZ8000[i].split(" ")[0]);
-this.Res2.push(HZ44100[k].split(" ")[0]);
-this.fileName[i]=this.fileName[i].split(".wav")
+
 this.count.push(i+1)
 }
+for(let j=0 ;j<this.fileName.length;j++){
+ 
+  this.fileName[j]=this.fileName[j].replace(".wav","")
+
+  }
+  for(let k=0;k<HZ44100.length;k++){
+    
+    this.Res2.push(HZ44100[k].split(" ")[0]);
+    this.count2.push(k+1)
+  
+
+    }
 console.log(this.count)
 console.log(this.Res)
 console.log(this.category[0])
 this.confision_matrix_function(this.category[0],this.Res,"1")
 this.confision_matrix_function(this.category[0],this.Res2,"2")
-// this. splitted12 = HZ44100[0].split(" ").slice(1); 
-// this. splitted22 = HZ44100[1].split(" ").slice(1); 
+
+  }
   const dataDailySalesChart: any = {
     labels:  this.Res,
     
@@ -134,9 +194,9 @@ this.confision_matrix_function(this.category[0],this.Res2,"2")
     chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
   }
   const dataDailySalesChart1: any = {
-    labels: this.Res,
+    labels: this.Res2,
     series: [
-        this.count
+        this.count2
     ]
   };
 
@@ -162,7 +222,14 @@ this.confision_matrix_function(this.category[0],this.Res2,"2")
     this.startAnimationForLineChart(dailySalesChart1);
 }, 100);
 })
-
+  
+}
+activateChart($event, id){
+ 
+this.calc(id)
+if(id==this.parmTestID){
+  this.parmTestID=0
+  }
 }
 sortvia(userName){
 
@@ -171,6 +238,20 @@ sortvia(userName){
 }
 resetSort(){
   this.Name='all'
+}
+assign(id,testerid){
+ this.testId=id
+ this.testerid=testerid
+}
+delete(){
+  
+  this.db.collection("Tests").doc(String(this.testId)).delete().then(function() {
+    console.log("Document successfully deleted!");
+}).catch(function(error) {
+    console.error("Error removing document: ", error);
+});
+this.db.collection("users").doc(this.testerid).update({"Tests":firebase.firestore.FieldValue.arrayRemove(this.testId.toString())})
+
 }
 cross_matches(arr1,arr2){
 var n = arr1
@@ -215,18 +296,41 @@ confision_matrix_function(catagory,expected_value_api,str){
     ];
     var p = tp + fn;
     var n = fp + tn;
-if(str==1){
+    var x=tp+fp
+    var y=tn+fn
+    if(p+n==0)
+    p=1
+    
   
+    if(x==0)
+    x=1
+    if(y==0)
+    y=1
+if(str==1){// 8000
+  console.log("tp: "+tp+" tn: "+tn+" fp: "+fp+" fn: "+fn)
     this. accuracy = (tp+tn)/(p+n);
     this. f1 = 2*tp/(2*tp+fp+fn);
-    this. precision = tp/(tp+fp);
-    this. recall = tp/(tp+fn);
+    this. precision = tp/(x);
+    this. recall = tp/(p);
+    // TN TRUE NEGTIVE ' SO FAR GIVES ZERO 
+    // fP SP FAR  give zero 
+    // if(n==0)
+    // this.Specifity=tn/(1);
+    // else
+    // this.Specifity=tn/(n);
+    // this.NegativePredictive=tn/(y);
+    // this.FalsePositive=fp/n;
+    // this.FalseFiscovery=fp/x;
+    this.FalseNegative=fn/p;
+    // this.Matthews=(tp*tn-fp*fn)/Math.sqrt((x)*(p)*(n)*(y))
+    // alert(this.accuracy)
     if(this.updated==false){
-      alert(122)
-    this.Resarray.push(this.accuracy,this.f1,this.precision,this.recall)
+
+    this.Resarray.push(this.accuracy,this.f1,this.precision,this.recall,this.FalseNegative)
     this.db.collection("Tests").doc(this.id.toString()).set({
      Result8000: this.Resarray
     }, { merge: true });
+    
   }
 }
 if(str==2){
@@ -234,8 +338,9 @@ if(str==2){
   this. f12 = 2*tp/(2*tp+fp+fn);
   this. precision2 = tp/(tp+fp);
   this. recall2 = tp/(tp+fn);
+  this.FalseNegative=fn/p;
   if(this.updated==false){
-  this.Resarray.push(this.accuracy2,this.f12,this.precision2,this.recall2)
+  this.Resarray.push(this.accuracy2,this.f12,this.precision2,this.recall2,this.FalseNegative)
     this.db.collection("Tests").doc(this.id.toString()).set({
      Result44100: this.Resarray
     }, { merge: true });
