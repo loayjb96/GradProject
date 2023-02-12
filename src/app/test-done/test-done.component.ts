@@ -33,6 +33,16 @@ export class TestDoneComponent implements OnInit {
   precision2: number;
   f12: number;
   updated: boolean=false;
+  testId: any;
+  parmTestID:any
+  class:any="card card-stats mb-4 mb-xl-0 alert alert-dark"
+  Specifity: number;
+  NegativePredictive: number;
+  FalsePositive: number;
+  FalseFiscovery: number;
+  FalseNegative: number;
+  Matthews: number;
+
   
   constructor(private route: ActivatedRoute,private router: Router,private db:AngularFirestore,private af:AngularFireAuth) {
     
@@ -43,7 +53,19 @@ export class TestDoneComponent implements OnInit {
     this.contacts = this.usersCollection.valueChanges()
     this.TestCollection = this.db.collection<any>('Tests')
     this.Test = this.TestCollection.valueChanges()
-    
+    this.route
+      .queryParams
+      .subscribe(params => {
+        // Defaults to 0 if no query param provided.
+        this.parmTestID = +params['TestId'] || 0;
+        if(this.parmTestID!=0){
+          this.class=" glow-on-hover card card-stats mb-4 mb-xl-0 alert alert-dark"
+          this.calc(this.parmTestID)
+      
+        
+        }
+      });
+     
   }
   startAnimationForLineChart(chart){
     let seq: any, delays: any, durations: any;
@@ -78,25 +100,20 @@ export class TestDoneComponent implements OnInit {
 
     seq = 0;
 };
+calc(id){
 
-activateChart($event, id){
+  
  this.count=[]
  this.Res=[]
  this.Res2=[]
   this.id=id
- 
   this.db.collection("Tests").doc(this.id.toString()).get().toPromise().then(result => {
     const actualData = result.data();
     let HZ44100=actualData.HZ44100;
     let HZ8000=actualData.HZ8000;
    this.category=actualData.Catagory;
     this.fileName=actualData.Name;
-    if(!actualData.Result8000){
-      this.updated=false
- 
-    }
-    else
-    this.updated=true
+  
    
     // this.fileName=this.fileName.split(".wav")
   
@@ -162,7 +179,14 @@ this.confision_matrix_function(this.category[0],this.Res2,"2")
     this.startAnimationForLineChart(dailySalesChart1);
 }, 100);
 })
-
+  
+}
+activateChart($event, id){
+ 
+this.calc(id)
+if(id==this.parmTestID){
+  this.parmTestID=0
+  }
 }
 sortvia(userName){
 
@@ -171,6 +195,17 @@ sortvia(userName){
 }
 resetSort(){
   this.Name='all'
+}
+assign(id){
+ this.testId=id
+}
+delete(){
+  
+  this.db.collection("Tests").doc(String(this.testId)).delete().then(function() {
+    console.log("Document successfully deleted!");
+}).catch(function(error) {
+    console.error("Error removing document: ", error);
+});
 }
 cross_matches(arr1,arr2){
 var n = arr1
@@ -215,18 +250,39 @@ confision_matrix_function(catagory,expected_value_api,str){
     ];
     var p = tp + fn;
     var n = fp + tn;
-if(str==1){
+    var x=tp+fp
+    var y=tn+fn
+    if(p+n==0)
+    p=1
+    
   
+    if(x==0)
+    x=1
+    if(y==0)
+    y=1
+if(str==1){
+  console.log("tp: "+tp+" tn: "+tn+" fp: "+fp+" fn: "+fn)
     this. accuracy = (tp+tn)/(p+n);
     this. f1 = 2*tp/(2*tp+fp+fn);
-    this. precision = tp/(tp+fp);
-    this. recall = tp/(tp+fn);
+    this. precision = tp/(x);
+    this. recall = tp/(p);
+    if(n==0)
+    this.Specifity=tn/(1);
+    else
+    this.Specifity=tn/(n);
+    this.NegativePredictive=tn/(y);
+    this.FalsePositive=fp/n;
+    this.FalseFiscovery=fp/x;
+    this.FalseNegative=fn/p;
+    this.Matthews=(tp*tn-fp*fn)/Math.sqrt((x)*(p)*(n)*(y))
+    // alert(this.accuracy)
     if(this.updated==false){
-      alert(122)
+
     this.Resarray.push(this.accuracy,this.f1,this.precision,this.recall)
     this.db.collection("Tests").doc(this.id.toString()).set({
      Result8000: this.Resarray
     }, { merge: true });
+    
   }
 }
 if(str==2){
